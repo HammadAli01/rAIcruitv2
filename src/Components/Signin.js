@@ -3,7 +3,7 @@ import "./Signup.css";
 import logo from '../Assets/mainmenu/bot.jpg';
 import chat from '../Assets/mainmenu/loginsideimg.png';
 import { Link } from 'react-router-dom'
-import Signup from './Signup';
+import Signup from './Signup'; 
 import { BsFacebook,BsYoutube,BsWhatsapp,BsTwitter,BsInstagram } from "react-icons/bs";
 import {useNavigate} from 'react-router-dom';
 import Axios from 'axios';
@@ -164,7 +164,7 @@ const checkErrors=()=>{
                     onClick={(e)=>formSubmitHandler(e)}>
                         Login
                     </button>
-                </form>
+                </form> 
             </div>
          </div>
     </div>
