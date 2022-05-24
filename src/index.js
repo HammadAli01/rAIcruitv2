@@ -13,21 +13,40 @@ import InterviewDetails from './Pages/InterviewDetails';
 import ManageBank from './Pages/ManageBank';
 import SendEmail from './Pages/SendEmail';
 import Userprofile from './Pages/Userprofile';
+import Templatemenu from './Pages/Templatemenu';
+import Interviewtemplate from './Pages/Interviewtemplate';
+import Categorypage from './Pages/Categorypage';
+import Admindashboard from './Pages/Admindashboard';
+import AdminCategories from './Pages/AdminCategories';
+import Adminmanagebank from './Pages/Adminmanagebank';
+import Checkcandidate from './Pages/Checkcandidate';
+import Checkresults from './Pages/Checkresults';
+import Checktranscript from './Pages/Checktranscript';
 ReactDOM.render(
   <React.StrictMode>
    
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<Mainmenu/>}/>
+    <Route path="/" element={<Adminmanagebank/>}/>
     <Route path="/signup"  element={<Signup/>}/>
         <Route path='/signin' element={<Signin/>} />
         <Route path='/dashboard' element={<RecruiterDashboard/>} />
         <Route path='/designinterview' element={<Designinterview/>} />
         <Route path='/interviewdetails' element={<InterviewDetails/>} />
         <Route path='/managebank' element={<ManageBank/>} />
-        
+        <Route path='/templates' element={<Templatemenu/>} />
+        <Route path='/template' element={<Interviewtemplate/>} />
         <Route path='/sendemail' element={<SendEmail/>} />
-        <Route path='/userprofile' element={<Userprofile/>} />        
+        <Route path='/Interviewview' element={<Checkresults/>} />
+        <Route path='/Interviewcandidatesview' element={<Checkcandidate/>} />
+        <Route path='/Interviewcandidateresultview' element={<Checktranscript/>} />
+        
+        <Route path='/Admindashboard' element={<Admindashboard/>} />
+         <Route path='/Allcategories' element={<AdminCategories/>} />
+         <Route path='/categoryView' element={<Categorypage/>} />
+         <Route path='/Adminmanagebank' element={<Adminmanagebank/>} />
+        <Route path='/userprofile' element={<Userprofile/>} />   
+             
         </Routes>
     </BrowserRouter>
   </React.StrictMode>,

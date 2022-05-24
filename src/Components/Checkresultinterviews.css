@@ -1,0 +1,97 @@
+
+.check-tablecontainer{
+    overflow-y: hidden;
+  position: relative;
+  float: right;
+  width: 80%;
+  /* height: 100%; */
+  background-color: rgb(255, 255, 255);
+  padding: 40px;
+  overflow: hidden;
+    }
+    .check-tabletitle{
+      margin-top: 3%;
+        color:black;
+
+    }
+.check-table{
+    margin-top: 20px;
+    padding: none;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
+  overflow:hidden;
+  
+ 
+ 
+}
+.check-interviews{
+    
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    max-height:200px !important;
+    min-height: 200px !important;
+    
+    
+}
+.check-interviews td {
+    
+    font-family: Lato-Regular;
+    font-size: 15px;
+    color: gray;
+    line-height: 1.4;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .check-interviews th
+  {
+      padding-top: 18px;
+  padding-bottom: 18px;
+  
+    font-size: 18px;
+    color: #464646;
+    line-height: 1.4;
+    background-color: #dbdfff;
+  }
+  .check-interviews tbody {
+    /* background-color: aliceblue;
+    */
+    
+   overflow: scroll;
+   height:350px;
+
+  }
+  .check-interviews tr:nth-child(even){background-color: #f8f6ff;}
+  
+  .check-interviews tr:hover {background-color: #fafafa;}
+  .result-action-button{
+cursor: pointer;
+display:inline-block;
+  
+font:normal normal 300 1.3em 'Open Sans';
+text-decoration:none; 
+
+color:#6c7ae0;
+background-color:transparent;
+border:1px solid #6c7ae0;
+border-radius:5px;
+
+padding: .2em 1.2em;
+    margin-left: 7%;
+background-size: 200% 200%; 
+background-image: linear-gradient(to right, transparent 50%, #6c7ae0 50%);
+transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
+  }
+  
+  .result-action-button:hover{
+    color:rgba(255, 255, 255, 1);
+    background-color:#6c7ae0;
+    background-position: -100% 100%;
+  }
+  .result-action-button:active,.result-action-button:focus{
+outline: none;
+transform: translateX(0px) translateY(-1px);
+}

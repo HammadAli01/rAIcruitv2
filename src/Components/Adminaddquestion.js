@@ -1,10 +1,10 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import {Container,Row,Col,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap'
-import './Addquestion.css';
+import './Adminaddquestion.css';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Toast } from 'react-bootstrap';
-export default function Addquestion() {
+export default function Adminaddquestion() {
   
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);
@@ -34,8 +34,8 @@ export default function Addquestion() {
   }
   const [categories,setCategories]=useState([
     {
-      "id": "",
-      "name": ""
+      id: "",
+      name: ""
     }
   ]);
     const handleShowOption=(optionid)=>{
@@ -70,9 +70,9 @@ export default function Addquestion() {
         //     setShowOptions('revert');
         // }
     }
-     const logged_user=window.localStorage.getItem("user_Id");
-     console.log("in add user",logged_user);
-//const logged_user="hammadalibu@gmail.com";
+     //const logged_user=window.localStorage.getItem("user_Id");
+     //console.log("in add user",logged_user);
+const logged_user="hammadalibu@gmail.com";
     const [Allquestions,setAllQuestions]=useState([ {
         id: "",
         question_weight: "",
@@ -88,11 +88,150 @@ export default function Addquestion() {
         ]
       }
    ]);
-   window.addEventListener('load', (event) =>{
+   useEffect(()=>{
+      // getUserQuestions();
+    //getCategories();
+    setAllQuestions([ {
+        id: 1,
+        question_weight: 50,
+        username: "Admin",
+        stem: "How are you",
+        CategoryName: "Icebreaker",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "fine",
+            optionWeightage: "100"
+          },{
+            id: 102,
+            optionText: "Not fine",
+            optionWeightage: "50"
+          }
+        ]
+      },{
+        id: 1,
+        question_weight: 50,
+        username: "Admin",
+        stem: "How many years of experience do you have?How many years of experience do you have?How many years of experience do you have?",
+        CategoryName: "Experience",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "5 Years",
+            optionWeightage: "100"
+          },{
+            id: 102,
+            optionText: "4 Years",
+            optionWeightage: "75"
+          },{
+            id: 103,
+            optionText: "2 Years",
+            optionWeightage: "50"
+          }
+        ]
+      },{
+        id: 4,
+        question_weight: 100,
+        username: "Admin",
+        stem: "What is your availability for this job",
+        CategoryName: "Timing",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "Morning",
+            optionWeightage: "75"
+          },{
+            id: 102,
+            optionText: "Evening",
+            optionWeightage: "75"
+          },{
+            id: 103,
+            optionText: "Both",
+            optionWeightage: "100"
+          }
+        ]
+      },{
+        id: 7,
+        question_weight: 75,
+        username: "Admin",
+        stem: "Where are you from",
+        CategoryName: "Icebreaker",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "Islamabad",
+            optionWeightage: "100"
+          },{
+            id: 102,
+            optionText: "Rawalpindi",
+            optionWeightage: "75"
+          },{
+            id: 103,
+            optionText: "taxila",
+            optionWeightage: "50"
+          },{
+            id: 104,
+            optionText: "other",
+            optionWeightage: "25"
+          }
+        ]
+      },{
+        id: 1,
+        question_weight: 50,
+        username: "Admin",
+        stem: "How are you2",
+        CategoryName: "Icebreaker",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "fine",
+            optionWeightage: "100"
+          },{
+            id: 102,
+            optionText: "Not fine",
+            optionWeightage: "50"
+          }
+        ]
+      },{
+        id: 1,
+        question_weight: 50,
+        username: "Admin",
+        stem: "How are you3",
+        CategoryName: "Icebreaker",
+        optionArray: [
+          {
+            id: 101,
+            optionText: "fine",
+            optionWeightage: "100"
+          },{
+            id: 102,
+            optionText: "Not fine",
+            optionWeightage: "50"
+          }
+        ]
+      },
+   ]);
+   setCategories([
+    {
+      id: "1",
+      name: "ICebreaker"
+    },{
+        id: "2",
+        name: "Experience"
+      },{
+        id: "3",
+        name: "Position"
+      },{
+        id: "4",
+        name: "Environment"
+      },{
+        id: "5",
+        name: "Timing"
+      },
+  ])
+},[]);
 
-    getUserQuestions();
-    getCategories();
-});
+  
 const getCategories = async () => {
   console.log("get categories called"); 
   const response = await axios.post("https://raicruittest.herokuapp.com/Category/get/all").catch((err) => 
@@ -115,7 +254,7 @@ const getUserQuestions=async()=>{
     console.error('There was an error!', error);
 });
 };
-   const [optionList,setoptionList]=useState([{id:1,optionText: '',optionWeightage: '25'}]);
+   const [optionList,setoptionList]=useState([{id:1,optionText: '',optionWeightage: '25'},{id:2,optionText: '',optionWeightage: '25'}]);
    //const [optionIndex,setOptionIndex]=useState([{optioncount:0}]);
    const handleOptionChange = (name,val, index) => 
     {
@@ -205,23 +344,31 @@ optionArray:[],
       }
       if(question.is_openended==true){question.optionArray=[{}]}else{question.optionArray=passed_optionList;}
       //send question to api 
-      const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", question).catch((err) => 
-      {
-        console.log("Error: ", err);
-      });
-      if (response)  {
-        console.log("reponse by post question is",response.data);
-        getUserQuestions();
-        //resetting
+      console.log("Data to API is",question);
       setStem();
       setCategoryName("Select Category");
       setStemWeightage("Select Weightage");
       setSemanticText([{id:1,optionText:'',optionWeightage:'0'}]);
       setoptionList([{id:1,optionText: '',optionWeightage: '25'}]);
       inputerror.current={stemError:"",categoryError:"",weightageError:"",optionsError:"",semanticError:""};
-      }
+     //api call commented is
+    //   const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", question).catch((err) => 
+    //   {
+    //     console.log("Error: ", err);
+    //   });
+    //   if (response)  {
+    //     console.log("reponse by post question is",response.data);
+    //     getUserQuestions();
+    //     //resetting
+    //   setStem();
+    //   setCategoryName("Select Category");
+    //   setStemWeightage("Select Weightage");
+    //   setSemanticText([{id:1,optionText:'',optionWeightage:'0'}]);
+    //   setoptionList([{id:1,optionText: '',optionWeightage: '25'}]);
+    //   inputerror.current={stemError:"",categoryError:"",weightageError:"",optionsError:"",semanticError:""};
+    //   }
       
-      console.log("data is",question);
+    //   console.log("data is",question);
     
     }
       else{
@@ -283,7 +430,7 @@ optionArray:[],
                       </DropdownButton>
                      
                      <div className="add-btn-box">
-                     {optionList.length !== 1 && <button
+                     {optionList.length !== 2 && <button
                       className="add-optionremoveButton"
                       onClick={() => handleRemoveClick(i)}>-</button>}
                         {optionList.length - 1 === i && <button className="add-optionaddbutton"
@@ -328,7 +475,7 @@ optionArray:[],
           <thead>
             <tr>
               <th>S/No</th>
-              <th>Question</th>
+              <th className='stemtd'>Question</th>
               <th> Category</th>
               <th>Weight </th>
               <th>Options</th>
@@ -346,7 +493,7 @@ optionArray:[],
                <>
               <tr key={index+1} onClick={()=>{handleShowOption(index)}} className='questionrow'>
                 <td>{index+1}</td>
-                 <td>{stem.slice(0,35)+"..."}</td>
+                 <td className='stemtd'>{stem.length<60 ? (stem):(stem.slice(0,60)+"...")}</td>
                  <td>{CategoryName}</td>
                  <td>{question_weight}</td>
                  <td>{optionArray.length}</td> 

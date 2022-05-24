@@ -1,4 +1,4 @@
-.showsidebar{
+.admin-showsidebar{
     left: 0;
    
    
@@ -12,7 +12,7 @@
     
     border-radius: 0px 5px 5px 0px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    background-image: linear-gradient(to top,#c7c7c7, #c6e7ff);
+    background-image: linear-gradient(to top,#c8e0f1, #7dbae5);
     color: #00504a;
 
     text-align:left;
@@ -30,7 +30,7 @@ padding-bottom: 5%;
     from {left: -20%;}
     to {left: 0;}
   }
-.hidesidebar{
+.admin-hidesidebar{
  
     left: -20%;
    
@@ -45,9 +45,8 @@ padding-bottom: 5%;
     
     border-radius: 0px 5px 5px 0px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-    /* background-image: linear-gradient(to bottom,#7be2db, #91e5e0); 
-    background-image: linear-gradient(to top,#ace3e7, #d0f1ef);*/
-    background-image: linear-gradient(to top,#c7c7c7, #c6e7ff);
+    /* background-image: linear-gradient(to bottom,#7be2db, #91e5e0); */
+    background-image: linear-gradient(to top,#ace3e7, #d0f1ef);
     color: #00504a;
 
     text-align:left;
@@ -67,8 +66,8 @@ padding-bottom: 5%;
    to {left: -20%;}
 }
 
-.sidebar-header{
-    border-bottom: 1px solid #f8f8f8;
+.admin-sidebar-header{
+    border-bottom: 1px solid #e4e4e4;
    
     width: 100%;
 position: relative;
@@ -84,20 +83,20 @@ height: 60px;
 border-radius: 50%;
 outline: none;
 } */
-.sidebar-sitelogo{
-    height: 45px;
+.admin-sidebar-sitelogo{
+    height: 50px;
     width: 70%;
     margin-left: 5%;
 
 }
-.user-name{
+.admin-user-name{
     font-size: 20px;
     font-weight: 500;
     padding-left: 38%;
     overflow: hidden;
     white-space: nowrap;
 }
-.user-role{
+.admin-user-role{
     font-size: 12px;
     display: block;
     margin-left: 42%;
@@ -107,13 +106,13 @@ outline: none;
     top: 47%;
     right: 33%; */
 }
-.user-info{
+.admin-user-info{
     position: absolute;
     float: right;
     top: 10%;
     right: 32%;
 }
-.sidebaritems{
+.admin-sidebaritems{
     position: relative;
     width: 100%;
     height: 80%;
@@ -125,28 +124,28 @@ outline: none;
 
 
 
-.sidebaritems ul{
+.admin-sidebaritems ul{
 list-style-type: none;
 padding: 0px;
 }
-.sidebar-item{
-    border-bottom: 1px solid #eeeeee;
+.admin-sidebar-item{
+    border-bottom: 1px solid #c7dbd7;
     color: #57858b;
    padding-top: 10px;
    padding-bottom: 5px;
 cursor: pointer;
 font-weight: 500;
 }
-.sidebar-item:hover {
+.admin-sidebar-item:hover {
     color: #333333 !important;
     border-bottom: 1px solid #8d8d8d;
     box-shadow: 0 1px 8px 0 rgb(0 0 0 / 2%);
 
 }
-.sidebar-item span:hover,.sidebar-item:hover{
+.admin-sidebar-item span:hover,.admin-sidebar-item:hover{
     color: #333333 !important;
 }
-.sidebar-item span{
+.admin-sidebar-item span{
 padding-left: 16px;
 font-size: large;
 vertical-align: middle;
@@ -156,9 +155,9 @@ color: #57858b;
 width: 100%;
 height: 100%;
 }
-.page-icon{
+.admin-page-icon{
     
-    background: #bad7eb;
+    background: #81bde7;
 color: #57858b;
 transition: all 0.3s ease;
 border-radius: 5px;
@@ -175,7 +174,7 @@ text-shadow: 0px 0px 10px rgba(68, 68, 68, 0.5);
   0% { transform: translate(1px, 1px)  }
   10% { transform: translate(-1px, -1px)  }
 }
-.sidebar-item:hover .page-icon{
+.admin-sidebar-item:hover .admin-page-icon{
 color: #333333;
 /* animation: shake 0.5s; animation-iteration-count: 2; */
 transform: translateY(-0.15em);

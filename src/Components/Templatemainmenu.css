@@ -1,0 +1,49 @@
+.alltemplates-container{
+margin-left: 20%;
+    background-color: transparent;
+    position: absolute;
+    min-height:100%;
+    width:80%;
+    color: black;
+    padding-top: 100px;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-bottom: 50px;
+   
+    }
+    .alltemplates-container h2{
+    color: black;
+}
+.template-container
+{border-radius: 15px;
+    padding-bottom: 5px;
+    box-shadow: 0 0 40px 0 rgb(0 0 0 / 11%);
+    margin-left: 3%;
+    position: relative;
+
+    margin-top: 3%;
+    display:inline-block;
+    width:29%;
+background-color: transparent;
+cursor: pointer;
+
+}
+.template-container img
+{
+    border-radius: 15px 0px 0px 0px;
+    height: 220px;
+    width: 100%;
+    display: flex;
+justify-content: center;
+}
+.template-container h5{
+     color: rgb(5, 0, 56);
+position: relative;
+     width: 100%;
+    padding: 8px;
+    padding-top: 15px;
+    border-top: 1px solid rgb(211, 211, 211);
+
+display: flex;
+justify-content: center;
+}
