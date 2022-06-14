@@ -2,7 +2,8 @@ import React,{useState,useEffect,useRef,useCallback} from 'react'
 import './Checkresultinterviews.css'
 import {useNavigate} from 'react-router-dom';
 import InfiniteScroll from "react-infinite-scroll-component";
-
+//write api for getting all interviews of user
+// on action click a function call which stores interview clicked data to local storage
 export default function Checkresultinterviews() {
     const navigation = useNavigate();
     const handlePageSubmit = useCallback(() => navigation('/Interviewcandidatesview', {replace: true}), [navigation]);

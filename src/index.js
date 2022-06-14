@@ -19,6 +19,11 @@ import Categorypage from './Pages/Categorypage';
 import Admindashboard from './Pages/Admindashboard';
 import AdminCategories from './Pages/AdminCategories';
 import Adminmanagebank from './Pages/Adminmanagebank';
+import Admintemplatemenu from './Pages/Admintemplatemenu';
+import Designtemplate from './Pages/Designtemplate';
+import Admintemplateview from './Pages/Admintemplateview';
+import Adminmanageusers from './Pages/Adminmanageusers';
+import AdminManageprofile from './Pages/AdminManageprofile';
 import Checkcandidate from './Pages/Checkcandidate';
 import Checkresults from './Pages/Checkresults';
 import Checktranscript from './Pages/Checktranscript';
@@ -27,7 +32,7 @@ ReactDOM.render(
    
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<Adminmanagebank/>}/>
+    <Route path="/" element={<Admindashboard/>}/>
     <Route path="/signup"  element={<Signup/>}/>
         <Route path='/signin' element={<Signin/>} />
         <Route path='/dashboard' element={<RecruiterDashboard/>} />
@@ -45,6 +50,13 @@ ReactDOM.render(
          <Route path='/Allcategories' element={<AdminCategories/>} />
          <Route path='/categoryView' element={<Categorypage/>} />
          <Route path='/Adminmanagebank' element={<Adminmanagebank/>} />
+         <Route path='/Admindesigntemplate' element={<Designtemplate/>} />
+         <Route path='/Admintemplatemenu' element={<Admintemplatemenu/>} />
+         <Route path='/Adminmanageusers' element={<Adminmanageusers/>} />
+         <Route path='/Adminmanageprofile' element={<AdminManageprofile/>} />
+         
+         <Route path='/Admintemplateview' element={<Admintemplateview/>} />
+{/*include upper route in admin sidebar */}         
         <Route path='/userprofile' element={<Userprofile/>} />   
              
         </Routes>

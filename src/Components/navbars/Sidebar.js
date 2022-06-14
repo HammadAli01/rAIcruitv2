@@ -1,6 +1,5 @@
 import React from 'react'
 import './Sidebar.css';
-import userimg from '../../Assets/mainmenu/profile.jpg';
 import sitelogo from '../../Assets/mainmenu/sitelogo2.png';
 import { BsFillFileEarmarkTextFill,BsHouseFill,BsBricks,BsFillChatSquareTextFill,BsReverseLayoutTextSidebarReverse,BsStickies,BsFillPersonFill,BsGearFill } from "react-icons/bs";
 
@@ -24,13 +23,13 @@ export default function Sidebar(props) {
       <BsHouseFill className="page-icon"></BsHouseFill>
       <span>Home</span>
     </li></Link>
-    <Link to="/designinterview">
+    <Link to="/interviewdetails">
     <li class="sidebar-item">
     <BsBricks className="page-icon"></BsBricks>
      <span>Design Interview</span>
     </li></Link> 
-    <Link to="/interviewdetails">
-    <li class="sidebar-item">
+    {/*<Link to="/interviewdetails">
+     <li class="sidebar-item">
     <BsFillChatSquareTextFill className="page-icon"></BsFillChatSquareTextFill>
     <span>Interview Detail</span> 
     </li></Link>
@@ -39,12 +38,12 @@ export default function Sidebar(props) {
     <BsReverseLayoutTextSidebarReverse className="page-icon"></BsReverseLayoutTextSidebarReverse>
      <span>Email</span>
     </li></Link> 
-
+*/}
     <Link to="/templates">
     <li class="sidebar-item">
     <BsFillFileEarmarkTextFill className="page-icon"></BsFillFileEarmarkTextFill>
      <span>Templates</span>
-    </li></Link> 
+    </li></Link>  
 
     <Link to="/managebank">
     <li class="sidebar-item">

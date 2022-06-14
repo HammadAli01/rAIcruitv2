@@ -17,7 +17,7 @@
  padding-bottom: 2%;
  box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
  position: relative;
- margin-top: 20%;
+ margin-top: -100px;
  }
  .Asorter{
    /* width: 27%;
@@ -240,3 +240,12 @@ background-color: #216ec0;}
         font-size: 16px;
         margin-right: 10%;
       }
+      .recruiterdashboard-graph{
+        position: relative;
+      }
+      .recruiterlinechart{
+        margin-top: 200px !important;
+        /* height: 320px !important;
+        
+        width: 98% !important; */
+      } 

@@ -34,11 +34,23 @@ const handleCategoryAdd=()=>{
         setCategoryError("Cateogry Name is required");
     }
     else{
+        let is_existing=false;
         setCategoryError("");
+        categories.map((current_category)=>{
+if(current_category.name==category){
+    setCategoryError("Category already exists");
+    is_existing=true;
+}
+else{
+}
+        });
+        if(is_existing===false){
+            console.log("UNEXPECTED IN",is_existing);
+            setCategoryError("");
         setCategories([...categories,{id:(categories.length+1),name:category}]);
-        //add cateogry api call
+        //add cateogry api call with name category_Name:""
         setCategory("");
-  
+  }
     }
 }
 const handleCategorySelected=(category)=>{

@@ -4,8 +4,11 @@ import { DatePickerComponent, Inject, MaskedDateTime } from "@syncfusion/ej2-rea
 import { Dropdown,DropdownButton } from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 export default function Interviewinformation(props) {
+  const logged_user=window.localStorage.getItem('user_Id');
   const navigation = useNavigate();
   const handlePageSubmit = useCallback(() => navigation('/designinterview', {replace: true}), [navigation]);
+  const handlePageSubmittemplate = useCallback(() => navigation('/sendemail', {replace: true}), [navigation]);
+  
   console.log("prop is",props.selectedJobDescription);
   const dateValue= new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
   const [InterviewDetail,setInterviewDetail]=useState({
@@ -140,6 +143,7 @@ const change=()=>{
       }
   }
     const submitForm=(e)=>{
+      const is_Template=window.localStorage.getItem("Is_Template");
       InterviewDetail.type=positionType;
       InterviewDetail.startDate=startDate.getFullYear()+"-" +(startDate.getMonth()+1)+"-" + startDate.getDate();
       InterviewDetail.endDate=endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate();
@@ -154,9 +158,32 @@ const change=()=>{
         console.log("Interview details are errored: ",InterviewDetail);
       }
       else{
-        console.log("Interview details sent to api are: ",InterviewDetail);
+        console.log("is template after submit is",is_Template);
+        if(is_Template==1){
+          console.log("DONE");
+const templateID=window.localStorage.getItem('current_template_Id');
+const APIDATA={
+  template_Id:templateID,
+  title: InterviewDetail.title,
+  generationDate: InterviewDetail.generationDate,
+  startDate: InterviewDetail.startDate,
+  endDate: InterviewDetail.endDate,
+  duration:InterviewDetail.duration,
+  type: InterviewDetail.type,
+  position:InterviewDetail.position ,
+  job_description:InterviewDetail.jobDescription ,
+  email: logged_user,
+}
+//write api for sending template data here
+console.log("API TEMPLATE DATA IS",APIDATA);
+window.localStorage.setItem('current_Interview', APIDATA.title);
+//window.localStorage.setitem("camefromtemplate",true);
+          handlePageSubmittemplate();
+        }else{
+console.log("GOING IN ELSE?/");
         window.localStorage.setItem("interview_data",JSON.stringify(InterviewDetail));
-        handlePageSubmit();
+        handlePageSubmit();}
+ 
         // const response = await axios.post("/interview details", InterviewDetail).catch((err) => 
       // {
       //   alert("Error: ", err);

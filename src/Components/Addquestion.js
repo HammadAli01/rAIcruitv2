@@ -231,7 +231,7 @@ optionArray:[],
     }
   return (
     <div className='add-parentcontainer'>
-        <div className='add-sortcontainer'></div>
+       
         <div className='add-tablecontainer'>
 <div className='addquestion-form'>
     <h2>Add Question</h2>

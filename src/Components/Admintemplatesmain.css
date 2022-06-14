@@ -1,0 +1,121 @@
+.Admintemplatesmain{
+    margin-left: 20%;
+    background-color: #f1f4f6;
+    position: absolute;
+    min-height:100%;
+    width:80%;
+    color: black;
+    padding-top: 100px;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-bottom: 50px;
+}
+.alltemplatescontainer{
+    margin-top: 50px;
+}
+.admin-template-container
+{border-radius: 15px;
+    
+    box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
+    margin-left: 3%;
+    position: relative;
+
+    margin-top: 3%;
+    display:inline-block;
+    width:29%;
+background-color: transparent;
+cursor: pointer;
+
+}
+.admin-template-container img
+{
+    border-radius: 15px 0px 0px 0px;
+    height: 220px;
+    width: 100%;
+    display: flex;
+justify-content: center;
+}
+.admin-template-container h5{
+     color: rgb(5, 0, 56);
+position: relative;
+    padding: 10px;
+    margin-bottom: 0px;
+   font-weight: 400;
+    border-top: 1px solid rgb(211, 211, 211);
+    display: flex;
+    justify-content: center;
+
+background-color: rgb(251 247 247);
+}
+.admin-template-container button{
+    cursor: pointer;
+   width: 100%;
+   padding-top: 8px;
+   outline:none;
+   padding-bottom: 8px;
+    border-top:1px solid rgb(211, 211, 211);
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    background-color: #d9d9eb;
+    border-radius: 0px 0px 10px 10px;
+    align-items: center;
+}
+
+
+
+.admin-template-container button:hover{
+background-color: #cccceb;
+}
+.admin-template-container button:focus{
+    transform: translateX(0px) translateY(0px);
+}
+
+.new-button {
+    float: right;
+    margin-right: 5%;
+    margin-top: -1%;
+    border-radius: 7px;
+    border: none;
+    background: #1875FF;
+    color: white;
+    font-family: inherit;
+    text-align: center;
+    font-size: 13px;
+    box-shadow: 0px 14px 56px -11px #dae9ff;
+    width: 13em;
+    padding: 1em;
+    transition: all 0.4s;
+    cursor: pointer;
+    white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+   }
+   
+   .new-button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.7s;
+   }
+   .new-button:focus{
+       outline:none;
+   }
+   .new-button span:after {
+    content: 'new template';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -30px;
+    left: 35px;
+    transition: 0.7s;
+   }
+   
+   .new-button:hover span {
+    padding-right: 6.55em;
+   }
+   
+   .new-button:hover span:after {
+    opacity: 4;
+    right: 0;
+   }

@@ -54,12 +54,14 @@ useEffect(() => {
   current_interview_id.current=window.localStorage.getItem("current_Interview");
   if(current_interview_id.current==undefined || current_interview_id.current==null){
     alert("Kindly design an interview first");
-    handlePageSubmit();
-  }
+    handlePageInterviewSubmit();
+  }else{
   console.log("send email loaded",current_interview_id.current);
-  getInterviewID();
+  currentid.current=10;
+  //getInterviewID();
+}
   //store in localhost user data if response is correct  checkData( params.get('interviewid'),params.get('userid'));
-});
+},[]);
 const getInterviewID=async()=>{
   const response = await axios.get(`https://raicruittest.herokuapp.com/Interview/get?email=${logged_user}&title=${current_interview_id.current}`).catch((err) => 
   {
@@ -87,36 +89,39 @@ subject:emailData.emailSubject,
 body:emailData.emailMessage,
   }
   console.log("TO_API: for email",email_data_sent);
-    //call api
-    const response = await axios.post("https://raicruittest.herokuapp.com/add/email", email_data_sent).catch((err) => 
-        {
-          alert("Error: ", err);
-        });
-        if (response)  {
-          console.log("reponse by send email is",response);
-          if(response.data.Message=="successfully sent emails to all applicant"){
-            console.log("sab sae");
-            //resetting fields and states
-    invalidEmails.current=0;
-    duplicateEmails.current=0;
-    emailData.receiverEmails="";
-    emailData.senderName="";
-    emailData.senderEmail="NOT USED";
-    emailData.emailSubject="";
-    emailData.emailMessage="";
-    candidates.current=[];
-    setSenderEmailError('');
-    isfileselected=false;
-    // console.log("invalid emails",invalidEmails.current,"duplicate are",duplicateEmails.current,"email data",emailData,
-    // "candidates are",candidates.current,"sender error",senderEmailError,"file selected",isfileselected );
-    e.target.reset();
-    handlePageSubmit();
-          }
+  window.localStorage.setItem("Is_Template",0);
+  handlePageSubmit();
+    //call api remove the below reponse cmnt
+    // const response = await axios.post("https://raicruittest.herokuapp.com/add/email", email_data_sent).catch((err) => 
+    //     {
+    //       alert("Error: ", err);
+    //     });
+    //     if (response)  {
+    //       console.log("reponse by send email is",response);
+    //       if(response.data.Message=="successfully sent emails to all applicant"){
+    //         console.log("sab sae");
+    //         //resetting fields and states
+    // invalidEmails.current=0;
+    // duplicateEmails.current=0;
+    // emailData.receiverEmails="";
+    // emailData.senderName="";
+    // emailData.senderEmail="NOT USED";
+    // emailData.emailSubject="";
+    // emailData.emailMessage="";
+    // candidates.current=[];
+    // setSenderEmailError('');
+    // isfileselected=false;
+    // // console.log("invalid emails",invalidEmails.current,"duplicate are",duplicateEmails.current,"email data",emailData,
+    // // "candidates are",candidates.current,"sender error",senderEmailError,"file selected",isfileselected );
+    // e.target.reset();
+    // handlePageSubmit();
+    //       }
          
-        }
+    //     }
     
     
   }
+  const handlePageInterviewSubmit = useCallback(() => navigation('/interviewdetails', {replace: true}), [navigation]);
   const handlePageSubmit = useCallback(() => navigation('/dashboard', {replace: true}), [navigation]);
   const sendmail=(e)=> {
     let emailmsg=emailData.emailMessage;

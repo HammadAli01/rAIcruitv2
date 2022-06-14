@@ -3,7 +3,6 @@ import "./Signup.css";
 import logo from '../Assets/mainmenu/bot.jpg';
 import chat from '../Assets/mainmenu/loginsideimg.png';
 import { Link } from 'react-router-dom'
-import Signup from './Signup'; 
 import { BsFacebook,BsYoutube,BsWhatsapp,BsTwitter,BsInstagram } from "react-icons/bs";
 import {useNavigate} from 'react-router-dom';
 import Axios from 'axios';
@@ -29,50 +28,52 @@ const formSubmitHandler=async(e)=>{
     
     const errors=checkErrors();
     if(errors==true)
-    {   setUserErrors(error);
-        console.log("call the api");
-        const a=userData.userEmail,b=userData.userPassword;
-        const response =await Axios.post(`https://raicruittest.herokuapp.com/login?email=${userData.userEmail}&password=${userData.userPassword}`).then(response => {
-             console.log("first response",response.data); 
-             error={
-                userEmailError:"",
-                userPasswordError:"",
-            };
-             if(response.data.user_email_status==false){
-                error.userEmailError="User doesn't exist. Try signup"
-                setUserErrors(error);
-             }
-             if(response.data.user_email_status==true){
-                if(response.data.password_status==false){
-                    error.userPasswordError="Password Incorrect";
-                    setUserErrors(error);
-                }
-             }
-             else if(response.data.email_status==true){
-                 if(response.data.password_status==true){
-                    //console.log("stored is",JSON.stringify(response.data.user_id));
-                    //localStorage.setItem('rememberMe', "hello");
-                   // window.localStorage.setItem('user_Id', response.data.user_id);
-               //document.cookie = "user_id=${John Doe}"; 
-               window.localStorage.setItem('user_Id', userData.userEmail);
-               console.log("stored is",window.localStorage.getItem('user_Id'));
-             setUserData({
-                userEmail:"",
-                userPassword:"",
-          });
-          document.getElementById("email-input").value="";
-          document.getElementById("password-input").value="";
-          handlePageSubmit();
-         }
-        }
-        })
-         .catch(error => {
-             console.error('There was an error!', error,"headers passed are",headers);
-         });
+    {   
+        setUserErrors(error);
+        console.log("call the api",userData);
+        window.localStorage.setItem('user_Id', userData.userEmail);
+        handlePageSubmit();
+        // const response =await Axios.post(`https://raicruittest.herokuapp.com/login?email=${userData.userEmail}&password=${userData.userPassword}`).then(response => {
+        //      console.log("first response",response.data); 
+        //      error={
+        //         userEmailError:"",
+        //         userPasswordError:"",
+        //     };
+        //      if(response.data.user_email_status==false){
+        //         error.userEmailError="User doesn't exist. Try signup"
+        //         setUserErrors(error);
+        //      }
+        //      if(response.data.user_email_status==true){
+        //         if(response.data.password_status==false){
+        //             error.userPasswordError="Password Incorrect";
+        //             setUserErrors(error);
+        //         }
+        //      }
+        //      else if(response.data.email_status==true){
+        //          if(response.data.password_status==true){
+        //             //console.log("stored is",JSON.stringify(response.data.user_id));
+        //             //localStorage.setItem('rememberMe', "hello");
+        //            // window.localStorage.setItem('user_Id', response.data.user_id);
+        //        //document.cookie = "user_id=${John Doe}"; 
+        //        window.localStorage.setItem('user_Id', userData.userEmail);
+        //        console.log("stored is",window.localStorage.getItem('user_Id'));
+        //      setUserData({
+        //         userEmail:"",
+        //         userPassword:"",
+        //   });
+        //   document.getElementById("email-input").value="";
+        //   document.getElementById("password-input").value="";
+        //   handlePageSubmit();
+        //  }
+        // }
+        // })
+        //  .catch(error => {
+        //      console.error('There was an error!', error,"headers passed are",headers);
+        //  });
         
-        //handlePageSubmit();
+        // //handlePageSubmit();
         
-        console.log("current userData is::",userData);
+        // console.log("current userData is::",userData);
     }
     else{
         setUserErrors(error);

@@ -2,6 +2,7 @@
     padding-top: 56px;
      height: 100%;
      width: 100%;
+     
   }
   .add-sortcontainer{
   position: fixed;
@@ -16,7 +17,7 @@
     float: right;
     width: 80%;
     height: 100%;
-    background-color: rgb(255, 255, 255);
+    background-color: #f1f4f6;
     padding: 40px;
     
       }
@@ -58,6 +59,7 @@
         
         .add-interviews td{
             text-align: center;
+            background-color: rgba(248, 248, 248, 0.9);
      
         }
         .add-interviews .stemtd{
@@ -72,12 +74,12 @@
      padding-left: 25px !important;
           }
           .add-interviews .optionhead{
-             background-color: transparent!important; 
+            background-color: rgba(206, 225, 255, 0.897) !important; 
             text-align: center !important;
             padding-left: 25px !important;
           }
           .add-interviews .optionweighthead{
-           background-color: transparent !important; 
+            background-color: rgba(206, 225, 255, 0.897) !important; 
             text-align: center !important;
             padding-left: 25px !important;
           }
@@ -87,17 +89,17 @@
             border-bottom: 2px solid lightgrey !important;
           }
          
-        .add-interviews tr:nth-child(even){background-color: rgba(0,0,0,.03);}
+        /* .add-interviews tr:nth-child(even){ background-color: white;} */
         
-        .add-interviews tr:hover {background-color: rgb(221, 235, 247);}
+        .add-interviews tr:hover { background:blue;}
         
         .add-interviews th {
           padding-top: 12px;
           padding-bottom: 12px;
           text-align: center;
-          background-color: rgba(221, 234, 255, 0.897);
+          background-color: rgba(206, 225, 255, 0.897);
           color: rgb(0, 0, 0);
-          border-top: 1px solid rgba(221, 234, 255, 0.897);
+          border: 1px solid rgba(206, 225, 255, 0.897);
         }
         .addquestion-form button{
 display: block;

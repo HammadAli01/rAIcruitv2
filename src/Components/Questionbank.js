@@ -6,15 +6,438 @@ import {BsArrowRightShort,BsSearch} from 'react-icons/bs'
 import  axios  from 'axios'
 
 export default function Questionbank() {
-    const [categories,setCategories]=useState([]);
-    const [questions,setQuestions]=useState([]);
-    const [userQuestions,setUserQuestions]=useState([]);
+    const [categories,setCategories]=useState([ {
+      "id": "1",
+      "name": "Icebreakers"
+    },
+    {
+      "id": "2",
+      "name": "Experience"
+    },
+    {
+      "id": "3",
+      "name": "Environment"
+    },
+    {
+      "id": "4",
+      "name": "Icebreakers"
+    },
+    {
+      "id": "5",
+      "name": "Experience"
+    },
+    {
+      "id": "6",
+      "name": "Environment"
+    }]);
+    const [questions,setQuestions]=useState([{
+      "id": "1",
+      "username":"admin",
+      "stem": "How was your day ",
+      "CategoryName": "Icebreakers",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option2",
+          "optionWeightage": "70"
+        },
+        {
+          "id": 103,
+          "optionText": "option3",
+          "optionWeightage": "80"
+        },
+        {
+          "id": 104,
+          "optionText": "option4",
+          "optionWeightage": "90"
+        }
+      ]
+    },
+    {
+      "id": "111",
+      "username":"admin",
+      "stem": "dummy question ",
+      "CategoryName": "Icebreakers",
+      "optionArray": []
+        
+    },
+    {
+      "id": "2",
+      "username":"admin",
+      "stem": "How are you feeling",
+      "CategoryName": "Icebreakers",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "username":"admin",
+      "stem": "Do you have working expereince",
+      "CategoryName": "Experience",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "100"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "username":"admin",
+      "stem": "Do you think you are qualified enough for this position",
+      "CategoryName": "Experience",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "username":"admin",
+      "stem": "What is your availability for this job",
+      "CategoryName": "Environment",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "username":"admin",
+      "stem": "How many years of working do you have",
+      "CategoryName": "Experience",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "username":"admin",
+      "stem": "Which type of work environment do you like",
+      "CategoryName": "Environment",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "username":"admin",
+      "stem": "Do you know about this company environment",
+      "CategoryName": "Environment",
+      "optionArray": [
+        {
+          "id": 101,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 102,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 103,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        },
+        {
+          "id": 104,
+          "optionText": "option1",
+          "optionWeightage": "60"
+        }
+      ]
+    }]);
+    const [userQuestions,setUserQuestions]=useState([
+      {
+        "id": "20",
+        "stem": "userques How was your day",
+        "CategoryName": "Icebreakers",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      },
+      {
+        "id": "21",
+        "stem": "How are you feeling",
+        "CategoryName": "Icebreakers",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      },
+      {
+        "id": "22",
+        "stem": "Do you have working expereince",
+        "CategoryName": "Experience",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      },
+      {
+        "id": "23",
+        "stem": "How many years of working do you have",
+        "CategoryName": "Experience",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      },
+      {
+        "id": "24",
+        "stem": "Which type of work environment do you like",
+        "CategoryName": "Environment",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      },
+      {
+        "id": "25",
+        "stem": "Do you know about this company environment",
+        "CategoryName": "Environment",
+        "username": "Hammad",
+        "optionArray": [
+          {
+            "id": 101,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 102,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 103,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          },
+          {
+            "id": 104,
+            "optionText": "option1",
+            "optionWeightage": "60"
+          }
+        ]
+      }
+    ]);
     const [stem,setStem]=useState();
     const [question_weight,setQuestionWeightage]=useState(25);
     const [category,setCategory]=useState('');
     var count=1;
     //const loggeduser=JSON.parse(window.localStorage.getItem(user_Id));
-    const loggeduser='hammadalibu@gmail.com';
+    const loggeduser=window.localStorage.getItem('user_Id');
     const [addcount,setAddCount]=useState(1);
     
     const [optionList,setoptionList]=useState([{id:count,optionText: '',optionWeightage: '25'}]);
@@ -179,12 +602,13 @@ export default function Questionbank() {
         handleShow();
         
       }
-      useEffect(() => {
-        getCategories();
-        getQuestions();
-        getUserQuestions(); 
+      //remove the below cmnt
+      // useEffect(() => {
+      //   getCategories();
+      //   getQuestions();
+      //   getUserQuestions(); 
 
-      },[]);
+      // },[]);
     return (
       <>
       <div className={styles.upperAdddiv}> 

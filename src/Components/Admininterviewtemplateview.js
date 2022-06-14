@@ -1,5 +1,6 @@
+
 import React,{useState,useRef,useCallback} from 'react'
-import './Interviewtemplatemenu.css';
+import './Admininterviewtemplateview.css';
 import {Form,Container,Row,Col,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap'
 import  axios  from 'axios'
 import ReactFlow, {
@@ -16,7 +17,7 @@ import ReactFlow, {
   MiniMap,
 } from 'react-flow-renderer';
 import { useNavigate } from 'react-router-dom';
-export default function Interviewtemplatemenu() {
+export default function Admininterviewtemplateview() {
     const navigation = useNavigate();
 const handlePageSubmit = useCallback(() => navigation('/interviewdetails', {replace: true}), [navigation]);
 const reactFlowWrapper = useRef(null);
@@ -66,7 +67,7 @@ const graphStyles = { width: "77%", height: "570px" };
             }}
             nodeStrokeWidth={3}
           />
-          <Button onClick={() => {
+          {/* <Button onClick={() => {
             
            handleuseFlow();
             
@@ -78,7 +79,7 @@ const graphStyles = { width: "77%", height: "570px" };
             style={{left:"10px",bottom: "0px",paddingLeft:"20px",paddingRight:"20px",
             top:"515px",position:"relative"}}
 
-            >Use Flow</Button>
+            >Use Flow</Button> */}
           </ReactFlow>
        </div> </ReactFlowProvider>
                </div>

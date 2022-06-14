@@ -1,6 +1,6 @@
 .managecategories{
     margin-left: 20%;
-    background-color: transparent;
+    background: #f1f4f6;
     position: absolute;
     min-height:100%;
     width:80%;
@@ -17,6 +17,7 @@
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 10px;
+    background-color: #fff;
 }
 .addcategory-container h3{
 margin-bottom: 20px;
@@ -28,6 +29,7 @@ margin-bottom: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
 padding: 10px;
+
 }
 
 .addcategory-container button:focus,.addcategory-container button:active{

@@ -1,6 +1,6 @@
 import React, { useState, useRef,useEffect,useCallback} from 'react';
-import './DesignFlow.css'
-import {Form,Container,Row,Col,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap'
+import './Admindesignflow.css'
+import {Form,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap';
 import  axios  from 'axios'
 import ReactFlow, {
   ReactFlowProvider,
@@ -24,30 +24,31 @@ const initialElements = [
       id: '0',
       type: 'input',
       data: { label: 'Start' },
-      position: { x: 250, y: 15 },
+      position: { x: 350, y: 55 },
     },
     {
       id: '-1',
       type: 'output',
       data: { label: 'End'  },
-      position: { x: 250, y: 450 },
+      position: { x: 350, y: 450 },
     }
   ];
   
 let id = 0;
-let deletecount=0;
+
 const getId = () => `dndnode_${id++}`;
-const tempUpdatedId = () =>id++ ;
+
 export default function DesignFlow() {
   
 //logged user
-const logged_user=window.localStorage.getItem('user_Id');
-console.log("user got in flow is",logged_user);
-//const logged_user="hammadalibu@gmail.com";
+//const logged_user=window.localStorage.getItem('user_Id');
+//console.log("user got in flow is",logged_user);
+const logged_user="hammadalibu@gmail.com";
 const [toast_text,setToastText]=useState();
-
+const selectedImage = useRef();
+const [templateName,setTemplateName]=useState();
 const navigation = useNavigate();
-const handlePageSubmit = useCallback(() => navigation('/sendemail', {replace: true}), [navigation]);
+const handlePageSubmit = useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
 const toggleShowA = () => {
   setShowA(!showA);
   sleep(3000);
@@ -61,33 +62,18 @@ const toggleShowA = () => {
   //question data states
   const question=useRef([{node_id:'',question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}],category:'',isUser:'',stemweightage:''}]);
   const dropdownValues=useRef([{option:[{id:'',optionText:'',optionWeightage:''}]}]);
-  //const [question,setQuestion]=useState([{question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}]}]);
   const edgeData=useRef([{edge_id:'',source:'',target:'',selectedValue:'',isUser:''}]);
   const [nodeFound,setnodeFound]=useState({node_id:'',question_id:'',stem:'',optionArray:[{id:'',optionText:'',optionWeightage:''}],CategoryName:'',username:'',question_weight:''});
   const [stem,setStem]=useState();
   const [sourcehandlecount,setsourcehandlecount]=useState({sourcecount:1,sourceid:''});
- 
-  const [deleteButtonIds,setDeleteButtonIds]=useState([{id:''}]);
     const [optionList,setoptionList]=useState([{id:count,optionText: '',optionWeightage: ''}]);
     const [question_weight,setQuestionWeightage]=useState();
-  //const [updateQuestion,setUpdatedQuestion]=useState({node_id:'',question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}],category:'',userName:''});
   edgeData.current=edgeData.current.filter(edge=>(!(edge.edge_id=='')));
   question.current=question.current.filter(node=>(!(node.node_id=='')));
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const dropDownTitle=useRef("A");
-//     const [dropdownstatus,setDropdownStatus]=useState(false);
-//     useEffect(()=>{
-//       const dropdown_button=document.getElementById("dropdown-basic-button");
-//   console.log("The dropdown button cathed is",dropdown_button);
-// if(dropdown_button.classList.contains('show')){
-// console.log("inside dropdown if-dropdown opened");
-
-// }else{
-// console.log("dropdown is closed");
-// }
-//        },[dropdownstatus]);
    
  const titleArray=useRef([{source_id:0,selectedTitle:"",target_id:0}]);
     var count=1;
@@ -118,8 +104,7 @@ const toggleShowA = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
-  //dropdown show hide z-index functionality
-  
+ 
   //data functions
   useEffect(()=>{
    console.log("in useeffect nodefound changed",nodeFound);
@@ -130,18 +115,13 @@ const toggleShowA = () => {
   const findNode=(nodeid)=>
   {
     
-  //console.log("Find node question called elements:",elements);
-    //console.log("Find node question called:",question);
-    //console.log("data id is ",nodeid);
+  
     question.current.map((node)=>
     {
       //console.log(" Current Question id",node.node_id);
       if(node.node_id===nodeid)
       {
-        //node update and posting request here
-
-        //console.log("FIND NODE CALLED(Node_id)",node.node_id,"(question ID):",node.question_id," question stem: ",node.stem,
-       //"options: ",node.option," Category: ",node.category,"username: ",node.userName);
+        
        const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.question_weight}
        setnodeFound(tempnode);
        setQuestionWeightage(nodeFound.question_weight);
@@ -212,14 +192,15 @@ const handleCloseUpdateQuestion=()=>{
 addques.optionArray=nodeFound.optionArray;
 addques.email=nodeFound.username;
 addques.CategoryName=nodeFound.CategoryName;
-  const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", addques).catch((err) => 
-  {
-    console.log("Error: ", err);
-  });
-  if (response)  {
-    console.log("reponse by post question is",response.data);
-    nodeFound.question_id=response.data.question_id;
-  }
+//   const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", addques).catch((err) => 
+//   {
+//     console.log("Error: ", err);
+//   });
+//   if (response)  {
+//     console.log("reponse by post question is",response.data);
+//     nodeFound.question_id=response.data.question_id;
+//   }
+nodeFound.question_id=999;
   //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
   console.log("API DONE",nodeFound.question_id);
   //update question in array
@@ -339,71 +320,26 @@ addques.CategoryName=nodeFound.CategoryName;
     //updateing node data
 
   }
-//   document.getElementsByClassName("react-flow__renderer").onClick=function changeContent() {
-// console.log("iiiii callled");
-//     const list = document.getElementsByClassName("react-flow__nodes");
-//     for (let i = 0; i < list.length; i++) {
-//       document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 3;
-//     }
- 
-//  }
+
   const setCurrentOption=(sourceid)=>
   {
-//   const dropdown_body1= document.getElementsByClassName("dropdown");
-// const dropdown_body2= document.getElementsByClassName("show dropdown")
-//   if(dropdown_body1!==null){
-//     if(dropdown_body2!==null){
-  
-//   console.log("dp body is",dropdown_body2.length);
 
-// }
-// }
- // const dropdown_body=document.getElementsByName("tempvalue");
-  // const list = document.getElementsByClassName("react-flow__nodes");
-  
-  //  if(dropdown_body!==null)
-  //  { console.log("dp body got is",document.getElementById("dropdown-basic-button").getAttribute("aria-expanded"));
-   
-  //   for (let i = 0; i < list.length; i++) {
-  //     document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 2;
-  //    }
- 
-  //  } 
-  //  else{
-  //   console.log("dropdown body  null");
-  //   for (let i = 0; i < list.length; i++) {
-  //     document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 3;
-  //   }
-  //  }
-   //changing react flow nodes z-index also list.getElementsByClassName("react-flow__node")[i].style.zIndex = 2;
-    // const list = document.getElementsByClassName("react-flow__nodes");
-    // console.log("i got called");
-    // for (let i = 0; i < list.length; i++) {
-    //   document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 2;
-    // }
     question.current.map((currentNode)=>
     {
-     // console.log("node id",currentNode.node_id,"current id:",currentNode.question_id,"Source id:",sourceid);
       if(currentNode.node_id===sourceid)
       {
         dropdownValues.current=currentNode.option;
 
-        // dropdownValues.current.shift();
-        //console.log("Dropdown values: ",dropdownValues);
+       
       }
       else
       {
-       // console.log("A setcurrent setting dp value iteration passsed");
       }
     });
   }
   const setEdgeData=(id,target,source,selectedOption)=>{
    
-    // const list = document.getElementsByClassName("react-flow__nodes");
-    //  console.log("dropdown body  null changing to 3");
-    //  for (let i = 0; i < list.length; i++) {
-    //    document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 3;
-    //  }
+   
    
     let existingOption=false;
     titleArray.current.map((titleNode)=>{
@@ -481,6 +417,12 @@ alert("There can only be one starting question");}
   }};
   const onElementsRemove = (elementsToRemove) =>
   {
+    if(elementsToRemove[0].type== "customedge"){
+        if(elementsToRemove[0].source== 0){
+          sourcehandlecount.sourcecount=1;
+          sourcehandlecount.sourceid='';
+        }
+      }
     console.log("element remove called",elementsToRemove);
     //first checking if source edge is deleted then restoring the source edge state
     
@@ -589,9 +531,23 @@ console.log("error is ",error);
       console.log("All eddges have options selected");
       convertEdgesId();
       console.log("All correct call api Edges",JSON.stringify(edgeData.current));
-     
-      console.log("edges are without json: ",edgeData.current);
-      sendFlow();
+     if(templateName!==undefined){
+      if(templateName.length<1 ){
+       if(selectedImage.current==undefined){
+         alert("Template Name and Image are required")
+       }
+       else{
+         alert("Template Name is required")
+       }
+     }
+     else if(selectedImage.current==undefined){
+      alert("Template Image is required")
+    }
+    else{
+      //console.log("edges are without json: ",edgeData.current);
+      sendFlow();}}else{
+        alert("Template Name is required");
+      }
      
     }
     else
@@ -621,67 +577,33 @@ useEffect(()=>{
     setShowA(true);}
    },[toast_text]);
 const sendFlow=async()=>{
-  const temp_detail=JSON.parse(window.localStorage.getItem("interview_data"));
   
-  console.log("Temp Interview detail got from local is:",temp_detail);
-
-  const data_to_send={
-    title: temp_detail.title,
-  generationDate: temp_detail.generationDate,
-  startDate: temp_detail.startDate,
-  endDate: temp_detail.endDate,
-  duration:temp_detail.duration,
-  type: temp_detail.type,
-  position:temp_detail.position ,
-  job_description:temp_detail.jobDescription ,
-  email: logged_user,
-  edge: edgeData.current
-  }
+ const data_to_send={
+  template_Name:templateName,
+  template_Image:selectedImage.current,
+  template_Flow: JSON.stringify(elements),
+  template_Rules:edgeData.current
+ }
   console.log("data sended to api is",data_to_send);
-  setToastText("Design Saved");
-  //remove the below cmnt
-  // const response = await axios.post("https://raicruittest.herokuapp.com/add/interview", data_to_send).catch((err) => 
-  //     {
-  //       console.log("Error: ", err);
-  //     });
-  //     if (response.status==200)  {
+  setToastText("Successfully stored");
+//   const response = await axios.post("https://raicruittest.herokuapp.com/add/interview", data_to_send).catch((err) => 
+//       {
+//         console.log("Error: ", err);
+//       });
+//       if (response.status==200)  {
         
-  //       if(response.data.Message=="Successfully stored interview")
-  //       {
-  //         setToastText(response.data.Message);
-  //       console.log("reponse is all good receved");
-  //       window.localStorage.setItem('current_Interview', temp_detail.title);
-  //       }
+//         if(response.data.Message=="Successfully stored interview")
+//         {
+//           setToastText(response.data.Message);
+//         console.log("reponse is all good received");
+//         
+//         }
         
-  //       console.log("reponse by post question is",response);
+//         console.log("reponse by post question is",response);
        
-  //     }
+//       }
 }
-  const addStartEdge=()=>{//function functionality already handled in else dropdown case
-    const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',isUser:''};
-    const edgeArray = [];
-    elements.map((els) => 
-    {
-      if (isEdge(els)) 
-      {
-        return edgeArray.push(els);
-      }
-      else 
-      {}
-    });
-    edgeArray.map((edge)=>{
-      if(edge.source===0)
-      {
-        tempEdge.edge_id=edge.id;
-        tempEdge.target=edge.target;
-      }
-      if(edge.target===-1)
-      {
-        tempEdge.isUser=false;
-      }
-    });
-    edgeData.current.push(tempEdge);
-  }
+  
   const onLoad = (_reactFlowInstance) =>
     setReactFlowInstance(_reactFlowInstance);
 
@@ -693,15 +615,7 @@ const sendFlow=async()=>{
     event.preventDefault();
     findNode(node.id);
   }
-  const customNodeDelete=(datas)=>{
-    // console.log("question before delete: ",question.current);
-    //    removeQuestion(datas.id);
-      
-    //   console.log("question after delete: ",question.current);
-      console.log("elemnts before deletion are:",elements)
-      setElements((els) => removeElements([datas], els));
-      console.log("elemnts after deletion are:",elements)
-  }
+  
   const ShowDeleteButton=(e,targetButtonId)=>{
     
     var x = document.getElementById(targetButtonId);
@@ -733,24 +647,25 @@ const sendFlow=async()=>{
       type="target"
       position="top"
       id={`${data.id}.top`}
-      // style={{ borderRadius: 30 }}
     />
     <Handle
       className='react-flow__handle react-flow__handle-bottom'
       type="source"
       position="bottom"
       id={`${data.id}.bottom`}
-      //style={{ borderRadius: 30,width:"5px",height:"5px" }}
-    //  style={{ top: "30%", borderRadius: 0 }}
+      
     />
     <div> {data.label}</div> 
       <button    
       id={`${data.id}.deletebutton`}
      className="updateButtonStyle"
      onContextMenu={()=>{ onElementsRemove([data]) }}
+      
       >
         X
         </button>
+    
+       
     </div>
     );
   };
@@ -873,7 +788,6 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
   const onDrop = (event) => {
     event.preventDefault();
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-    //const type = event.dataTransfer.getData('application/reactflow');
     const tempQuestionId=event.dataTransfer.getData('questionid');
     const tempQuestionStem=event.dataTransfer.getData('questionstem');
     const tempOptionsArray=(JSON.parse(event.dataTransfer.getData('currentoptions')));
@@ -891,18 +805,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
     else if(tempUsername!==""){list['isUser']=true;}
     list['stemweightage']=tempstemweightage;
     console.log("list is after",list);
-    let isExisting=false;
-    elements.map((currentQuestion)=>
-    {
-      console.log("Current question is ",currentQuestion.id,"tempques id,",tempQuestionId);
-      if(currentQuestion.id==tempQuestionId)
-      {
-        isExisting=true;
-      }
-    });
-    console.log("isexisting",isExisting);
-    if(isExisting===false)
-    {
+  
       
       const position = reactFlowInstance.project({
         x: event.clientX - reactFlowBounds.left,
@@ -922,11 +825,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
       list['node_id']=newNode.id;
       question.current.push(list);   
       console.log("question is after current",question.current);
-    }
-    else
-    {
-      alert("Same question cannot be added twice");
-    }
+  
   };
   const edgeTypes = {
     customedge: customEdge,
@@ -934,9 +833,31 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
   const nodeTypes = {
     CustomNode: CustomNode,
   };//601
-  const graphStyles = { width: "100%", height: "580px" };
+  const hiddenFileInput = useRef(null);
+    const handleClick = (e) => {
+      hiddenFileInput.current.click();
+    };
+
+  const handleChange = (event) => {
+     
+    var selectedFile = event.target.files[0];
+    selectedImage.current=URL.createObjectURL(selectedFile);
+  console.log(selectedFile.name.slice(0,20)+"...","URL MADE IS:",selectedImage.current);
+  document.getElementById('templateimage').innerText=selectedFile.name.slice(0,15)+"...";
+  
+  }
+  
+  const graphStyles = { width: "100%", height: "515px" };
   return (
-    <div className='designflows'>
+    <div className='admin-designflows'><div className='template-infomration'>
+     Template Name <input type='text' required={true} value={templateName} onChange={(e)=>setTemplateName(e.target.value)} placeholder='Enter template name here' className='templatename-input'/>
+      Template Image <button id='templateimage' className='templateimage' onClick={(e)=>handleClick(e)}>No File Chosen</button>
+     
+      <input type='file' id='templateimg-input' accept='image/*'
+      ref={hiddenFileInput}
+      onChange={(e)=>{handleChange(e)}} required={true}
+      />
+      </div>
     <div className="dndflow" >
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -967,9 +888,9 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
             nodeStrokeWidth={3}
           />
           <Controls style={{bottom: "5px"}}></Controls>
-          <Button onClick={() => {
+          <Button type="submit" onClick={() => {
             
-            //console.log(JSON.stringify(elements));
+            console.log("Flow to save is",JSON.stringify(elements));
             //question.current.shift();
             //console.log("Questions: ",question.current);
             //console.log("edges are: ",edgeData.current);
@@ -980,8 +901,8 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
             }
             }//left left:"600px",bottom: "5px",top:"535px",
             className='react-flow__controls'
-            style={{left:"40px",bottom: "0px",paddingLeft:"20px",paddingRight:"20px",
-            top:"525px",position:"relative"}}
+            style={{left:"40px",bottom: "20px",paddingLeft:"20px",paddingRight:"20px",
+            top:"460px",position:"relative"}}
             >Save</Button>
           </ReactFlow>
               
@@ -989,10 +910,10 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
       </ReactFlowProvider>
      
     </div>
-    <Toast show={showA} onClose={toggleShowA} className='toast1' position='bottom-center' delay={2000} autohide >
+    <Toast show={showA} onClose={toggleShowA} className='toast1' position='bottom-center'  delay={2000} autohide>
           <Toast.Header>
             {/* <img 
-              src="" 
+              src=""  
               className="rounded me-2" 
               alt="Notification"
             /> */}

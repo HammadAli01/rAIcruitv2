@@ -1,4 +1,403 @@
-import React, { useState, useRef,useEffect,useCallback} from 'react';
+.Nodestyle{
+    cursor: grab;
+  
+}
+.admin-designflows .react-flow{
+  background-color: snow;
+    padding-top: 10px;
+    margin-top: 10px;
+    border: 1px solid rgb(212, 212, 212) !important;
+border-right: 1px solid rgb(212, 212, 212) !important;
+}
+/* .react-flow__node-input{
+    display: -webkit-box;
+-webkit-line-clamp: 1;
+text-overflow: -o-ellipsis-lastline;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+.react-flow__handle{
+    
+} */
+.minimap{
+background-color: rgb(195, 196, 196) !important;
+}
+.updateButtonStyle{
+border-radius: 20px;
+text-align: center;
+padding: 3px;
+width: 25px;
+height:25px;
+position: absolute;
+top: 1px;
+left: -9%;
+transform: translate(0, -50%);
+background-color: white;
+z-index: 13;
+display: none;
+font-size: 11px;
+font-weight: 700;
+color: #0041d0;
+
+border: 1px solid #0041d0;
+box-shadow: 0 1px 10px 1px #0041d0;
+z-index: 4000;
+font-family: monospace;
+cursor: pointer;
+}
+
+
+#dropdown-button-drop-end {
+
+z-index: 5;
+background-color:rgb(96, 142, 185);
+box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+border-color: transparent;
+border-radius: 20px;
+color: #ffffff;
+font-weight: lighter;
+}
+.edgebutton-foreignobject{
+background-color:transparent;
+position: relative;
+z-index: 8 !important;
+}
+ .dpdown{
+z-index:110;
+position: relative;
+
+}
+.dpdown .btn-primary:focus,.dpdown .btn-primary:focus {
+   box-shadow: none !important;
+   transform: none;
+}
+ /* .dropdownmenu{
+background-color: rgb(118, 150, 180) !important;
+color: white !important;
+}
+ .dropdownmenu:hover,  .dropdownmenu:focus,  .dropdownmenu:active{
+background-color: rgb(228, 228, 228) !important;
+color: #030303;
+}
+ .dropdownmenu ,  .dropdown-item{
+    color: white;
+}
+ .dropdownmenu,  .dropdown-item:hover{
+    background-color: rgb(94, 135, 173) !important;
+    color: #000000;
+} */
+.dropdown-item:hover{
+    background-color: rgb(188, 200, 255) !important;
+    color: #000000;
+}
+ .pathdropdown{
+background-color:transparent;
+z-index:8 !important;
+position: relative;
+}
+.react-flow__edge-path
+{ 
+position: relative;
+z-index:8 !important;
+stroke: #bdb6b6 !important; 
+stroke-width: 2 !important;
+cursor: pointer;
+}
+.edgearrow{
+color: #030303;}
+/* }
+.react-flow__nodes {
+    height: 100%;
+    width: 100%;
+    z-index: 3 !important;
+} */
+
+/* .react-flow__node-input.selectable :hover
+{
+  box-shadow: 0 1px 4px 1px #0041d0;
+
+}
+.react-flow__node-input {
+background: #fff;
+border-color: #919e9e;
+}
+.react-flow__node-input.selected{box-shadow: 0 0 0 0.5px #0041d0;}
+.react-flow__node-input.selected:hover {
+  box-shadow: 0 0 0 0.5px #0041d0;
+}
+
+*/
+/*
+.react-flow__node-default.selected, .react-flow__node-default.selected:hover {
+box-shadow: 0 0 0 0.5px #1a192b;
+}
+<style>
+.react-flow__node-default.selectable:hover, .react-flow__node-input.selectable:hover, .react-flow__node-output.selectable:hover {
+box-shadow: 0 1px 4px 1px rgb(0 0 0 / 8%);
+}
+<style>
+.react-flow__node-default {
+background: #fff;
+border-color: #1a192b;
+}
+<style>
+.react-flow__node-default, .react-flow__node-input, .react-flow__node-output {
+border-radius: 3px;
+border-style: solid;
+border-width: 1px;
+color: #222;
+font-size: 12px;
+padding: 10px;
+text-align: center;
+width: 150px;
+}
+<style>
+.react-flow__node {
+cursor: -webkit-grab;
+cursor: grab;
+}
+<style>
+.react-flow__node {
+pointer-events: all;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+<style>
+.react-flow__node, .react-flow__nodes {
+position: absolute;
+transform-origin: 0 0;
+}
+*, ::after, ::before {
+box-sizing: border-box;
+}
+user agent stylesheet
+div {
+display: block;
+}
+<style>
+.react-flow__nodes {
+height: 100%;
+pointer-events: none;
+width: 100%;
+z-index: 3;
+}
+*/
+.react-flow__node-default {
+    background: #fff !important;
+    border-color: #0041d0 !important;
+}
+.react-flow__node-default .react-flow__handle-top,.react-flow__node-default .react-flow__handle-bottom{
+    left: 50% !important;
+    background-color: #fff!important;
+    border: 1px solid #0041d0!important;
+    border-radius: 100%!important;
+    height: 8px!important;
+    position: absolute!important;
+    width: 8px!important;
+}
+.react-flow__node-default .react-flow__handle-top{ top: -5px !important;}
+.react-flow__node-default .react-flow__handle-bottom{bottom: -4.5px !important;}
+.react-flow__node-default.selected, .react-flow__node-default.selected:hover {
+    box-shadow: 0 0 0 0.5px #0041d0 !important;
+}
+.react-flow__node-input .react-flow__handle-bottom {
+    left: 50% !important;
+    background-color: #fff!important;
+    border: 1px solid #ff0072!important;
+    border-radius: 100%!important;
+    height: 8px!important;
+    position: absolute!important;
+    width: 8px!important;
+    bottom: -4.5px !important;
+ 
+}
+.react-flow__node-input{
+    background: #fff !important;
+    border-color: #ff0072 !important;
+}
+.react-flow__node-input.selected, .react-flow__node-input.selected:hover {
+    box-shadow: 0 0 0 0.5px #ff0072 !important;
+}
+.react-flow__node-output .react-flow__handle-top {
+    left: 50% !important;
+    background-color: #fff!important;
+    border: 1px solid #ff0072!important;
+    border-radius: 100%!important;
+    height: 8px!important;
+    position: absolute!important;
+    width: 8px!important;
+    top: -5px !important;
+ 
+}
+.react-flow__node-output .react-flow__handle-top:hover,.react-flow__node-output .react-flow__handle-bottom:hover {
+    background: #ed956f;
+  }
+.question-categoty-name{
+    font-size: large;
+}
+
+.btn-box{
+    display: inline-block;
+    margin-left: 15%;
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 25px;
+  }
+  .optionremoveButton,.optionaddbutton{
+  
+  box-shadow: 0px 4px 12px 0px rgb(0 0 0 / 15%);
+  background-color: #007bff;
+  border: 0px solid  #007bff;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 8px;
+  cursor: pointer;
+  margin-right: 10px;
+  }
+  
+  .optionremoveButton:hover,.optionaddbutton:hover{
+    outline: none;
+    background-color: #00c7e6;
+  }
+  .cancelupdateformbutton{
+      float: left;
+      margin-right: 73% !important;
+  }
+  .update-question-modal .modal-content {
+      overflow-y: scroll;
+      height:560px !important;
+      width: 560px !important;
+  }
+  .template-infomration{
+    margin-top: 20px;
+    
+  }
+  .template-infomration #file-upload-button{
+    display: none;
+  }
+  .template-infomration{
+    font-weight: 600;
+    font-size: large;
+  }
+  .templatename-input{
+    font-size: medium;
+    font-weight: 400;
+    height:40px;
+    padding-left: 15px;
+    padding-right: 10px;
+    width: 40%;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right:10px;
+    border:1px solid hsla(0, 0%, 73%, 0.85);
+    border-radius: 5px;
+  }
+  .templateimage{
+    margin-left: 1px;
+    width: max-content;
+    outline:none;
+    cursor:pointer;
+    color: black;
+    border: none;
+    text-decoration: none;
+ padding: 0.4em 4em;
+ display: inline-block;
+ border-radius: 0.4em;
+ transition: all .2s;
+ border: none;
+ font-family: inherit;
+ font-weight: 400;
+ font-size: medium;
+ color: black;
+ background-color: white;
+ border:1px solid hsla(0, 0%, 73%, 0.85);
+  }
+  .templateimage:focus{
+    outline:none;
+  }
+  #templateimg-input{
+    display: none;
+    margin-left: 5px;
+    width: max-content;
+  }
+  .designflows .toast{
+    position: absolute;
+    padding: 0.5rem 0.75rem;
+    z-index: 500;
+      margin-top: -60%;
+      margin-left: 30%;
+       min-width: 310px;
+       height: max-content;
+       font-size: .875rem;
+pointer-events: auto;
+background-color: hsla(0, 0%, 100%, 0.85);
+background-clip: padding-box;
+border: 1px solid rgba(0,0,0,.1);
+box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+border-radius: 7px;
+animation: toastFadeIn 1s toastFadeOut 1s;
+-webkit-animation: toastFadeIn 1s toastFadeOut 1s;
+-moz-animation: toastFadeIn 1s toastFadeOut 1s;
+-o-animation: toastFadeIn 1s toastFadeOut 1s;
+-ms-animation: toastFadeIn 1s toastFadeOut 1s;
+   }
+
+   .designflows .btn-close{
+display: none;
+} 
+.designflows small{
+float: right;
+    font-size: .875em;
+}
+.designflows  .toast-header{
+    
+padding: 0.5rem 0.75rem;
+color: #6c757d;
+background-color: hsla(0,0%,100%,.85);
+background-clip: padding-box;
+border-bottom: 1px solid rgba(0,0,0,.05);
+border-top-left-radius: calc(0.25rem - 1px);
+border-top-right-radius: calc(0.25rem - 1px);
+}
+.designflows  .toast-body{
+text-align: center;
+padding: 0.75rem;
+word-wrap: break-word;}
+
+@keyframes toastFadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes toastFadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes toastFadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes toastFadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+@-webkit-keyframes toastFadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes toastFadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+  /*import React, { useState, useRef,useEffect } from 'react';
 import './DesignFlow.css'
 import {Form,Container,Row,Col,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap'
 import  axios  from 'axios'
@@ -15,8 +414,7 @@ import ReactFlow, {
   Handle,
   MiniMap,
 } from 'react-flow-renderer';
-import { useNavigate } from 'react-router-dom';
-import { Toast } from 'react-bootstrap';
+
 //reactflow work
 const foreignObjectSize = 100;
 const initialElements = [
@@ -41,28 +439,13 @@ const tempUpdatedId = () =>id++ ;
 export default function DesignFlow() {
   
 //logged user
-const logged_user=window.localStorage.getItem('user_Id');
-console.log("user got in flow is",logged_user);
-//const logged_user="hammadalibu@gmail.com";
-const [toast_text,setToastText]=useState();
-
-const navigation = useNavigate();
-const handlePageSubmit = useCallback(() => navigation('/sendemail', {replace: true}), [navigation]);
-const toggleShowA = () => {
-  setShowA(!showA);
-  sleep(3000);
-  handlePageSubmit();
-};
-  const [showA, setShowA] = useState(false);
-  const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
-  
+//const logged_user=JSON.parse(window.localstorage.getItem("user_Id"));
+const logged_user="hamzaasif@gmail.com";
   //question data states
-  const question=useRef([{node_id:'',question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}],category:'',isUser:'',stemweightage:''}]);
+  const question=useRef([{node_id:'',question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}],category:'',userName:'',stemweightage:''}]);
   const dropdownValues=useRef([{option:[{id:'',optionText:'',optionWeightage:''}]}]);
   //const [question,setQuestion]=useState([{question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}]}]);
-  const edgeData=useRef([{edge_id:'',source:'',target:'',selectedValue:'',isUser:''}]);
+  const edgeData=useRef([{edge_id:'',source:'',target:'',selectedValue:'',userName:''}]);
   const [nodeFound,setnodeFound]=useState({node_id:'',question_id:'',stem:'',optionArray:[{id:'',optionText:'',optionWeightage:''}],CategoryName:'',username:'',question_weight:''});
   const [stem,setStem]=useState();
   const [sourcehandlecount,setsourcehandlecount]=useState({sourcecount:1,sourceid:''});
@@ -144,7 +527,7 @@ const toggleShowA = () => {
        //"options: ",node.option," Category: ",node.category,"username: ",node.userName);
        const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.question_weight}
        setnodeFound(tempnode);
-       setQuestionWeightage(nodeFound.question_weight);
+       
        //console.log("Question node is",node);
        //console.log("updated node value",nodeFound);
        handleShow();
@@ -161,7 +544,7 @@ const handleCloseUpdateQuestion=()=>{
   setQuestionWeightage(nodeFound.question_weight);
   handleClose();
 }
-  const handleSubmitUpdateQuestion=async()=>
+  const handleSubmitUpdateQuestion=()=>
   {
     let notchanged1=false,notchanged2=false,notchanged3=false,stemchanged=true,optionschanged=true,weightagechanged=true;
     if(nodeFound.stem===stem){
@@ -189,39 +572,13 @@ const handleCloseUpdateQuestion=()=>{
     if(notchanged1==false||notchanged2==false ||notchanged3==false){
       console.log("not change is false something updated optionlist is",optionList);
       nodeFound.stem=stem;
-      if(optionList.length<1){nodeFound.optionArray=[{}];}
-      else{nodeFound.optionArray=optionList;}
           nodeFound.optionArray=optionList;
           nodeFound.username=logged_user;
       nodeFound.question_weight=question_weight;
   //getusername
   console.log("updated nodefound in handlesubmit is",nodeFound);
-  const addques={CategoryName: '',
-  stem: '',
-  question_weight: '',
-  optionArray:[
-          {
-            id: 1,
-            optionText:'',
-            optionWeightage: ''
-          }
-        ],
-  email: ''};
-  addques.stem=nodeFound.stem;
-  addques.question_weight=question_weight;
-addques.optionArray=nodeFound.optionArray;
-addques.email=nodeFound.username;
-addques.CategoryName=nodeFound.CategoryName;
-  const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", addques).catch((err) => 
-  {
-    console.log("Error: ", err);
-  });
-  if (response)  {
-    console.log("reponse by post question is",response.data);
-    nodeFound.question_id=response.data.question_id;
-  }
   //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
-  console.log("API DONE",nodeFound.question_id);
+  nodeFound.question_id=789;
   //update question in array
   updateQuestion();
   updateNode();
@@ -423,13 +780,12 @@ addques.CategoryName=nodeFound.CategoryName;
       titleArray.current.push({source_id:source,selectedTitle:selectedOption,target_id:target})
     }else{}
     //for setting changesd option title to edge
-    const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',isUser:''};
+    const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',userName:''};
     question.current.map((node)=>{
-      if(node.node_id===target)
+      if(node.node_id===source)
       {
-       // console.log("node id ",node.node_id,"questionID",node.question_id," source",source ,"node isuser ",node.isUser);
-       if(node.node_id==-1){tempEdge.isUser=false;}else{ 
-       tempEdge.isUser=node.isUser;}
+       // console.log("node id ",node.node_id,"questionID",node.question_id," source",source ,"node username ",node.userName);
+        tempEdge.userName=node.userName;
       }
     });
     tempEdge.edge_id=id;
@@ -449,7 +805,6 @@ addques.CategoryName=nodeFound.CategoryName;
     })
     if(isExisting===false)
     {
-      if(target==-1){tempEdge.isUser=false;}
       edgeData.current.push(tempEdge);
     }
     else
@@ -589,10 +944,7 @@ console.log("error is ",error);
       console.log("All eddges have options selected");
       convertEdgesId();
       console.log("All correct call api Edges",JSON.stringify(edgeData.current));
-     
-      console.log("edges are without json: ",edgeData.current);
       sendFlow();
-     
     }
     else
     {
@@ -615,50 +967,18 @@ const convertEdgesId=()=>{
     });
   });
 }
-useEffect(()=>{
-  console.log("toast text is",toast_text);
-  if(toast_text!==undefined){
-    setShowA(true);}
-   },[toast_text]);
 const sendFlow=async()=>{
-  const temp_detail=JSON.parse(window.localStorage.getItem("interview_data"));
-  
-  console.log("Temp Interview detail got from local is:",temp_detail);
-
-  const data_to_send={
-    title: temp_detail.title,
-  generationDate: temp_detail.generationDate,
-  startDate: temp_detail.startDate,
-  endDate: temp_detail.endDate,
-  duration:temp_detail.duration,
-  type: temp_detail.type,
-  position:temp_detail.position ,
-  job_description:temp_detail.jobDescription ,
-  email: logged_user,
-  edge: edgeData.current
-  }
-  console.log("data sended to api is",data_to_send);
-  setToastText("Design Saved");
-  //remove the below cmnt
-  // const response = await axios.post("https://raicruittest.herokuapp.com/add/interview", data_to_send).catch((err) => 
-  //     {
-  //       console.log("Error: ", err);
-  //     });
-  //     if (response.status==200)  {
-        
-  //       if(response.data.Message=="Successfully stored interview")
-  //       {
-  //         setToastText(response.data.Message);
-  //       console.log("reponse is all good receved");
-  //       window.localStorage.setItem('current_Interview', temp_detail.title);
-  //       }
-        
-  //       console.log("reponse by post question is",response);
+  const response = await axios.post("/flow", edgeData.current).catch((err) => 
+      {
+        console.log("Error: ", err);
+      });
+      if (response)  {
+        console.log("reponse by post question is",response);
        
-  //     }
+      }
 }
   const addStartEdge=()=>{//function functionality already handled in else dropdown case
-    const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',isUser:''};
+    const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',userName:''};
     const edgeArray = [];
     elements.map((els) => 
     {
@@ -674,10 +994,6 @@ const sendFlow=async()=>{
       {
         tempEdge.edge_id=edge.id;
         tempEdge.target=edge.target;
-      }
-      if(edge.target===-1)
-      {
-        tempEdge.isUser=false;
       }
     });
     edgeData.current.push(tempEdge);
@@ -748,9 +1064,21 @@ const sendFlow=async()=>{
       id={`${data.id}.deletebutton`}
      className="updateButtonStyle"
      onContextMenu={()=>{ onElementsRemove([data]) }}
+      // style={{
+      // borderRadius:"20px",
+      // width:"20px",
+      // height:"20px",
+      // position:"absolute",
+      // top:" 50%",
+      // left: "-10px",
+      // transform: "translate(0, -50%)",
+      // background:"transparent"
+      // }}
       >
         X
         </button>
+    
+       
     </div>
     );
   };
@@ -887,8 +1215,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
     list['stem']=tempQuestionStem;
     list['option']=tempOptionsArray;
     list['category']=tempCategory;
-    if(tempUsername==""){list['isUser']=false;}
-    else if(tempUsername!==""){list['isUser']=true;}
+    list['userName']=tempUsername;
     list['stemweightage']=tempstemweightage;
     console.log("list is after",list);
     let isExisting=false;
@@ -936,7 +1263,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
   };//601
   const graphStyles = { width: "100%", height: "580px" };
   return (
-    <div className='designflows'>
+    <>
     <div className="dndflow" >
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -969,10 +1296,10 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
           <Controls style={{bottom: "5px"}}></Controls>
           <Button onClick={() => {
             
-            //console.log(JSON.stringify(elements));
+            console.log(JSON.stringify(elements));
             //question.current.shift();
-            //console.log("Questions: ",question.current);
-            //console.log("edges are: ",edgeData.current);
+            console.log("Questions: ",question.current);
+            console.log("edges are: ",edgeData.current);
             //edgeData.current.shift();
             checkEdges(elements);
             
@@ -987,20 +1314,8 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
               
         </div>
       </ReactFlowProvider>
-     
     </div>
-    <Toast show={showA} onClose={toggleShowA} className='toast1' position='bottom-center' delay={2000} autohide >
-          <Toast.Header>
-            {/* <img 
-              src="" 
-              className="rounded me-2" 
-              alt="Notification"
-            /> */}
-            <strong className="me-auto">Message</strong>
-            <small>now</small>
-          </Toast.Header>
-          <Toast.Body>{toast_text}</Toast.Body>
-        </Toast>
+    
     <Modal
         show={show}
         onHide={handleClose}
@@ -1065,7 +1380,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
       </Modal>
       
     
-    </div>
+    </>
   );
 };
-//update/option selected issue/path zindex/sidebar coloring
+//update/option selected issue/path zindex/sidebar coloring*/
