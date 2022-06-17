@@ -19,10 +19,11 @@ const signOut=()=>{
     <div className='recruiternavbar'> <Navbar >
     <Container >
         <BsList className='sidebarIcon' viewBox='0 0 20 13' onClick={changesidebarstatus}></BsList>
-        <Navbar.Brand href="#home">rAIcruiter</Navbar.Brand>
+        {/* <Navbar.Brand href="#home">rAIcruiter</Navbar.Brand> */}
         <Nav onClick={()=>{setShowSignOut(!showsignout)}}>
-            <BsCaretDownFill className='bell-icon'></BsCaretDownFill>
+            
         <img src={userImg} className='userImg'></img>
+        <BsCaretDownFill className='bell-icon'></BsCaretDownFill>
         </Nav>
        
     </Container>

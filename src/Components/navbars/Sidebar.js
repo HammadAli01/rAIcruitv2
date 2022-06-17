@@ -1,12 +1,13 @@
 import React from 'react'
 import './Sidebar.css';
-import sitelogo from '../../Assets/mainmenu/sitelogo2.png';
+import sitelogo from '../../Assets/mainmenu/raicruitlogo.PNG';
 import { BsFillFileEarmarkTextFill,BsHouseFill,BsBricks,BsFillChatSquareTextFill,BsReverseLayoutTextSidebarReverse,BsStickies,BsFillPersonFill,BsGearFill } from "react-icons/bs";
 
 import { Link } from 'react-router-dom';
 export default function Sidebar(props) {
     
   return (
+    <div className='Adminsidebar-main'>
     <div className={props.sidebarclass}>
 <div className='sidebar-header'>
   {/* <img src={userimg}></img><div className='user-info'>
@@ -61,7 +62,7 @@ export default function Sidebar(props) {
      <span>Profile</span>
     </li></Link> 
   </ul>
-</div>
+</div> </div>
     </div>
   )
 }

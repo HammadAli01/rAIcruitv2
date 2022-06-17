@@ -4,7 +4,7 @@ import botImage from '../Assets/mainmenu/botimage.jpg';
 import candidateImage from '../Assets/mainmenu/candidate1.PNG';
 import InfiniteScroll from "react-infinite-scroll-component";
 export default function Transcript() {
-const [candidateData,setCandidateData]=useState({email:"hammadalibu@gmail.com",name:"hammad",marks:"60",total:"100"});
+const [candidateData,setCandidateData]=useState({email:"hammadalibu@gmail.com",name:"Hammad Ali",marks:"60%"});
     const [results,setResults]=useState([{stem:"What is your name",response:"hammad",response_Time:"2:21"},
     {stem:"What is your name2",response:"anser1",response_Time:"2:21"},
     {stem:"What is your name3",response:"anser3",response_Time:"3:21"},
@@ -34,7 +34,7 @@ const [candidateData,setCandidateData]=useState({email:"hammadalibu@gmail.com",n
         
        <div className='transcript-candidateDatablock'> <h6>Name: </h6> <div>{candidateData.name}</div></div>
        <div className='transcript-candidateDatablock'><h6>Email: </h6><div>{candidateData.email}</div></div>
-       <div className='transcript-candidateDatablock'> <h6>Marks: </h6><div>{candidateData.marks}/{candidateData.total}</div></div>
+       <div className='transcript-candidateDatablock'> <h6>Marks: </h6><div>{candidateData.marks}</div></div>
     </div>
         <h3>Conversation Transcript</h3>
         <div className='transcript-conversation'>

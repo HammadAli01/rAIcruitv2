@@ -4,6 +4,7 @@ import { Dropdown,DropdownButton,Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Line } from "react-chartjs-2";
 import Axios from 'axios';
+import { getRectOfNodes } from 'react-flow-renderer';
 export default function Recruitermain() {
     window.localStorage.setItem("Is_Template",0);
     const logged_user=window.localStorage.getItem('user_Id');
@@ -12,28 +13,32 @@ export default function Recruitermain() {
     const [jobTitle,setJobtitle]=useState("Interview Order");
     const [jobType,setJobtype]=useState("Job Type");
     const [gOrder,setGOrder]=useState("Generation Order");
-    const [interviews,setInterviews]=useState([{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"}]);
+    const [interviews,setInterviews]=useState([]);
     const [recruiterData,setRecruiterData]=useState([]);
     const [data,setData]=useState({});
     const getRecruiterData=async()=>{
         setRecruiterData([{interviewName:"hammad1",no_Of_Candidates:"2"},
-        {interviewName:"hammad2",no_Of_Candidates:"5"},{interviewName:"Senior software Engineer",no_Of_Candidates:"10"},
-        {interviewName:"HR",no_Of_Candidates:"12"},{interviewName:"Junior software Engineer",no_Of_Candidates:"20"},
-        {interviewName:"Manager",no_Of_Candidates:"23"},{interviewName:"Driver",no_Of_Candidates:"30"},
-        {interviewName:"Cook",no_Of_Candidates:"122"},{interviewName:"Nurse",no_Of_Candidates:"70"},
-        {interviewName:"Cadet",no_Of_Candidates:"200"},{interviewName:"Teaching",no_Of_Candidates:"22"},{interviewName:"hammad2",no_Of_Candidates:"5"},{interviewName:"Senior software Engineer",no_Of_Candidates:"10"},
-        {interviewName:"HR",no_Of_Candidates:"12"},{interviewName:"Junior software Engineer",no_Of_Candidates:"20"},
-        {interviewName:"Manager",no_Of_Candidates:"23"},{interviewName:"Driver",no_Of_Candidates:"30"},
-        {interviewName:"Cook",no_Of_Candidates:"122"},{interviewName:"Nurse",no_Of_Candidates:"70"},
-        {interviewName:"Cadet",no_Of_Candidates:"200"},{interviewName:"Teaching",no_Of_Candidates:"22"}
-        ]);
+        {interviewName:"hammad2",no_Of_Candidates:"5"},{interviewName:"Senior software Engineer",no_Of_Candidates:"100"},
+        {interviewName:"HR",no_Of_Candidates:"12"},{interviewName:"Junior software Engineer",no_Of_Candidates:"70"},
+        {interviewName:"Manager",no_Of_Candidates:"43"},{interviewName:"Driver",no_Of_Candidates:"20"},
+        {interviewName:"Cook",no_Of_Candidates:"122"},{interviewName:"Nurse",no_Of_Candidates:"102"},
+       , {interviewName:"hammad2",no_Of_Candidates:"5"},{interviewName:"Senior software Engineer",no_Of_Candidates:"100"},
+       {interviewName:"HR",no_Of_Candidates:"12"},{interviewName:"Junior software Engineer",no_Of_Candidates:"70"},
+       {interviewName:"Manager",no_Of_Candidates:"43"},{interviewName:"Driver",no_Of_Candidates:"20"},
+       {interviewName:"Cook",no_Of_Candidates:"122"},{interviewName:"Nurse",no_Of_Candidates:"102"},
+       ]);
       };
-      
+      useEffect(()=>{
+       //calling api remove below comment
+        // getInterviewData();
+        setInterviews([{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"}]);
+      },[]);
        useEffect(()=>{
        getRecruiterData();
         
         },[]);
         useEffect(()=>{
+          if(recruiterData.length!==0){
           let graphrecruitersnames=[],graphrecruitersinterviews=[];
           recruiterData.map((recruiter) => graphrecruitersnames.push(recruiter.interviewName));
           recruiterData.map((recruiter) => graphrecruitersinterviews.push(recruiter.no_Of_Candidates));
@@ -49,7 +54,7 @@ export default function Recruitermain() {
               }
             ]
           });
-          console.log("current data is",data);
+          console.log("current data is",data);}
         },[recruiterData])
     const getInterviewData=async()=>{
        
@@ -63,10 +68,7 @@ export default function Recruitermain() {
             console.error('There was an error!', error);
         });
       }
-      useEffect(()=> {
-           //remove the bbelow comment 
-       // getInterviewData();
-      },[]);
+    
 //     window.addEventListener('load', (event) =>{
 // getInterviewData();
         
@@ -82,29 +84,48 @@ const legend = {
     }
   };
   
-  const options =  {
+  const options = {
+  
     maintainAspectRatio: true,
     responsive: true,
     scales: {
-        yAxes:{
+      
+      xAxes: [
+        {
+          gridLines: {
+            display: true,
+            borderColor:"green",
             
-           
-            ticks:{
-                beginAtZero: true,
-                color: 'black',
-                fontSize: 12,
-            }
-        },
-        xAxes: {
-           
-            ticks:{
-                beginAtZero: true,
-                color: 'black',
-                fontSize: 16,
-            }
-        },
+            drawBorder: true,
+            borderDash: [1, 1],
+            zeroLineColor: "blue"
+          },
+          categoryPercentage: 0.7,
+          barPercentage: 0.9,
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ],
+      yAxes: [
+        {
+          display: false,
+          gridLines: {
+            display: false,
+            zeroLineColor: "transparent"
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      ]
+    },elements: {
+        point:{
+            radius: 3,
+            hitRadius: 30
+        }
     }
-};
+  };
    
   const Sortinterviews=(e)=>{
       e.preventDefault();
@@ -185,20 +206,19 @@ if(jobType!=="Select Type")
   }
   return (
     <div className='parentcontainer'>
-        <div className='sortcontainer'>z
-     
-        </div>
+        
         <div className='tablecontainer'>
-            <div className='graph1'><h5>Interviews Designed</h5><h6>348</h6></div>
-            <div className='graph2'><h5>Interviews Conducted</h5><h6>1300</h6></div>
-            <div className='graph3'><h5>Interviews Remaining</h5><h6>48</h6></div>
+        <h3 className='adminmain-header'>Recruiter Dashboard</h3>
+            <div className='graph1'><h5>Interviews<br></br> Designed</h5><h6>348</h6></div>
+            <div className='graph2'><h5>Interviews<br></br> Conducted</h5><h6>1300</h6></div>
+            <div className='graph3'><h5>Total <br></br> Candidates</h5><h6>1400</h6></div>
             <div className='graph4'><h5>Emails Sended To Candidates</h5><h6>1348</h6></div>    
             <div className='recruiterdashboard-graph'>
         {console.log("condition1",Object.keys(data).length!==0)}
        
 
             {Object.keys(data).length!==0?(data.labels.length!==0?(<Line data={data} legend={legend}
-             options={options} className="recruiterlinechart"  height={700} />):(console.log("graph data lenbht is empty"))):(console.log("DATA STILL 0"))}
+             options={options} className="recruiterlinechart"   />):(console.log("graph data lenbht is empty"))):(console.log("DATA STILL 0"))}
         
                 </div>     
             <div className='sort'>
@@ -229,6 +249,7 @@ if(jobType!=="Select Type")
             </div>
             <h2 className='tabletitle'>Interviews</h2>
             <div className='table'>
+            {interviews.length!==0?(
             <table className='interviews'>
           <thead>
             <tr>
@@ -242,7 +263,9 @@ if(jobType!=="Select Type")
             </tr>
           </thead>
          
-          <tbody>
+         
+        
+         <tbody>
          
           {interviews.map((interview,index) => {
               console.log("current_interview",interview);
@@ -262,7 +285,7 @@ if(jobType!=="Select Type")
            )
         })}
           </tbody>
-        </table>
+        </table>):(<div className='empty-interviews'>No interviews exist</div>)}
         </div>
         </div>
     </div>

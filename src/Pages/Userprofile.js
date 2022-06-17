@@ -1,10 +1,13 @@
-import React,{useRef,useState,useEffect} from 'react'
+import React,{useRef,useState,useEffect,useCallback} from 'react'
 import DashboardNavbar from '../Components/navbars/DashboardNavbar';
 import './Userprofile.css';
 import UiImg from '../Assets/mainmenu/profileUI.png';
 import tempprofile from '../Assets/mainmenu/DSC.png';
+import {useNavigate} from 'react-router-dom';
 export default function Userprofile() {
   const userdetails={userName:"Hammad Ali",email:"hammadalibu@gmail.com",password:"andrea",companyName:"magich,isb",gender:"Male"}
+  const navigation = useNavigate();
+    const handlePageSubmit = useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
   
   const [userData,setUserData]=useState(userdetails);
   const [userGender,setuserGender]=useState(userData.gender);
@@ -52,6 +55,7 @@ export default function Userprofile() {
         console.log("call the api");
         userData.gender=userGender;
         console.log("current userData is::",userData);
+        handlePageSubmit();
     }
     else{
         setUserErrors(error);
@@ -110,9 +114,9 @@ export default function Userprofile() {
 }
 
   return (
-    <div className='userprofileparent'>
-       <DashboardNavbar/>
-        
+    <div>
+       <DashboardNavbar side={true}/>
+       <div className='userprofileparent'>
     <div className='userprofilefirstchild'><img id="imageid" className='userProfile' src={tempprofile} alt="userimg"  onClick={handleClick}></img>
     <input type="file"
              ref={hiddenFileInput}
@@ -120,7 +124,7 @@ export default function Userprofile() {
              style={{display:'none'}} 
              accept="image/*"
       />
-      <img src={UiImg} className="pageuiImg"></img>
+      {/* <img src={UiImg} className="pageuiImg"></img> */}
     </div>
     <div className='userprofilesecondchild'>
       <form>
@@ -170,7 +174,7 @@ export default function Userprofile() {
       
     </div>
     </div>
-    
+    </div>
   )
   
 }

@@ -71,8 +71,7 @@ const getRecruiterData=async()=>{
   {recruiterName:"hammad7",no_Of_Interviews:"20"},
   {recruiterName:"hammad8",no_Of_Interviews:"8"},
   {recruiterName:"hammad9",no_Of_Interviews:"10"},
-  {recruiterName:"zahid",no_Of_Interviews:"0"},
-  ]);
+  {recruiterName:"zahid",no_Of_Interviews:"0"},]);
 };
 
  useEffect(()=>{
@@ -80,6 +79,7 @@ const getRecruiterData=async()=>{
   
   },[]);
   useEffect(()=>{
+    if(recruiterData.length!==0){
     let graphrecruitersnames=[],graphrecruitersinterviews=[];
     recruiterData.map((recruiter) => graphrecruitersnames.push(recruiter.recruiterName));
     recruiterData.map((recruiter) => graphrecruitersinterviews.push(recruiter.no_Of_Interviews));
@@ -96,7 +96,7 @@ const getRecruiterData=async()=>{
         }
       ]
     });
-    console.log("current data is",data);
+    console.log("current data is",data);}
   },[recruiterData]);
   return (
     <div className='adminmain'>
@@ -112,7 +112,7 @@ const getRecruiterData=async()=>{
     <p><h4>Interviews conducted</h4><h6>With candidates</h6></p>
     <h1>2219</h1></div>
     <div className='dashboard-chart-area'>
-        {Object.keys(data).length!==0?(data.labels.length!==0?(<Line data={data}   options={options}  className="adminlinechart"/>):(console.log("graph data lenbht is empty"))):(console.log("DATA STILL 0"))}
+        {Object.keys(data).length!==0?(data.labels.length!==0?(<Line data={data}   options={options}  className="adminlinechart"/>):(console.log("graph data lenbht is empty"))):(<div className='adminmain-recruiterzero'>No recruiters data to show</div>)}
         </div>
     </div>
   )

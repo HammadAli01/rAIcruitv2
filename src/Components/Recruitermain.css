@@ -2,19 +2,27 @@
    padding-top: 56px;
     height: 100%;
     width: 100%;
+    background-color: #f1f4f6;
  }
+ .adminmain-header{
+  display: flex;
+margin-bottom: 10px;
+}
  .sortcontainer{
  position: fixed;
  width: 20%;
  height: 100%;
- background-color:transparent;
+ background-color: #f1f4f6;
  }
  .sort{
+  margin-left: 1%;
+  margin-right: 0.5%;
    border-radius: 15px;
    padding-left: 3%;
  padding-right: 3%;
  padding-top: 1%;
  padding-bottom: 2%;
+ background-color: #fff;
  box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
  position: relative;
  margin-top: -100px;
@@ -115,7 +123,7 @@ background-color: #216ec0;}
    float: right;
    width: 80%;
    height: 100%;
-   background-color: rgb(255, 255, 255);
+   background-color: #f1f4f6;
    padding: 40px;
    
      }
@@ -156,21 +164,21 @@ background-color: #216ec0;}
          
        }
         tbody {
-         background-color: aliceblue;
+         background-color: #fdfff7;
         
          
         
  
        }
-       .interviews tr:nth-child(even){background-color: rgba(0,0,0,.03);}
+       .interviews tr:nth-child(even){background-color: rgb(234 243 243);}
        
-       .interviews tr:hover {background-color: #d9d9d9;}
+       .interviews tr:hover {background-color: rgb(213, 238, 238);}
        
        .interviews th {
          padding-top: 12px;
          padding-bottom: 12px;
          text-align: center;
-         background-color: #e7e7e7;
+         background-color: #fff;
          color: rgb(0, 0, 0);
          border-top: 1px solid #d4d4d4;
         
@@ -180,22 +188,23 @@ background-color: #216ec0;}
        .graph1{
          position: absolute;
          margin-left: 10px;
-         height: 165px;
+         height: 105px;
          width: 22%;
-         background-image: -webkit-linear-gradient(90deg,#3f5efb 0%,#fc466b 100%);
+         background-image: -webkit-linear-gradient(90deg,#879bff 0%,#ff728f 100%);
          /* background-image: linear-gradient(-20deg,#2b5876 0%,#4e4376 100%)!important; */
          box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 8%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 8%), 0 0.25rem 0.53125rem rgb(4 9 20 / 8%), 0 0.125rem 0.1875rem rgb(4 9 20 / 8%);
     border-width: 0;
     border-radius: 5px;
     transition: all .2s;
+    padding-right: 10px;
          /* #00b26f,#ff8300,#00b5e9,#fa4251 */
        }
        .graph2{
         position: absolute;
         margin-left: 24%;
-        height: 165px;
+        height: 105px;
         width: 22%;
-        background-image: -webkit-linear-gradient(90deg,#11998e 0%,#38ef7d 100%);
+        background-image: -webkit-linear-gradient(90deg,#51dfd3 0%,#00ad41 100%);
         /* background-image: radial-gradient(circle 248px at center,#16d9e3 0%,#30c7ec 47%,#46aef7 100%)!important; */
         box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 8%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 8%), 0 0.25rem 0.53125rem rgb(4 9 20 / 8%), 0 0.125rem 0.1875rem rgb(4 9 20 / 8%);
          border-width: 0;
@@ -205,7 +214,7 @@ background-color: #216ec0;}
       .graph3{
         position: absolute;
         margin-left: 47%;
-        height: 165px;
+        height: 105px;
         width: 22%;
         background-image: -webkit-linear-gradient(90deg,#ee0979 0%,#ff6a00 100%);
         /* background-image: linear-gradient(to top,#0ba360 0%,#3cba92 100%)!important; */
@@ -217,9 +226,9 @@ background-color: #216ec0;}
       .graph4{
         position: absolute;
         margin-left: 70%;
-        height: 165px;
+        height: 105px;
         width: 22%;
-        background-image: -webkit-linear-gradient(90deg,#45b649 0%,#dce35b 100%);
+        background-image: -webkit-linear-gradient(90deg,#01ad07b3 0%,#cbd511 100%);
         /* background-image: linear-gradient(to right,#434343 0%,black 100%)!important; */
         box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 8%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 8%), 0 0.25rem 0.53125rem rgb(4 9 20 / 8%), 0 0.125rem 0.1875rem rgb(4 9 20 / 8%);
             border-width: 0;
@@ -227,25 +236,43 @@ background-color: #216ec0;}
     transition: all .2s;
       }
       .tablecontainer h5{
-        color: white;
-        margin-top: 20%;
+        color: rgb(241, 241, 241);
+        margin-top: 6%;
         margin-left: 10%;
-        font-size: 24px;
+        font-size: 22px;
+        font-weight: 400;
         font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
       .tablecontainer h6{
-        color: white;
+        color: rgb(226, 211, 211);
         margin-top: 1%;
         float: right;
         font-size: 16px;
         margin-right: 10%;
       }
       .recruiterdashboard-graph{
-        position: relative;
+        margin-bottom: 120px;
       }
       .recruiterlinechart{
-        margin-top: 200px !important;
-        /* height: 320px !important;
+        margin-top: 140px !important;
+        background-color: #fff;
+        border-radius: 5px;
+        margin-left: 1%;
+    
+    padding: 10px;
+    width: 98.5% !important;
+    height: 420px !important;
+        box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
         
-        width: 98% !important; */
+         /* height: 420px !important;
+        
+        width: 98% !important;  */
       } 
+      .empty-interviews{
+        margin-top: 1%;
+  margin-bottom: 1%;
+    margin-left: 43%;
+    color: rgb(114, 109, 109);
+    font-size: large;
+    font-weight: bold;
+      }

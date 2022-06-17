@@ -5,38 +5,39 @@ export default function Adminmanageusers() {
     const [users,setUsers]=useState([{}])
     const [call_Api,setCallApi]=useState(false);
     useEffect(()=>{
-        //api call to get recruiters data
-        setUsers([{
-            email: "hammadalibu@gmail.com",company_name: "Magisch Tech",
-            first_name: "Hammad1",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
-            {
-                email: "zahidbu@gmail.com",company_name: "Magisch Tech",
-                first_name: "Hammad2",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:1,status:false},
-                {
-                    email: "hammadalibu1@gmail.com",company_name: "Magisch Tech",
-                    first_name: "Hammad3",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
-                    {
-                        email: "hammadalibu2@gmail.com",company_name: "Magisch Tech",
-                        first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
-                        {
-                            email: "hammadalibu3@gmail.com",company_name: "Magisch Tech",
-                            first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
-                            {
-                                email: "hammadalibu4@gmail.com",company_name: "Magisch Tech",
-                                first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
-                                {
-                                    email: "hammadalibu5@gmail.com",company_name: "Magisch Tech",
-                                    first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
-                                    {
-                                        email: "hammadalibu6@gmail.com",company_name: "Magisch Tech",
-                                        first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
-                                        {
-                                            email: "hammadalibu7@gmail.com",company_name: "Magisch Tech",
-                                            first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
-                                            {
-                                                email: "hammadalibu11@gmail.com",company_name: "Magisch Tech",
-                                                first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true}
-        ])
+        // //api call to get recruiters data
+        // {
+        //   email: "hammadalibu@gmail.com",company_name: "Magisch Tech",
+        //   first_name: "Hammad1",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
+        //   {
+        //       email: "zahidbu@gmail.com",company_name: "Magisch Tech",
+        //       first_name: "Hammad2",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:1,status:false},
+        //       {
+        //           email: "hammadalibu1@gmail.com",company_name: "Magisch Tech",
+        //           first_name: "Hammad3",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
+        //           {
+        //               email: "hammadalibu2@gmail.com",company_name: "Magisch Tech",
+        //               first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
+        //               {
+        //                   email: "hammadalibu3@gmail.com",company_name: "Magisch Tech",
+        //                   first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
+        //                   {
+        //                       email: "hammadalibu4@gmail.com",company_name: "Magisch Tech",
+        //                       first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
+        //                       {
+        //                           email: "hammadalibu5@gmail.com",company_name: "Magisch Tech",
+        //                           first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
+        //                           {
+        //                               email: "hammadalibu6@gmail.com",company_name: "Magisch Tech",
+        //                               first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true},
+        //                               {
+        //                                   email: "hammadalibu7@gmail.com",company_name: "Magisch Tech",
+        //                                   first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:false},
+        //                                   {
+        //                                       email: "hammadalibu11@gmail.com",company_name: "Magisch Tech",
+        //                                       first_name: "Hammad",last_name:  "Ali",password:  "adsfaf",no_Of_Interviews:10,status:true}
+        setUsers([
+           ])
     },[call_Api]);
     const handleStatusChange=(recruiter_current_email,recruiter_status)=>{
 console.log("recruiter id",recruiter_current_email,"recruiter status",recruiter_status);
@@ -68,8 +69,12 @@ setCallApi(!call_Api);
           </tr>
         </thead>
       </table>
-    </div>
+    </div> 
+    {users.length!==0?(
+      
     <div class="tbl-content">
+   {console.log("users length:",users.length)}
+
       <table >
         <tbody>
         {users.map((recruiter,index)=>{
@@ -99,7 +104,8 @@ setCallApi(!call_Api);
          
         </tbody>
       </table>
-    </div>
+     
+    </div> ):(<div className='empty-data'>No users data available to show</div>)}
   </section></div>
   </>
   )

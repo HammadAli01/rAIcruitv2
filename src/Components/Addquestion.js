@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import {Container,Row,Col,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap'
 import './Addquestion.css';
 import Form from 'react-bootstrap/Form';
@@ -73,47 +73,315 @@ export default function Addquestion() {
      const logged_user=window.localStorage.getItem("user_Id");
      console.log("in add user",logged_user);
 //const logged_user="hammadalibu@gmail.com";
-    const [Allquestions,setAllQuestions]=useState([ {
-        id: "",
-        question_weight: "",
-        username: "",
-        stem: "No Questions",
-        CategoryName: "",
-        optionArray: [
-          {
-            id: 101,
-            optionText: "",
-            optionWeightage: ""
-          }
-        ]
-      }
+    const [Allquestions,setAllQuestions]=useState([ 
    ]);
-   window.addEventListener('load', (event) =>{
-
+   useEffect(()=>{
+    getCategories();   
     getUserQuestions();
-    getCategories();
-});
+       
+  //   setAllQuestions([ {
+  //       id: 1,
+  //       question_weight: 50,
+  //       username: "Admin",
+  //       stem: "How are you",
+  //       CategoryName: "Icebreaker",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "fine",
+  //           optionWeightage: "100"
+  //         },{
+  //           id: 102,
+  //           optionText: "Not fine",
+  //           optionWeightage: "50"
+  //         }
+  //       ]
+  //     },{
+  //       id: 1,
+  //       question_weight: 50,
+  //       username: "Admin",
+  //       stem: "How many years of experience do you have?How many years of experience do you have?How many years of experience do you have?",
+  //       CategoryName: "Experience",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "5 Years",
+  //           optionWeightage: "100"
+  //         },{
+  //           id: 102,
+  //           optionText: "4 Years",
+  //           optionWeightage: "75"
+  //         },{
+  //           id: 103,
+  //           optionText: "2 Years",
+  //           optionWeightage: "50"
+  //         }
+  //       ]
+  //     },{
+  //       id: 4,
+  //       question_weight: 100,
+  //       username: "Admin",
+  //       stem: "What is your availability for this job",
+  //       CategoryName: "Timing",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "Morning",
+  //           optionWeightage: "75"
+  //         },{
+  //           id: 102,
+  //           optionText: "Evening",
+  //           optionWeightage: "75"
+  //         },{
+  //           id: 103,
+  //           optionText: "Both",
+  //           optionWeightage: "100"
+  //         }
+  //       ]
+  //     },{
+  //       id: 7,
+  //       question_weight: 75,
+  //       username: "Admin",
+  //       stem: "Where are you from",
+  //       CategoryName: "Icebreaker",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "Islamabad",
+  //           optionWeightage: "100"
+  //         },{
+  //           id: 102,
+  //           optionText: "Rawalpindi",
+  //           optionWeightage: "75"
+  //         },{
+  //           id: 103,
+  //           optionText: "taxila",
+  //           optionWeightage: "50"
+  //         },{
+  //           id: 104,
+  //           optionText: "other",
+  //           optionWeightage: "25"
+  //         }
+  //       ]
+  //     },{
+  //       id: 1,
+  //       question_weight: 50,
+  //       username: "Admin",
+  //       stem: "How are you2",
+  //       CategoryName: "Icebreaker",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "fine",
+  //           optionWeightage: "100"
+  //         },{
+  //           id: 102,
+  //           optionText: "Not fine",
+  //           optionWeightage: "50"
+  //         }
+  //       ]
+  //     },{
+  //       id: 1,
+  //       question_weight: 50,
+  //       username: "Admin",
+  //       stem: "How are you3",
+  //       CategoryName: "Icebreaker",
+  //       optionArray: [
+  //         {
+  //           id: 101,
+  //           optionText: "fine",
+  //           optionWeightage: "100"
+  //         },{
+  //           id: 102,
+  //           optionText: "Not fine",
+  //           optionWeightage: "50"
+  //         }
+  //       ]
+  //     },
+  //  ]);
+  //  setCategories([
+  //   {
+  //     id: "1",
+  //     name: "ICebreaker"
+  //   },{
+  //       id: "2",
+  //       name: "Experience"
+  //     },{
+  //       id: "3",
+  //       name: "Position"
+  //     },{
+  //       id: "4",
+  //       name: "Environment"
+  //     },{
+  //       id: "5",
+  //       name: "Timing"
+  //     },
+  // ])
+},[]);
+
+  
 const getCategories = async () => {
-  console.log("get categories called"); 
-  const response = await axios.post("https://raicruittest.herokuapp.com/Category/get/all").catch((err) => 
-  { console.log("Error:", err); });
-   if (response) { 
-     console.log("cateogires got are",response.data); 
-     setCategories(response.data); 
-   } };
+  // console.log("get categories called"); 
+  // const response = await axios.post("https://raicruittest.herokuapp.com/Category/get/all").catch((err) => 
+  // { console.log("Error:", err); });
+  //  if (response) { 
+  //    console.log("cateogires got are",response.data); 
+  //    setCategories(response.data); 
+  //  }
+ 
+setCategories([
+  {
+    id: "1",
+    name: "ICebreaker"
+  },{
+      id: "2",
+      name: "Experience"
+    },{
+      id: "3",
+      name: "Position"
+    },{
+      id: "4",
+      name: "Environment"
+    },{
+      id: "5",
+      name: "Timing"
+    },
+])
+
+};
 const getUserQuestions=async()=>{
-  console.log("get user questions called",logged_user);
-  const response =await axios.get(`https://raicruittest.herokuapp.com/get/user/question?email=${logged_user}`).then(response => {
-    console.log("first response",response.data); 
-    if(response.data.Questions.length!==0){
-    setAllQuestions(response.data.Questions);
-}else{
-  console.log("user no questions found retainng none");
-}
-})
-.catch(error => {
-    console.error('There was an error!', error);
-});
+//   console.log("get user questions called",logged_user);
+//   const response =await axios.get(`https://raicruittest.herokuapp.com/get/user/question?email=${logged_user}`).then(response => {
+//     console.log("first response",response.data); 
+//     if(response.data.Questions.length!==0){
+//     setAllQuestions(response.data.Questions);
+// }else{
+//   console.log("user no questions found retainng none");
+// }
+// })
+// .catch(error => {
+//     console.error('There was an error!', error);
+// });
+setAllQuestions([  {
+  id: 1,
+  question_weight: 50,
+  username: "Admin",
+  stem: "How are you",
+  CategoryName: "Icebreaker",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "fine",
+      optionWeightage: "100"
+    },{
+      id: 102,
+      optionText: "Not fine",
+      optionWeightage: "50"
+    }
+  ]
+},{
+  id: 1,
+  question_weight: 50,
+  username: "Admin",
+  stem: "How many years of experience do you have?How many years of experience do you have?How many years of experience do you have?",
+  CategoryName: "Experience",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "5 Years",
+      optionWeightage: "100"
+    },{
+      id: 102,
+      optionText: "4 Years",
+      optionWeightage: "75"
+    },{
+      id: 103,
+      optionText: "2 Years",
+      optionWeightage: "50"
+    }
+  ]
+},{
+  id: 4,
+  question_weight: 100,
+  username: "Admin",
+  stem: "What is your availability for this job",
+  CategoryName: "Timing",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "Morning",
+      optionWeightage: "75"
+    },{
+      id: 102,
+      optionText: "Evening",
+      optionWeightage: "75"
+    },{
+      id: 103,
+      optionText: "Both",
+      optionWeightage: "100"
+    }
+  ]
+},{
+  id: 7,
+  question_weight: 75,
+  username: "Admin",
+  stem: "Where are you from",
+  CategoryName: "Icebreaker",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "Islamabad",
+      optionWeightage: "100"
+    },{
+      id: 102,
+      optionText: "Rawalpindi",
+      optionWeightage: "75"
+    },{
+      id: 103,
+      optionText: "taxila",
+      optionWeightage: "50"
+    },{
+      id: 104,
+      optionText: "other",
+      optionWeightage: "25"
+    }
+  ]
+},{
+  id: 1,
+  question_weight: 50,
+  username: "Admin",
+  stem: "How are you2",
+  CategoryName: "Icebreaker",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "fine",
+      optionWeightage: "100"
+    },{
+      id: 102,
+      optionText: "Not fine",
+      optionWeightage: "50"
+    }
+  ]
+},{
+  id: 1,
+  question_weight: 50,
+  username: "Admin",
+  stem: "How are you3",
+  CategoryName: "Icebreaker",
+  optionArray: [
+    {
+      id: 101,
+      optionText: "fine",
+      optionWeightage: "100"
+    },{
+      id: 102,
+      optionText: "Not fine",
+      optionWeightage: "50"
+    }
+  ]
+},
+]);
 };
    const [optionList,setoptionList]=useState([{id:1,optionText: '',optionWeightage: '25'}]);
    //const [optionIndex,setOptionIndex]=useState([{optioncount:0}]);
@@ -324,6 +592,7 @@ optionArray:[],
 </div>
             <h2 className='add-tabletitle'>Questions</h2>
             <div className='add-table'>
+            {Allquestions.length!==0?(
             <table className='add-interviews'>
           <thead>
             <tr>
@@ -336,6 +605,8 @@ optionArray:[],
             </tr>
           </thead>
          
+        
+           
           <tbody>
          
           {Allquestions.map((question,index) => {
@@ -371,7 +642,7 @@ optionArray:[],
            )
         })}
           </tbody>
-        </table>
+        </table>):(<div className='empty-questions'>No questions exist</div>)}
         </div>
         </div>
     </div>

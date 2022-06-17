@@ -91,7 +91,7 @@
          
         /* .add-interviews tr:nth-child(even){ background-color: white;} */
         
-        .add-interviews tr:hover { background:blue;}
+        .add-interviews tr:hover { background:rgb(0, 26, 255) !important;}
         
         .add-interviews th {
           padding-top: 12px;
@@ -444,4 +444,13 @@ word-wrap: break-word;}
 @keyframes toastFadeOut {
  0% {opacity: 1;}
  100% {opacity: 0;}
+}
+.empty-questions{
+  z-index: 30;
+  margin-top: 1%;
+  margin-bottom: 1%;
+    margin-left: 40%;
+    color: rgb(114, 109, 109);
+    font-size: large;
+    font-weight: bold;
 }

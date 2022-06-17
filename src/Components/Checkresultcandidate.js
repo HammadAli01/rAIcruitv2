@@ -9,35 +9,28 @@ export default function Checkresultinterviews() {
     const navigation = useNavigate();
     const handlePageSubmit = useCallback(() => navigation('/Interviewcandidateresultview', {replace: true}), [navigation]);
     const currentCandidatesLength=useRef(10);
-const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.com",marks:"80%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"80%"},
-{id:1,email:"zahidullah@gmail.com",marks:"74%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"65%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"90%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"81%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"70%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"60%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"44%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"55%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"75%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"90%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"70%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"60%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"50%"},
-{id:1,email:"hammadalibu@gmail.com",marks:"40%"},]);
-    const [current_candidates,setCandidates]=useState(AllCandidates.slice(0,9));
+const [AllCandidates,setAllCandidates]=useState([]);
+
+    const [current_candidates,setCandidates]=useState([]);
+useEffect(()=>{
+setAllCandidates([]);
+},[]);
+useEffect(()=>{
+  setCandidates(AllCandidates.slice(0,9));
+},[AllCandidates]);
     const fetchMoreData = () => {
-        currentCandidatesLength.current=currentCandidatesLength.current+3;
+        currentCandidatesLength.current=currentCandidatesLength.current+2;
         setTimeout(() => {
             setCandidates(AllCandidates.slice(0,(currentCandidatesLength.current)));
         }, 1000);
       };
       const handleSortButton=()=>{
+        if(AllCandidates.length!==0){
         let tempcandidates=[...current_candidates];
         //title sorting
         if(sortTitle!=="Select sort")
         {
-            if(sortTitle=="Ascending")
+            if(sortTitle=="Lowest")
             {
                 tempcandidates=tempcandidates.sort((a, b) => {
               if (parseInt(a.marks) < parseInt(b.marks))
@@ -47,7 +40,7 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
               return 0;
           });
         }
-        else if(sortTitle=="Descending"){
+        else if(sortTitle=="Highest"){
             tempcandidates=tempcandidates.sort((a, b) => {
               if (parseInt(a.marks) > parseInt(b.marks))
                   return -1;
@@ -58,13 +51,13 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
         }}
         setCandidates(tempcandidates);
         sortAllcandidates();
-        console.log("result is",tempcandidates,current_candidates);
+        console.log("result is",tempcandidates,current_candidates);}
       }
       const sortAllcandidates=()=>{
         let tempAllCandidates=[...AllCandidates];
         if(sortTitle!=="Select sort")
         {
-            if(sortTitle=="Ascending")
+            if(sortTitle=="Lowest")
             {
                 tempAllCandidates=tempAllCandidates.sort((a, b) => {
               if (parseInt(a.marks) < parseInt(b.marks))
@@ -74,7 +67,7 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
               return 0;
           });
         }
-        else if(sortTitle=="Descending"){
+        else if(sortTitle=="Highest"){
             tempAllCandidates=tempAllCandidates.sort((a, b) => {
               if (parseInt(a.marks) > parseInt(b.marks))
                   return -1;
@@ -87,18 +80,19 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
       }
   return (
     <div><div className='candidate-check-tablecontainer'>
-        <h2>Sort Candidates</h2>
+        <h3>Sort Candidates</h3>
         <div className='candidate-check-sortContainer'>
         <div className='candidate-Asorter'>
         
         <DropdownButton id="dropdown-basic-button" title={sortTitle} onSelect={(e)=>{setSorttitle(e)}}>
-        <Dropdown.Item eventKey="Ascending">Ascending</Dropdown.Item>
-        <Dropdown.Item eventKey="Descending">Descending</Dropdown.Item>
+        <Dropdown.Item eventKey="Lowest">Lowest</Dropdown.Item>
+        <Dropdown.Item eventKey="Highest">Highest</Dropdown.Item>
         </DropdownButton>
         </div> 
         <button onClick={()=>handleSortButton()}>sort</button>
         </div>
-<h2 className='candidate-check-tabletitle'>Interview Candidates</h2>
+<h3 className='candidate-check-tabletitle'>Interview Candidates</h3>
+{AllCandidates.length!==0?(
          <div className='candidate-check-table'>
          <InfiniteScroll
           dataLength={current_candidates.length}
@@ -112,7 +106,7 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
             <tr>
               <th>S/No</th>
               <th>Email</th>
-              <th>Marks</th>
+              <th>Score</th>
               <th>Action</th>
               
             </tr>
@@ -136,7 +130,8 @@ const [AllCandidates,setAllCandidates]=useState([{id:1,email:"hammadalibu@gmail.
         })} 
           </tbody>
         </table></InfiniteScroll>
-        </div>
-    </div> </div>
+        </div>):(<div className='empty-candidates'>No candidate has given interview yet</div>)}
+    </div>
+     </div>
   )
 }

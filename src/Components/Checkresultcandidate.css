@@ -5,7 +5,7 @@
   float: right;
   width: 80%;
   /* height: 100%; */
-  background-color: rgb(255, 255, 255);
+  background-color: #f1f4f6;
   padding: 40px;
   overflow: hidden;
   margin-top: 56px;
@@ -119,7 +119,7 @@ transform: translateX(0px) translateY(-1px);
     font-weight: normal;
     
     color: rgb(0, 0, 0);
-    background-color: #eeeeee;
+    background-color: #ffff;
     border-color: transparent;
     outline: 0px;
     margin-top: 10px;
@@ -127,27 +127,48 @@ transform: translateX(0px) translateY(-1px);
   .candidate-Asorter .btn-primary:hover {
    
     color: rgb(0, 0, 0);
-    background-color: transparent;
+    background-color: #ffff;
     border-color: black;
     outline: 0px;
     
-    
   }
+  /* .candidate-Asorter .btn-primary:focus,.candidate-Asorter .btn-primary:active {
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255) !important;
+    outline: 0px;
+    color: rgb(0, 0, 0);
+    border-color: black;
+    background-color: #ffff;
+  }
+  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active:focus,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active:focus,.Asorter .show> .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255) !important;
+    background-color: #ffff !important;
+    color: rgb(0, 0, 0);
+    border-color: black;
+   
+  }
+  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active,.Asorter .show> .btn-primary.dropdown-toggle {
+    color: rgb(0, 0, 0);
+    background-color: #ffff !important;
+    border-color: black;
+    
+  } */
   .candidate-Asorter .btn-primary:focus,.candidate-Asorter .btn-primary:active {
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255) !important;
     outline: 0px;
    
   }
-  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active:focus,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active:focus,.Asorter .show> .btn-primary.dropdown-toggle:focus {
+  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active:focus,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active:focus,.candidate-Asorter .show> .btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255) !important;
    
    
   }
-  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active,.Asorter .show> .btn-primary.dropdown-toggle {
+  .candidate-Asorter .btn-primary:not(:disabled):not(.disabled).active,.candidate-Asorter .btn-primary:not(:disabled):not(.disabled):active,.candidate-Asorter .show> .btn-primary.dropdown-toggle {
     color: rgb(0, 0, 0);
     background-color: transparent;
     border-color: black;
   }
+
+
   .candidate-Asorter .dropdown-menu{
     background-color: #ffffff;
     border: 1px solid rgba(0,0,0,.15);
@@ -191,4 +212,12 @@ transform: translateX(0px) translateY(-1px);
   .candidate-check-sortContainer button:focus{
     transform: translateX(-0.15em);
     outline:none;
+  }
+  .empty-candidates{
+    color: rgb(109, 109, 109);
+    font-size: large;
+    margin-left: 30%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-weight: bold;
   }

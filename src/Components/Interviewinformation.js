@@ -159,55 +159,100 @@ const change=()=>{
       }
       else{
         console.log("is template after submit is",is_Template);
-        if(is_Template==1){
-          console.log("DONE");
-const templateID=window.localStorage.getItem('current_template_Id');
-const APIDATA={
-  template_Id:templateID,
-  title: InterviewDetail.title,
-  generationDate: InterviewDetail.generationDate,
-  startDate: InterviewDetail.startDate,
-  endDate: InterviewDetail.endDate,
-  duration:InterviewDetail.duration,
-  type: InterviewDetail.type,
-  position:InterviewDetail.position ,
-  job_description:InterviewDetail.jobDescription ,
-  email: logged_user,
-}
-//write api for sending template data here
-console.log("API TEMPLATE DATA IS",APIDATA);
-window.localStorage.setItem('current_Interview', APIDATA.title);
-//window.localStorage.setitem("camefromtemplate",true);
-          handlePageSubmittemplate();
-        }else{
-console.log("GOING IN ELSE?/");
-        window.localStorage.setItem("interview_data",JSON.stringify(InterviewDetail));
-        handlePageSubmit();}
- 
-        // const response = await axios.post("/interview details", InterviewDetail).catch((err) => 
-      // {
-      //   alert("Error: ", err);
-      // });
+        const initial_Duration=""+InterviewDetail.duration;
+        if(initial_Duration.length==5){
+          if(initial_Duration.includes(":"))
+        {
+        const convert_Milliseconds=InterviewDetail.duration.split(":");
+        console.log("ALL MILLISECONDS:",convert_Milliseconds);
+        const convert_Milliseconds_Hours=parseInt(convert_Milliseconds.splice(0,1))*3600000;
+        const convert_Milliseconds_Minutes=parseInt(convert_Milliseconds)*60000;
+        InterviewDetail.duration=convert_Milliseconds_Hours+convert_Milliseconds_Minutes;
+        console.log("Duration inmilliseconds is:",InterviewDetail.duration/60000,"Hours are:",convert_Milliseconds_Hours,"minutes are:",convert_Milliseconds_Minutes);
+        if( InterviewDetail.duration/60000<5){
+          error={
+            jobTitleError:"",
+            positionTitleError:"",
+            positionTypeError:"",
+            durationError:"Duration cannot be less than 5 minutes",
+            jobDescriptionError:"",
+            sameDateError:""
+        };
+        setUserErrors(error);
+}else{  
+  console.log("Duration in fine");
+  if(is_Template==1){
+            console.log("DONE");
+            
+            
+  const templateID=window.localStorage.getItem('current_template_Id');
+  const APIDATA={
+    template_Id:templateID,
+    title: InterviewDetail.title,
+    generationDate: InterviewDetail.generationDate,
+    startDate: InterviewDetail.startDate,
+    endDate: InterviewDetail.endDate,
+    duration:InterviewDetail.duration,
+    type: InterviewDetail.type,
+    position:InterviewDetail.position ,
+    job_description:InterviewDetail.jobDescription ,
+    email: logged_user,
+  }
+  //write api for sending template data here
+  console.log("API TEMPLATE DATA IS",APIDATA);
+  window.localStorage.setItem('current_Interview', APIDATA.title);
+  //window.localStorage.setitem("camefromtemplate",true);
+            handlePageSubmittemplate();
+          }else{
+  console.log("GOING IN ELSE?/");
+          window.localStorage.setItem("interview_data",JSON.stringify(InterviewDetail));
+          handlePageSubmit();}
+   
+          // const response = await axios.post("/interview details", InterviewDetail).catch((err) => 
+        // {
+        //   alert("Error: ", err);
+        // });
+  
+        // if (response) {
+           setInterviewDetail({
+            id:1,
+            title:"",
+            generationDate:"",
+            startDate:"",
+            endDate:"",
+            duration:"",
+            type:"",
+            position:"",
+            jobDescription:""
+          });
+        //}
+          
+          
+        
 
-      // if (response) {
-         setInterviewDetail({
-          id:1,
-          title:"",
-          generationDate:"",
-          startDate:"",
-          endDate:"",
-          duration:"",
-          type:"",
-          position:"",
-          jobDescription:""
-        });
-      //}
-        
-        
       }
-      
-    }
-    
+        }else{
+          error={
+            jobTitleError:"",
+            positionTitleError:"",
+            positionTypeError:"",
+            durationError:"Kindly enter the duration in the specified format",
+            jobDescriptionError:"",
+            sameDateError:""
+        };
+        setUserErrors(error);
+        }}else{
+          error={
+            jobTitleError:"",
+            positionTitleError:"",
+            positionTypeError:"",
+            durationError:"Kindly enter the duration in the specified format",
+            jobDescriptionError:"",
+            sameDateError:""
+        };
+        setUserErrors(error);
+        } }
+  }
       const interviewdate=document.getElementById("interviewdate");
       if(interviewdate!==null){
     interviewdate.addEventListener("keydown", function (e) {

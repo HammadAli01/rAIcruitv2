@@ -5,12 +5,12 @@
   float: right;
   width: 80%;
   /* height: 100%; */
-  background-color: rgb(255, 255, 255);
+  background-color: #f1f4f6;
   padding: 40px;
   overflow: hidden;
     }
     .check-tabletitle{
-      margin-top: 3%;
+      margin-top: 5.5%;
         color:black;
 
     }
@@ -20,7 +20,7 @@
   min-width: 100%;
   min-height: 100%;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 0 0 40px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 0 40px 0 rgb(0 0 0 / 8%);
   overflow:hidden;
   
  
@@ -52,9 +52,10 @@
   padding-bottom: 18px;
   
     font-size: 18px;
-    color: #464646;
+    color: white;
     line-height: 1.4;
-    background-color: #dbdfff;
+    /*#a5aef5*/
+    background-color: #6c7ae0;
   }
   .check-interviews tbody {
     /* background-color: aliceblue;
