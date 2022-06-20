@@ -1,140 +1,147 @@
 import React,{useEffect,useState,useRef} from 'react'
 import './Category.css';
+import  axios  from 'axios'
 export default function Category() {
     const maxOption=useRef();
-    const [categoryName,setcategoryName]=useState({});
+   
     const [questions,setQuestions]=useState([]);
+    const categoryData=JSON.parse(window.localStorage.getItem("SelectedCategory"));
+    console.log("categoty data",categoryData);
+    const getCategoryQuestions=async()=>{
+      console.log("callind api id is",categoryData.id);
+  const response = await axios.get(`${process.env.REACT_APP_API_KEY}/get/question/by/category?category_id=${categoryData.id}`).catch((err) => {
+  console.log("Error:", err);
+});
+if (response ) {
+  console.log(response.data);
+    setQuestions(response.data.Questions);
+}
+    };
   useEffect(()=>{
-    setcategoryName(JSON.parse(window.localStorage.getItem('SelectedCategory')));
-      console.log("category name got is",categoryName.id,categoryName.name);
-       // const response = await axios.get("https://raicruittest.herokuapp.com/get/all/question").catch((err) => {
-//   console.log("Error:", err);
-// });
-// if (response ) {
-//     setQuestions(response.data.Questions);
-// }
-setQuestions([
-    {
-      id: "1",
-      username:"admin",
-      stem: "How was your day ",
-      CategoryName: "Icebreakers",
-      optionArray: [
-        {
-          id: 101,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 102,
-          optionText: "option2",
-          optionWeightage: "70"
-        },
-        {
-          id: 103,
-          optionText: "option3",
-          optionWeightage: "80"
-        },
-        {
-          id: 104,
-          optionText: "option4",
-          optionWeightage: "90"
-        }
-      ]
-    },
-    {
-      id: "111",
-      username:"admin",
-      stem: "dummy question ",
-      CategoryName: "Icebreakers",
-      optionArray: []
+    getCategoryQuestions();
+     
+// setQuestions([
+//     {
+//       id: "1",
+//       username:"admin",
+//       stem: "How was your day ",
+//       CategoryName: "Icebreakers",
+//       optionArray: [
+//         {
+//           id: 101,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 102,
+//           optionText: "option2",
+//           optionWeightage: "70"
+//         },
+//         {
+//           id: 103,
+//           optionText: "option3",
+//           optionWeightage: "80"
+//         },
+//         {
+//           id: 104,
+//           optionText: "option4",
+//           optionWeightage: "90"
+//         }
+//       ]
+//     },
+//     {
+//       id: "111",
+//       username:"admin",
+//       stem: "dummy question ",
+//       CategoryName: "Icebreakers",
+//       optionArray: []
         
-    },
-    {
-      id: "2",
-      username:"admin",
-      stem: "How are you feeling",
-      CategoryName: "Icebreakers",
-      optionArray: [
-        {
-          id: 101,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 102,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 103,
-          optionText: "option1",
-          optionWeightage: "100"
-        },
-        {
-          id: 104,
-          optionText: "option1",
-          optionWeightage: "60"
-        }
-      ]
-    },
-    {
-      id: "3",
-      username:"admin",
-      stem: "Do you have working expereince",
-      CategoryName: "Experience",
-      optionArray: [
-        {
-          id: 101,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 102,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 103,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 104,
-          optionText: "option1",
-          optionWeightage: "100"
-        }
-      ]
-    },
-    {
-      id: "13",
-      username:"admin",
-      stem: "Do you think you are qualified enough for this position",
-      CategoryName: "Experience",
-      optionArray: [
-        {
-          id: 101,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 102,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 103,
-          optionText: "option1",
-          optionWeightage: "60"
-        },
-        {
-          id: 104,
-          optionText: "option1",
-          optionWeightage: "60"
-        }
-      ]
-    }
-  ]);
+//     },
+//     {
+//       id: "2",
+//       username:"admin",
+//       stem: "How are you feeling",
+//       CategoryName: "Icebreakers",
+//       optionArray: [
+//         {
+//           id: 101,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 102,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 103,
+//           optionText: "option1",
+//           optionWeightage: "100"
+//         },
+//         {
+//           id: 104,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         }
+//       ]
+//     },
+//     {
+//       id: "3",
+//       username:"admin",
+//       stem: "Do you have working expereince",
+//       CategoryName: "Experience",
+//       optionArray: [
+//         {
+//           id: 101,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 102,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 103,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 104,
+//           optionText: "option1",
+//           optionWeightage: "100"
+//         }
+//       ]
+//     },
+//     {
+//       id: "13",
+//       username:"admin",
+//       stem: "Do you think you are qualified enough for this position",
+//       CategoryName: "Experience",
+//       optionArray: [
+//         {
+//           id: 101,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 102,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 103,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         },
+//         {
+//           id: 104,
+//           optionText: "option1",
+//           optionWeightage: "60"
+//         }
+//       ]
+//     }
+//   ]);
   },[]);
   const checkOptions=(optionArray)=>{
    
@@ -152,9 +159,9 @@ console.log("admin-result max is",maxOption.current);
 }
     return (
     <div className='a-category-page'>
-        <h3>{categoryName.name} Cateogry</h3>
+        <h3>{categoryData.name} Cateogry</h3>
         <div className='admin-interviewTemplatemainmenu-container'>
-        {questions.map((question,index)=>{
+        {questions.length!==0?(questions.map((question,index)=>{
             if(question.optionArray.length!==0){
             checkOptions(question.optionArray);}else{}
             return(
@@ -172,7 +179,7 @@ console.log("admin-result max is",maxOption.current);
                 })}</ul>
                 </div>
             )
-        })}
+        })):(<div className='empty-questions'>No questions exist</div>)}
         </div>
         </div>
   )

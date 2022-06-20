@@ -1,15 +1,18 @@
 
 import React,{useState,useCallback} from 'react';
 import "./Signup.css";
-import logo from '../Assets/mainmenu/bot.jpg';
+import logo from '../Assets/mainmenu/raicruitlogo.PNG';
 import chat from '../Assets/mainmenu/signupimg.png';
-
+import { Toast } from 'react-bootstrap';
 import { BsFacebook,BsYoutube,BsWhatsapp,BsTwitter,BsInstagram } from "react-icons/bs";
 import Signin from './Signin';
 import { Link } from 'react-router-dom'
 import {useNavigate} from 'react-router-dom';
 import Axios from 'axios';
 export default function Signup() {
+    const [showA, setShowA] = useState(false);
+    const toggleShowA = () => setShowA(!showA);
+    console.log("assesed env is",process.env);
     //Field states
     const navigation = useNavigate();
 const [userData,setUserData]=useState({
@@ -26,6 +29,10 @@ const changeHandler=(e)=>{
 //error states
 let error;
 const [userErrors,setUserErrors]=useState({});
+const sleep = async (milliseconds) => {
+    console.log("sleep called");
+    return await new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
 const formSubmitHandler=async(e)=>{
     e.preventDefault();
     
@@ -38,11 +45,17 @@ const formSubmitHandler=async(e)=>{
         
         first_name: userData.firstName,
         last_name:  userData.lastName,
-        password:  userData.userPassword}
-        console.log("call the api",user_data);
-         const response =await Axios.post('https://raicruittest.herokuapp.com/user/create/', user_data).then(response => {
-             console.log("first response",response.data); 
+        password:  userData.userPassword,
+        gender:"Male",
+        user_Image:"blob:http://localhost:3000/7edcd3ee-aa3d-402a-9eb0-dddc625baab9",
+        is_admin:false,
+    
+    }
+        console.log("call the api",user_data,"API IS",process.env.REACT_APP_API_KEY);
+         const response =await Axios.post(`${process.env.REACT_APP_API_KEY}/user/create/`, user_data).then(response => {
+             console.log("Signup response",response.data); 
              if(response.data.user_email_status==false){
+               
                 error={
                     userFirstNameError:"",
                     userLastNameError:"",
@@ -51,11 +64,14 @@ const formSubmitHandler=async(e)=>{
                     confirmPasswordError:"",
                     userCompanyNameError:"",
                 };
-                setUserErrors(error);
-             }
-             else if(response.data.signup_status==true){
-                window.localStorage.setItem('user_Id', JSON.stringify(user_data.email));
-                console.log("stored is",JSON.stringify(response.data.user_id));
+                setUserErrors(error);}
+             
+             else if(response.data.user_email_status==true){
+                setShowA(!showA);
+               
+                //show toast go to login
+                // window.localStorage.setItem('user_Id', JSON.stringify(user_data.email));
+                // console.log("stored is",JSON.stringify(response.data.user_id));
              setUserData({
                 firstName:"",
                 lastName:"",
@@ -66,11 +82,11 @@ const formSubmitHandler=async(e)=>{
           });
           document.getElementById("password-input").value="";
           document.getElementById("confirm-password-input").value="";
-          handlePageSubmit();
+         // handlePageSubmit();
          }
         })
          .catch(error => {
-             console.error('There was an error!', error);
+             alert('There was an error while signup because of server kindly try again');
          });
         
      
@@ -84,7 +100,7 @@ const formSubmitHandler=async(e)=>{
     }
    
 }
-const handlePageSubmit = useCallback(() => navigation('/dashboard', {replace: true}), [navigation]);
+const handlePageSubmit = useCallback(() => navigation('/signin', {replace: true}), [navigation]);
 
 const checkErrors=()=>{
     error={
@@ -174,13 +190,13 @@ const checkErrors=()=>{
                         <input type="text" className="form-input" id="first-name-input"  value={userData.firstName}
                     placeholder=" "  name="firstName" required onChange={(e)=>{changeHandler(e)}}/>
                     <label className="form-label" onClick={e=>{labelclicked("first-name-input")}}>First Name</label>
-                    {userErrors.userNameError && <p className="field-error">{userErrors.userNameError}</p>}
+                    {userErrors.userFirstNameError && <p className="field-error">{userErrors.userFirstNameError}</p>}
                     </div>
                     <div className="form-group">
                         <input type="text" className="form-input" id="last-name-input"  value={userData.lastName}
                     placeholder=" "  name="lastName" required onChange={(e)=>{changeHandler(e)}}/>
                     <label className="form-label" onClick={e=>{labelclicked("last-name-input")}}>Last Name</label>
-                    {userErrors.userNameError && <p className="field-error">{userErrors.userNameError}</p>}
+                    {userErrors.userLastNameError && <p className="field-error">{userErrors.userLastNameError}</p>}
                     </div>
                     <div class="form-group">
                         <input type="email" className="form-input" id="email-input" name="userEmail" value={userData.userEmail}
@@ -214,6 +230,20 @@ const checkErrors=()=>{
                         Let's Get Started
                     </button>
                 </form>
+                <div className='signup-toast'>
+                <Toast show={showA} onClose={handlePageSubmit} className='toast1' position='bottom-center' delay={2000} autohide>
+          <Toast.Header>
+            {/* <img 
+              src=""   delay={2000} autohide
+              className="rounded me-2"
+              alt="Notification"
+            /> */}
+            <strong className="me-auto">Message</strong>
+            <small>now</small>
+          </Toast.Header>
+          <Toast.Body>Signup successfull</Toast.Body>
+        </Toast>
+        </div>
             </div>
          </div>
     </div>

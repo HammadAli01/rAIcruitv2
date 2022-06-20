@@ -211,7 +211,7 @@ margin-bottom: 50%;
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0px;
+  top: 1px !important;
   left: 0;
   right: 0;
   bottom: 15px;

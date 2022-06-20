@@ -10,14 +10,14 @@
 .question{
     margin-top: 56px;
 position: absolute;
-width: 25%;
+width: 20%;
 height: 91.5%;
 }
 .interview{
     margin-top: 56px;
     position: relative;
     float: right;
-    width: 69%;
+    width: 75%;
     margin-left: 3%;
     margin-right: 3%;
     height: 100%;

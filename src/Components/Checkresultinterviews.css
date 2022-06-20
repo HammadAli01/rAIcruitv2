@@ -62,7 +62,7 @@
     */
     
    overflow: scroll;
-   height:350px;
+   /* height:350px; 270 works*/
 
   }
   .check-interviews tr:nth-child(even){background-color: #f8f6ff;}

@@ -1,6 +1,6 @@
 import React,{useState,useCallback} from 'react'
 import "./Signup.css";
-import logo from '../Assets/mainmenu/bot.jpg';
+import logo from '../Assets/mainmenu/raicruitlogo.PNG';
 import chat from '../Assets/mainmenu/loginsideimg.png';
 import { Link } from 'react-router-dom'
 import { BsFacebook,BsYoutube,BsWhatsapp,BsTwitter,BsInstagram } from "react-icons/bs";
@@ -13,9 +13,7 @@ export default function Signin() {
     userPassword:"",
    
 });
-const headers = { 
-    'Content-Type': 'application/json'
-};
+
 const changeHandler=(e)=>{
     setUserData({...userData,[e.target.name]:e.target.value});
 }
@@ -31,45 +29,70 @@ const formSubmitHandler=async(e)=>{
     {   
         setUserErrors(error);
         console.log("call the api",userData);
-        window.localStorage.setItem('user_Id', userData.userEmail);
-        handlePageSubmit();
-        // const response =await Axios.post(`https://raicruittest.herokuapp.com/login?email=${userData.userEmail}&password=${userData.userPassword}`).then(response => {
-        //      console.log("first response",response.data); 
-        //      error={
-        //         userEmailError:"",
-        //         userPasswordError:"",
-        //     };
-        //      if(response.data.user_email_status==false){
-        //         error.userEmailError="User doesn't exist. Try signup"
-        //         setUserErrors(error);
-        //      }
-        //      if(response.data.user_email_status==true){
-        //         if(response.data.password_status==false){
-        //             error.userPasswordError="Password Incorrect";
-        //             setUserErrors(error);
-        //         }
-        //      }
-        //      else if(response.data.email_status==true){
-        //          if(response.data.password_status==true){
-        //             //console.log("stored is",JSON.stringify(response.data.user_id));
-        //             //localStorage.setItem('rememberMe', "hello");
-        //            // window.localStorage.setItem('user_Id', response.data.user_id);
-        //        //document.cookie = "user_id=${John Doe}"; 
-        //        window.localStorage.setItem('user_Id', userData.userEmail);
-        //        console.log("stored is",window.localStorage.getItem('user_Id'));
-        //      setUserData({
-        //         userEmail:"",
-        //         userPassword:"",
-        //   });
-        //   document.getElementById("email-input").value="";
-        //   document.getElementById("password-input").value="";
-        //   handlePageSubmit();
-        //  }
-        // }
-        // })
-        //  .catch(error => {
-        //      console.error('There was an error!', error,"headers passed are",headers);
-        //  });
+        // window.localStorage.setItem('user_Id', userData.userEmail);
+        // handlePageSubmit();
+        const response =await Axios.post(`${process.env.REACT_APP_API_KEY}/login?email=${userData.userEmail}&password=${userData.userPassword}`).then(response => {
+             console.log("first response in login",response); 
+             error={
+                userEmailError:"",
+                userPasswordError:"",
+            };
+             if(response.data.user_email_status==false){
+                console.log("here1");
+                error.userEmailError="User doesn't exist. Try signup"
+                setUserErrors(error);
+             }
+             if(response.data.enable_status==false){
+                console.log("hereenable");
+                error.userEmailError="Your account has been disabled";
+                setUserErrors(error);
+             }
+             if(response.data.is_enable==false){
+                console.log("hereenable");
+                error.userEmailError="Your account has been disabled";
+                setUserErrors(error);
+             }
+             if(response.data.enable_status!==false||response.data.is_enable!==false){
+             if(response.data.user_email_status==true){
+                console.log("here2");
+                if(response.data.password_status==false){
+                    error.userPasswordError="Password Incorrect";
+                    setUserErrors(error);
+                }
+             }}
+              if(response.data.user_email_status==true){
+                console.log("here3");
+                 if(response.data.password_status==true){
+                    console.log("ALL USER DATA BY ZAHID IS,",response.data);
+                   
+               window.localStorage.setItem('user_Id', response.data.id);
+               window.localStorage.setItem('user_first_name', response.data.first_name);
+               window.localStorage.setItem('user_last_name', response.data.last_name);
+               window.localStorage.setItem('user_gender', response.data.gender);
+               window.localStorage.setItem('user_email', response.data.email);
+               window.localStorage.setItem('user_company', response.data.company_name);
+               window.localStorage.setItem('user_image', response.data.user_image);
+               window.localStorage.setItem('user_password', response.data.hashed_password);
+              
+
+           //    console.log("user data got is",response.data);
+             setUserData({
+                userEmail:"",
+                userPassword:"",
+          });
+          document.getElementById("email-input").value="";
+          document.getElementById("password-input").value="";
+          if(response.data.is_admin==true){
+            handleadminpagesubmit();}else{
+            
+            handlePageSubmit();
+          }
+         }
+        }
+        })
+         .catch(error => {
+             console.error('There was an error!', error);
+         });
         
         // //handlePageSubmit();
         
@@ -82,7 +105,7 @@ const formSubmitHandler=async(e)=>{
    
 }
 const handlePageSubmit = useCallback(() => navigation('/dashboard', {replace: true}), [navigation]);
-
+const handleadminpagesubmit= useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
 const checkErrors=()=>{
     error={
        

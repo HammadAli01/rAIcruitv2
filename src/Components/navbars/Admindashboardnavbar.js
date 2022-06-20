@@ -1,11 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState,useCallback} from 'react'
 import './Admindashboardnavbar.css'
 import { Navbar,Nav,Container } from 'react-bootstrap';
 import { BsList,BsCaretDownFill } from "react-icons/bs";
 import Sidebar from './Adminsidebar';
 import userImg from '../../Assets/mainmenu/profile.jpg';
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 export default function Admindashboardnavbar(props) {
+    
     const [sidebar,showSidebar]=useState(props.side);
 const changesidebarstatus=()=>{
     showSidebar(!sidebar);  
@@ -14,7 +16,12 @@ const [showsignout,setShowSignOut]=useState(false);
 const signOut=()=>{
     window.localStorage.removeItem('user_Id');
     console.log("signout",window.localStorage.getItem('user_Id'));
+    handlePageSingout();
 }
+const navigation = useNavigate();
+const handlePageSingout= useCallback(() => navigation('/home', {replace: true}), [navigation]);
+   
+
   return (
     <div className='adminnavbar'> <Navbar >
     <Container >

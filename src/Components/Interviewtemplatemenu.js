@@ -40,7 +40,7 @@ const [interview,setInterview]=useState(JSON.parse(window.localStorage.getItem('
 //     console.log(JSON.parse(window.localStorage.getItem('current_Selected_Template')));
 // },[]);
 const handleuseFlow=()=>{
-  window.localStorage.setItem('current_template_Id',interview.id);
+  window.localStorage.setItem('current_template_Rules',JSON.stringify(interview.template_Rules));
   window.localStorage.setItem("Is_Template",1);
   handlePageSubmit();
 }

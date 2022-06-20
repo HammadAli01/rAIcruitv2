@@ -2,9 +2,10 @@ import React,{useRef,useState,useEffect,useCallback} from 'react'
 import Admindashboardnavbar from '../Components/navbars/Admindashboardnavbar';
 import './AdminManageprofile.css';
 import {useNavigate} from 'react-router-dom';
-import tempprofile from '../Assets/mainmenu/DSC.png';
+// import tempprofile from '../Assets/mainmenu/DSC.png';
+import tempprofile from '../Assets/mainmenu/loginsideimg.png';
 export default function AdminManageprofile() {
-  const userdetails={userName:"Hammad Ali",email:"hammadalibu@gmail.com",password:"andrea",companyName:"magich,isb",gender:"Male"}
+  const userdetails={userName:"Hammad Ali",email:"hammadalibu@gmail.com",password:"andrea",companyName:"magich,isb",gender:"Male",user_Image:"blob:http://localhost:3000/7edcd3ee-aa3d-402a-9eb0-dddc625baab9"}
   const navigation = useNavigate();
     const handlePageSubmit = useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
   const [userData,setUserData]=useState(userdetails);
@@ -30,9 +31,11 @@ export default function AdminManageprofile() {
 
       reader.onload = function(event) {
         imgtag.src = event.target.result;
-        console.log("imgsrc",imgtag.src);
+        //console.log("imgsrc",imgtag.src);
+        userData.user_Image=URL.createObjectURL(selectedFile);
+      console.log("here is",userData.user_Image,"and tag is",imgtag.src);
       };
-
+      
       reader.readAsDataURL(selectedFile);
   
     };
@@ -115,7 +118,7 @@ export default function AdminManageprofile() {
     <div >
        <Admindashboardnavbar  side={true}/>
        <div className='userprofileparent'>
-    <div className='userprofilefirstchild'><img id="imageid" className='userProfile' src={tempprofile} alt="userimg"  onClick={handleClick}></img>
+    <div className='userprofilefirstchild'><img id="imageid" className='userProfile' src={userdetails.user_Image} alt="userimg"  onClick={handleClick}></img>
     <input type="file"
              ref={hiddenFileInput}
              onChange={(e)=>{handleChange(e)}}
@@ -129,12 +132,12 @@ export default function AdminManageprofile() {
       <div className="form-Group">
         <input type="text" className="form-Input" id="name-input" value={userData.userName}
         placeholder=" "  name="userName" required onChange={(e)=>{changeHandler(e)}}/>
-        <label className="form-Label" onClick={e=>{labelclicked("name-input")}}>Full Name</label>
+        <label className="form-Label" onClick={e=>{labelclicked("name-input")}}>Name</label>
         {userErrors.userNameError && <p className="field-Error">{userErrors.userNameError}</p>}
       </div>
       <div className="form-Group">
                         <input type="email" className="form-Input" id="email-input" name="email" value={userData.email}
-                        placeholder=" " required onChange={(e)=>{changeHandler(e)}}/>
+                        placeholder=" " disabled={true} required onChange={(e)=>{changeHandler(e)}}/>
                         <label className="form-Label" onClick={e=>{labelclicked("email-input")}}>Email Address</label>
                         {userErrors.emailError && <p className="field-Error">{userErrors.emailError}</p>}
                     </div>

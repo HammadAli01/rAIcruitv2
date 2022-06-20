@@ -102,7 +102,7 @@ border: 1px solid lightgrey;
     line-height: 1.5;
     color: #212529;
     text-align: left;
-    margin-left: -25px;
+    margin-left: -30px;
     }
     .question_Stem span{
         position: relative;
@@ -122,4 +122,7 @@ border: 1px solid lightgrey;
         right: 50%;
         margin-top: 60px;
         margin-bottom: 10px;
+    }
+    .trans-bye-chat{
+        margin-left: 0px !important;
     }

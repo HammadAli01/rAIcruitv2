@@ -40,8 +40,10 @@ const getId = () => `dndnode_${id++}`;
 const tempUpdatedId = () =>id++ ;
 export default function DesignFlow() {
   
-//logged user
-const logged_user=window.localStorage.getItem('user_Id');
+//logged user 
+const logged_user=window.localStorage.getItem('user_email');
+const logged_user_id=window.localStorage.getItem('user_Id');
+
 console.log("user got in flow is",logged_user);
 //const logged_user="hammadalibu@gmail.com";
 const [toast_text,setToastText]=useState();
@@ -66,14 +68,17 @@ const toggleShowA = () => {
   const [nodeFound,setnodeFound]=useState({node_id:'',question_id:'',stem:'',optionArray:[{id:'',optionText:'',optionWeightage:''}],CategoryName:'',username:'',question_weight:''});
   const [stem,setStem]=useState();
   const [sourcehandlecount,setsourcehandlecount]=useState({sourcecount:1,sourceid:''});
- 
+  const updateNodeList=useRef([{old_Question_Id:'',new_Question_Id:''}])
+
   const [deleteButtonIds,setDeleteButtonIds]=useState([{id:''}]);
     const [optionList,setoptionList]=useState([{id:count,optionText: '',optionWeightage: ''}]);
     const [question_weight,setQuestionWeightage]=useState();
   //const [updateQuestion,setUpdatedQuestion]=useState({node_id:'',question_id:'',stem:'',option:[{id:'',optionText:'',optionWeightage:''}],category:'',userName:''});
   edgeData.current=edgeData.current.filter(edge=>(!(edge.edge_id=='')));
   question.current=question.current.filter(node=>(!(node.node_id=='')));
-    const [show, setShow] = useState(false);
+  updateNodeList.current=updateNodeList.current.filter(node=>(!(node.old_Question_Id=='')));
+ 
+  const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const dropDownTitle=useRef("A");
@@ -112,7 +117,7 @@ const toggleShowA = () => {
     {
     count=Math.ceil(Math.random()*99999999);
     //id=count;
-    setoptionList([...optionList, {id:count, optionText: '', optionWeightage: '' }]);
+    setoptionList([...optionList, {id:count, optionText: '', optionWeightage: '25' }]);
     };
   //reactflow states
   const reactFlowWrapper = useRef(null);
@@ -123,6 +128,7 @@ const toggleShowA = () => {
   //data functions
   useEffect(()=>{
    console.log("in useeffect nodefound changed",nodeFound);
+   //here
    setoptionList(nodeFound.optionArray);
    setStem(nodeFound.stem);
    setQuestionWeightage(nodeFound.question_weight);
@@ -142,10 +148,12 @@ const toggleShowA = () => {
 
         //console.log("FIND NODE CALLED(Node_id)",node.node_id,"(question ID):",node.question_id," question stem: ",node.stem,
        //"options: ",node.option," Category: ",node.category,"username: ",node.userName);
-       const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.question_weight}
+      console.log("node to be copied is ",node);
+       const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.stemweightage}
        setnodeFound(tempnode);
        setQuestionWeightage(nodeFound.question_weight);
-       //console.log("Question node is",node);
+
+       console.log("Weight here is",node.question_weight);
        //console.log("updated node value",nodeFound);
        handleShow();
       }
@@ -173,6 +181,7 @@ const handleCloseUpdateQuestion=()=>{
     console.log("optinlist is",optionList);
       if(nodeFound.optionArray===optionList){
         console.log("option same");
+        
         //setoptionList(nodeFound.optionArray);
         notchanged2=true;
         optionschanged=false;
@@ -181,10 +190,7 @@ const handleCloseUpdateQuestion=()=>{
         notchanged3=true;
         weightagechanged=false;
       }
-      if(stemchanged===false || optionschanged===false || weightagechanged===false){
-        console.log("noneupdated");
-      handleClose();
-    }
+     
       //check weightage here too 
     if(notchanged1==false||notchanged2==false ||notchanged3==false){
       console.log("not change is false something updated optionlist is",optionList);
@@ -198,7 +204,7 @@ const handleCloseUpdateQuestion=()=>{
   console.log("updated nodefound in handlesubmit is",nodeFound);
   const addques={CategoryName: '',
   stem: '',
-  question_weight: '',
+  question_weight: 1,
   optionArray:[
           {
             id: 1,
@@ -206,21 +212,37 @@ const handleCloseUpdateQuestion=()=>{
             optionWeightage: ''
           }
         ],
-  email: ''};
+  user_id: logged_user_id};
   addques.stem=nodeFound.stem;
   addques.question_weight=question_weight;
 addques.optionArray=nodeFound.optionArray;
-addques.email=nodeFound.username;
+
 addques.CategoryName=nodeFound.CategoryName;
-  const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", addques).catch((err) => 
-  {
-    console.log("Error: ", err);
-  });
-  if (response)  {
-    console.log("reponse by post question is",response.data);
-    nodeFound.question_id=response.data.question_id;
-  }
-  //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
+let isSomethingempty=false;
+if(addques.stem.length==0){
+  isSomethingempty=true;
+}
+addques.optionArray.map((option)=>{
+if(option.optionText.length==0){
+  isSomethingempty=true;
+  alert("Kindly input all options");
+}
+});
+
+if(isSomethingempty==false) {
+  if(stemchanged===false || optionschanged===false || weightagechanged===false){
+    console.log("noneupdated");
+  handleClose();
+}
+  console.log("adding update question");
+  const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/user/question`, addques).catch((err) => 
+{
+  //incase of server down
+  alert("There was an error while updating .Kindly try again");
+});
+if (response)  {
+  console.log("reponse by post question is",response.data);
+  updateNodeList.current.push({old_Question_Id:nodeFound.question_id,new_Question_Id:response.data.question_id});
   console.log("API DONE",nodeFound.question_id);
   //update question in array
   updateQuestion();
@@ -248,8 +270,12 @@ addques.CategoryName=nodeFound.CategoryName;
     console.log("updated question did not had any edges");
     handleClose();
   }
+  // yay nodeFound.question_id=response.data.question_id;
+}
+  //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
+  
     }
-  }
+     } }
   const updateQuestion=()=>
   {
     question.current.map((node)=>
@@ -382,16 +408,37 @@ addques.CategoryName=nodeFound.CategoryName;
     //   document.getElementsByClassName("react-flow__nodes")[i].style.zIndex = 2;
     // }
     question.current.map((currentNode)=>
-    {
+    { let exist_edge=false;
      // console.log("node id",currentNode.node_id,"current id:",currentNode.question_id,"Source id:",sourceid);
       if(currentNode.node_id===sourceid)
-      {
+      { //removing already made edge option for the new edge option values
+    let tempoptions=[];
+    currentNode.option.map((questionOption)=>{
+      let optionfound=false;
+titleArray.current.map((title)=>{if(title.source_id==sourceid){
+if(questionOption.optionText==title.selectedTitle){
+  optionfound=true;
+}}
+});
+if(optionfound==false){
+  console.log("new option adding",questionOption);
+tempoptions.push(questionOption);
+}else{
+  console.log("option already added",questionOption);
+}
+    });
+    dropdownValues.current=tempoptions;
+    console.log("dp options after loop are",dropdownValues.current);
+if(tempoptions.length==0){
+  exist_edge=false;
+}else{ }
+if(exist_edge==true){
+  
         dropdownValues.current=currentNode.option;
-
+}
         // dropdownValues.current.shift();
         //console.log("Dropdown values: ",dropdownValues);
-      }
-      else
+      }     else
       {
        // console.log("A setcurrent setting dp value iteration passsed");
       }
@@ -456,6 +503,7 @@ addques.CategoryName=nodeFound.CategoryName;
     {
       console.log("item value changed");
     }
+    console.log("current edges are",edgeData.current);
       console.log("edge parameters: id:",id," source id: ",source," target :",target,"selected Option: ",selectedOption);
 
   }
@@ -466,8 +514,39 @@ addques.CategoryName=nodeFound.CategoryName;
  //react flow functions
   const onConnect = (params) => {
     console.log("params are",params);
+    let isopenended=false,ismade=false;
     if(params.source!=="0"){
-    setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+      const edgeArray = [];
+      const nodeArray = [];
+      elements.map((els) => 
+      {
+        if (isEdge(els)) 
+        {
+          return edgeArray.push(els);
+        }
+        else 
+        {
+          return nodeArray.push(els);
+        }
+      });
+      edgeArray.map((edge)=>{
+        if(edge.source==params.source){
+
+question.current.map((currentQuestion)=>{
+  if(currentQuestion.node_id==params.source){
+    if(currentQuestion.option.length==0){
+      isopenended=true;
+      ismade=true;
+      alert("Open ended question can have only one outgoing edge");
+    }
+  }
+        });
+        if(isopenended==false){
+          ismade=true;
+      setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+
+      }});if(ismade==false){ setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+     }
   else{
     if(sourcehandlecount.sourcecount==1) { setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els));
     //const temp={};
@@ -482,6 +561,33 @@ alert("There can only be one starting question");}
   const onElementsRemove = (elementsToRemove) =>
   {
     console.log("element remove called",elementsToRemove);
+    if(elementsToRemove[0].type== "customedge"){
+      if(elementsToRemove[0].source== 0){
+        sourcehandlecount.sourcecount=1;
+        sourcehandlecount.sourceid='';
+      }
+    }
+    elementsToRemove.map((currentelement)=>{
+      
+      if(currentelement.type=="customedge"){
+       
+        titleArray.current.map((title)=>{
+         
+      if(title.source_id==currentelement.source){
+       
+        if(title.target_id==currentelement.target){
+          
+          titleArray.current=titleArray.current.filter((ctitle)=>{
+            if(ctitle!==title){return true};
+        }
+         );
+        console.log("titlearra after filter are",titleArray.current);
+        }
+      }
+        });
+        console.log("after element removal title are",titleArray.current);
+      }
+          });
     //first checking if source edge is deleted then restoring the source edge state
     
     let isStartEnd=false;
@@ -583,7 +689,7 @@ console.log("error is ",error);
   }
   if(res===true)
   {
-    console.log("edge array: ",edgeArray.length,"edgedataarray:",edgeData.current.length);
+    console.log("edge array: ",edgeArray,"edgedataarray:",edgeData.current);
     if((edgeArray.length)==edgeData.current.length)
     {
       console.log("All eddges have options selected");
@@ -592,6 +698,7 @@ console.log("error is ",error);
      
       console.log("edges are without json: ",edgeData.current);
       sendFlow();
+      
      
     }
     else
@@ -614,6 +721,15 @@ const convertEdgesId=()=>{
       }
     });
   });
+  edgeData.current.map((edge)=>{
+    updateNodeList.current.map((update_Node)=>{
+    if(edge.source==update_Node.old_Question_Id){
+      edge.source=update_Node.new_Question_Id;
+    }else if(edge.target==update_Node.old_Question_Id){
+      edge.target=update_Node.new_Question_Id;
+    }
+    });
+      });
 }
 useEffect(()=>{
   console.log("toast text is",toast_text);
@@ -638,24 +754,28 @@ const sendFlow=async()=>{
   edge: edgeData.current
   }
   console.log("data sended to api is",data_to_send);
-  setToastText("Design Saved");
+  
   //remove the below cmnt
-  // const response = await axios.post("https://raicruittest.herokuapp.com/add/interview", data_to_send).catch((err) => 
-  //     {
-  //       console.log("Error: ", err);
-  //     });
-  //     if (response.status==200)  {
+  let er=false;
+  const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/interview`, data_to_send).catch((err) => 
+      {
+        console.log("Error: ", err);
+        sendFlow();
+      });
+
+      if(er==false){ 
+        if(response.status==200)  {
         
-  //       if(response.data.Message=="Successfully stored interview")
-  //       {
-  //         setToastText(response.data.Message);
-  //       console.log("reponse is all good receved");
-  //       window.localStorage.setItem('current_Interview', temp_detail.title);
-  //       }
+        if(response.data.Message=="Successfully stored interview")
+        {
+          setToastText("Interview is stored successfully");
+        console.log("reponse is all good receved");
+        window.localStorage.setItem('current_Interview', temp_detail.title);
+        }
         
-  //       console.log("reponse by post question is",response);
+        console.log("reponse by post question is",response);
        
-  //     }
+      }}
 }
   const addStartEdge=()=>{//function functionality already handled in else dropdown case
     const tempEdge={edge_id:'',source:'',target:'',selectedValue:'',isUser:''};
@@ -831,7 +951,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
           y={edgeCenterY - foreignObjectSize / 4}
           className="edgebutton-foreignobject"
           requiredExtensions="http://www.w3.org/1999/xhtml"
-          style={{color: "red",zIndex:"50px"}}
+          
         >
           <body className="pathdropdown">
    
@@ -1013,42 +1133,47 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
         <Modal.Title>Update Question</Modal.Title>
         </Modal.Header>
           <Form>
-            <Modal.Body >      
+            <Modal.Body >  
+            <h6 className='myclasscateogry'>Category Name:</h6><label>{nodeFound.CategoryName}</label>    
+            
                 <InputGroup>
                     <InputGroup.Text>Question</InputGroup.Text>
                     <FormControl as="textarea" name="stem"  
                     onChange={handleStemChange} value={stem} >{nodeFound.stem}</FormControl>
                 </InputGroup>
+                <div className='admin-weight-dp'><label className="weightagelabelss">Weightage: </label>
+              
                 <DropdownButton id="dropdown-basic-button" title={question_weight}  name="question_weight"
-                value={question_weight}  onSelect={e => setQuestionWeightage(e)} required className="newquestiondeightage">
+                value={question_weight}  onSelect={e => setQuestionWeightage(e)} required className="updatequestiondeightage">
                           <Dropdown.Item eventKey="25">25</Dropdown.Item>
                           <Dropdown.Item eventKey="50">50</Dropdown.Item>
                           <Dropdown.Item eventKey="75">75</Dropdown.Item>
                           <Dropdown.Item eventKey="100">100</Dropdown.Item>
                           
-                      </DropdownButton>
-                <label>Category Name: {nodeFound.CategoryName}</label><br/>
-                <label>Options</label><br/>
+                      </DropdownButton></div>
+               
+                      <label style={{fontWeight:"500",display: "flex",marginLeft: "5px"}}>Options</label>
+                
                 
                 {optionList.map((T_option,i)=>(
-                    <div key={T_option.id}>
+                    <div key={T_option.id} style={{marginTop:"10px"}}>
                       
                       <Form.Control  type="text" name="optionText" value={T_option.optionText} 
                       onChange={e=> handleOptionChange(e.target.name,e.target.value,i)} ></Form.Control><br/>    
                       <DropdownButton id="dropdown-basic-button" title={T_option.optionWeightage}  name="optionWeightage"
-                value={T_option.optionWeightage}  onSelect={e => handleOptionChange("optionWeightage",e, i)} >
+                value={T_option.optionWeightage}  onSelect={e => handleOptionChange("optionWeightage",e, i)} style={{display:"contents",marginRight:"20px"}}>
                           <Dropdown.Item eventKey="25">25</Dropdown.Item>
                           <Dropdown.Item eventKey="50">50</Dropdown.Item>
                           <Dropdown.Item eventKey="75">75</Dropdown.Item>
                           <Dropdown.Item eventKey="100">100</Dropdown.Item>
                           
                       </DropdownButton>
-                      <div className="btn-box">
-                  {optionList.length !== 1 && <button
+                      <div className="update-add-question-btn-box" style={{marginLeft:"20px"}}>
+                  {optionList.length !== 2 && <button
                   
-                    className="optionremoveButton"
+                    className="update-add-question-optionremoveButton"
                     onClick={() => handleRemoveClick(i)}>-</button>}
-                  {optionList.length - 1 === i && <button className="optionremoveButton"
+                  {optionList.length - 1 === i && <button className="update-add-question-optionaddbutton"
                   onClick={()=>handleAddClick(i)}>+</button>}
                 </div>
                       </div>

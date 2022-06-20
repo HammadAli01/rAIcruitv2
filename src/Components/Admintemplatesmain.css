@@ -16,7 +16,7 @@
 .admin-template-container
 {border-radius: 15px;
     
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
+    box-shadow: 0 0 20px 0 rgb(0 0 0 / 5%);
     margin-left: 3%;
     position: relative;
 
@@ -26,6 +26,9 @@
 background-color: transparent;
 cursor: pointer;
 
+}
+.admin-template-container:hover{
+box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
 }
 .admin-template-container img
 {
@@ -118,4 +121,22 @@ text-overflow:ellipsis;
    .new-button:hover span:after {
     opacity: 4;
     right: 0;
-   }
+  
+}
+.loadingdiv-admintemplate{
+
+    width: 350px;
+    height: 250px;
+    text-align: center;
+    align-items: center;
+    padding-left: 42%;
+    margin-top: 10%;
+}
+.loadingdiv-admintemplate h4{
+
+}
+.loadingdiv-admintemplate .template-loading-image{
+    margin-left: -55px;
+    width: 200px;
+    height: 200px;
+}

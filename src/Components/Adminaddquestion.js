@@ -14,10 +14,10 @@ export default function Adminaddquestion() {
   const [stem,setStem]=useState('');
   const [category_name,setCategoryName]=useState("Select Category");
   const [stem_weightage,setStemWeightage]=useState("Select Weightage");
-  const [semantictext,setSemanticText]=useState([{id:1,optionText:'',optionWeightage:'0'}]);
+  const [semantictext,setSemanticText]=useState('');
   let inputerror=useRef({stemError:"",categoryError:"",weightageError:"",optionsError:"",semanticError:""});
   const handleSemanticInput=(val)=>{
-    semantictext.optionText=val;
+    setSemanticText(val);
   }
   const updateQuestionType=()=>{
       if(questionType=='close ended')
@@ -221,167 +221,167 @@ const logged_user="hammadalibu@gmail.com";
 
   
 const getCategories = async () => {
-  // console.log("get categories called"); 
-  // const response = await axios.post("https://raicruittest.herokuapp.com/Category/get/all").catch((err) => 
-  // { console.log("Error:", err); });
-  //  if (response) { 
-  //    console.log("cateogires got are",response.data); 
-  //    setCategories(response.data); 
-  //  }
+  console.log("get categories called"); 
+  const response = await axios.post(`${process.env.REACT_APP_API_KEY}/Category/get/all`).catch((err) => 
+  { alert("There has been a server issue. Kindly try again by refreshing the page"); });
+   if (response) { 
+     console.log("cateogires got are",response.data); 
+     setCategories(response.data); 
+   }
  
-setCategories([
-  {
-    id: "1",
-    name: "ICebreaker"
-  },{
-      id: "2",
-      name: "Experience"
-    },{
-      id: "3",
-      name: "Position"
-    },{
-      id: "4",
-      name: "Environment"
-    },{
-      id: "5",
-      name: "Timing"
-    },
-])
+// setCategories([
+//   {
+//     id: "1",
+//     name: "Icebreaker"
+//   },{
+//       id: "2",
+//       name: "Experience"
+//     },{
+//       id: "3",
+//       name: "Position"
+//     },{
+//       id: "4",
+//       name: "Environment"
+//     },{
+//       id: "5",
+//       name: "Timing"
+//     },
+// ])
 
 };
 const getUserQuestions=async()=>{
 //   console.log("get user questions called",logged_user);
-//   const response =await axios.get(`https://raicruittest.herokuapp.com/get/user/question?email=${logged_user}`).then(response => {
-//     console.log("first response",response.data); 
-//     if(response.data.Questions.length!==0){
-//     setAllQuestions(response.data.Questions);
-// }else{
-//   console.log("user no questions found retainng none");
-// }
-// })
-// .catch(error => {
-//     console.error('There was an error!', error);
-// });
-setAllQuestions([ {
-  id: 1,
-  question_weight: 50,
-  username: "Admin",
-  stem: "How are you",
-  CategoryName: "Icebreaker",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "fine",
-      optionWeightage: "100"
-    },{
-      id: 102,
-      optionText: "Not fine",
-      optionWeightage: "50"
-    }
-  ]
-},{
-  id: 1,
-  question_weight: 50,
-  username: "Admin",
-  stem: "How many years of experience do you have?How many years of experience do you have?How many years of experience do you have?",
-  CategoryName: "Experience",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "5 Years",
-      optionWeightage: "100"
-    },{
-      id: 102,
-      optionText: "4 Years",
-      optionWeightage: "75"
-    },{
-      id: 103,
-      optionText: "2 Years",
-      optionWeightage: "50"
-    }
-  ]
-},{
-  id: 4,
-  question_weight: 100,
-  username: "Admin",
-  stem: "What is your availability for this job",
-  CategoryName: "Timing",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "Morning",
-      optionWeightage: "75"
-    },{
-      id: 102,
-      optionText: "Evening",
-      optionWeightage: "75"
-    },{
-      id: 103,
-      optionText: "Both",
-      optionWeightage: "100"
-    }
-  ]
-},{
-  id: 7,
-  question_weight: 75,
-  username: "Admin",
-  stem: "Where are you from",
-  CategoryName: "Icebreaker",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "Islamabad",
-      optionWeightage: "100"
-    },{
-      id: 102,
-      optionText: "Rawalpindi",
-      optionWeightage: "75"
-    },{
-      id: 103,
-      optionText: "taxila",
-      optionWeightage: "50"
-    },{
-      id: 104,
-      optionText: "other",
-      optionWeightage: "25"
-    }
-  ]
-},{
-  id: 1,
-  question_weight: 50,
-  username: "Admin",
-  stem: "How are you2",
-  CategoryName: "Icebreaker",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "fine",
-      optionWeightage: "100"
-    },{
-      id: 102,
-      optionText: "Not fine",
-      optionWeightage: "50"
-    }
-  ]
-},{
-  id: 1,
-  question_weight: 50,
-  username: "Admin",
-  stem: "How are you3",
-  CategoryName: "Icebreaker",
-  optionArray: [
-    {
-      id: 101,
-      optionText: "fine",
-      optionWeightage: "100"
-    },{
-      id: 102,
-      optionText: "Not fine",
-      optionWeightage: "50"
-    }
-  ]
-},
-]);
+  const response =await axios.get(`${process.env.REACT_APP_API_KEY}/get/all/question`).then(response => {
+    console.log("first response",response.data); 
+    if(response.data.Questions.length!==0){
+    setAllQuestions(response.data.Questions);
+}else{
+  console.log("user no questions found retainng none");
+}
+})
+.catch(error => {
+    console.error('There was an error!', error);
+});
+// setAllQuestions([ {
+//   id: 1,
+//   question_weight: 50,
+//   username: "Admin",
+//   stem: "How are you",
+//   CategoryName: "Icebreaker",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "fine",
+//       optionWeightage: "100"
+//     },{
+//       id: 102,
+//       optionText: "Not fine",
+//       optionWeightage: "50"
+//     }
+//   ]
+// },{
+//   id: 1,
+//   question_weight: 50,
+//   username: "Admin",
+//   stem: "How many years of experience do you have?How many years of experience do you have?How many years of experience do you have?",
+//   CategoryName: "Experience",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "5 Years",
+//       optionWeightage: "100"
+//     },{
+//       id: 102,
+//       optionText: "4 Years",
+//       optionWeightage: "75"
+//     },{
+//       id: 103,
+//       optionText: "2 Years",
+//       optionWeightage: "50"
+//     }
+//   ]
+// },{
+//   id: 4,
+//   question_weight: 100,
+//   username: "Admin",
+//   stem: "What is your availability for this job",
+//   CategoryName: "Timing",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "Morning",
+//       optionWeightage: "75"
+//     },{
+//       id: 102,
+//       optionText: "Evening",
+//       optionWeightage: "75"
+//     },{
+//       id: 103,
+//       optionText: "Both",
+//       optionWeightage: "100"
+//     }
+//   ]
+// },{
+//   id: 7,
+//   question_weight: 75,
+//   username: "Admin",
+//   stem: "Where are you from",
+//   CategoryName: "Icebreaker",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "Islamabad",
+//       optionWeightage: "100"
+//     },{
+//       id: 102,
+//       optionText: "Rawalpindi",
+//       optionWeightage: "75"
+//     },{
+//       id: 103,
+//       optionText: "taxila",
+//       optionWeightage: "50"
+//     },{
+//       id: 104,
+//       optionText: "other",
+//       optionWeightage: "25"
+//     }
+//   ]
+// },{
+//   id: 1,
+//   question_weight: 50,
+//   username: "Admin",
+//   stem: "How are you2",
+//   CategoryName: "Icebreaker",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "fine",
+//       optionWeightage: "100"
+//     },{
+//       id: 102,
+//       optionText: "Not fine",
+//       optionWeightage: "50"
+//     }
+//   ]
+// },{
+//   id: 1,
+//   question_weight: 50,
+//   username: "Admin",
+//   stem: "How are you3",
+//   CategoryName: "Icebreaker",
+//   optionArray: [
+//     {
+//       id: 101,
+//       optionText: "fine",
+//       optionWeightage: "100"
+//     },{
+//       id: 102,
+//       optionText: "Not fine",
+//       optionWeightage: "50"
+//     }
+//   ]
+// },
+// ]);
 };
    const [optionList,setoptionList]=useState([{id:1,optionText: '',optionWeightage: '25'},{id:2,optionText: '',optionWeightage: '25'}]);
    //const [optionIndex,setOptionIndex]=useState([{optioncount:0}]);
@@ -430,8 +430,10 @@ optionList.map((option)=>{
 });
 }
 if(questionType=='open ended'){
+  if(category_name!=='Icebreaker'){
+    if(semantictext.length==0){
   inputerror.current.semanticError=" The expected answer of the question is empty ";
-    errorcount=1;
+    errorcount=1;}}
 }
 //inputerror=inputerror+"";
 if(errorcount==0){
@@ -451,53 +453,53 @@ else{
       const res=checkErrors();
       if(res==false){
         setShowA(false);
-      
+        const question={
+       
+          stem:stem,
+          question_weight:stem_weightage,
+          CategoryName:category_name,
+  user_id:0,
+  
+  //is_openended:openended,
+  optionArray:[],
+        }
       let openended,passed_optionList;
       if(questionType=='open ended'){
         openended=true;
-        passed_optionList=semantictext;
+        console.log("semantic array is",semantictext);
+        if(category_name!=='Icebreaker'){
+        question.optionArray=[{id:1,optionText:semantictext,optionWeightage:0}];
+        console.log("passing normal open ended",passed_optionList);
+      }else{
+        question.optionArray=[]
+        }
       }
       else{
         openended=false;
-        passed_optionList=optionList;
+        question.optionArray=optionList;
       }
-      const question={
-       
-        stem:stem,
-        question_weight:stem_weightage,
-        CategoryName:category_name,
-email:logged_user,
-
-//is_openended:openended,
-optionArray:[],
-      }
-      if(question.is_openended==true){question.optionArray=[{}]}else{question.optionArray=passed_optionList;}
+     
+     // if(question.is_openended==true){question.optionArray=[{}]}else{question.optionArray=passed_optionList;}
       //send question to api 
-      console.log("Data to API is",question);
-      setStem();
+      console.log("question is",question);
+      
+      const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/user/question`, question).catch((err) => 
+      {
+        console.log("Error: ", err);
+      });
+      if (response)  {
+        console.log("reponse by post question is",response.data);
+        getUserQuestions();
+        //resetting
+      setStem('');
       setCategoryName("Select Category");
       setStemWeightage("Select Weightage");
-      setSemanticText([{id:1,optionText:'',optionWeightage:'0'}]);
-      setoptionList([{id:1,optionText: '',optionWeightage: '25'}]);
+      setSemanticText('');
+      console.log("After clearing",semantictext);
+      setoptionList([{id:1,optionText: '',optionWeightage: '25'},{id:2,optionText: '',optionWeightage: '25'}]);
       inputerror.current={stemError:"",categoryError:"",weightageError:"",optionsError:"",semanticError:""};
-     //api call commented is
-    //   const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", question).catch((err) => 
-    //   {
-    //     console.log("Error: ", err);
-    //   });
-    //   if (response)  {
-    //     console.log("reponse by post question is",response.data);
-    //     getUserQuestions();
-    //     //resetting
-    //   setStem();
-    //   setCategoryName("Select Category");
-    //   setStemWeightage("Select Weightage");
-    //   setSemanticText([{id:1,optionText:'',optionWeightage:'0'}]);
-    //   setoptionList([{id:1,optionText: '',optionWeightage: '25'}]);
-    //   inputerror.current={stemError:"",categoryError:"",weightageError:"",optionsError:"",semanticError:""};
-    //   }
-      
-    //   console.log("data is",question);
+      }
+      console.log("data is",question);
     
     }
       else{
@@ -505,6 +507,15 @@ optionArray:[],
        // console.log(inputerror.current);
       }
     }
+    const handleActionbutton=async(id)=>{
+      const response =await axios.post(`${process.env.REACT_APP_API_KEY}/Question/User/delete?question_id=${id}`).then(response => {
+        console.log("first response",response.data); 
+       getUserQuestions();
+    })
+    .catch(error => {
+        console.error('There was an error in delete api call!', error);
+    });
+    };
   return (
     <div className='add-parentcontainer'>
        
@@ -569,14 +580,15 @@ optionArray:[],
             ))}</ul>
                 </div>}
                 
-{questionType=='open ended' &&
+{questionType=='open ended' && <div> {category_name !== 'Icebreaker'?(
   <div className='optionsarea'>
 <h4>Semantic Text</h4><br/>
 <InputGroup>
     <InputGroup.Text>Answer</InputGroup.Text>
-    <FormControl as="textarea" aria-label="With textarea" value={semantictext.optionText} placeholder='Write Your Answer Here' 
+    <FormControl as="textarea" aria-label="With textarea" value={semantictext} placeholder='Write Your Answer Here' 
     className='openended-input'onChange={(e)=>{handleSemanticInput(e.target.value)}}/>
   </InputGroup>
+ </div> ):(console.log("Icebreaker question is selected with open ended type"))}
   </div>
 }
     <button className='question-add-button' onClick={()=>{handleaddquestion()}}>ADD</button>
@@ -609,7 +621,7 @@ optionArray:[],
               <th> Category</th>
               <th>Weight </th>
               <th>Options</th>
-              
+              <th>Action</th>
             </tr>
           </thead>
          
@@ -621,12 +633,13 @@ optionArray:[],
         //    console.log("ct",count.current);
            return (
                <>
-              <tr key={index+1} onClick={()=>{handleShowOption(index)}} className='questionrow'>
-                <td>{index+1}</td>
-                 <td className='stemtd'>{stem.length<60 ? (stem):(stem.slice(0,60)+"...")}</td>
-                 <td>{CategoryName}</td>
-                 <td>{question_weight}</td>
-                 <td>{optionArray.length}</td> 
+              <tr key={index+1}  className='questionrow'>
+                <td onClick={()=>{handleShowOption(index)}}>{index+1}</td>
+                 <td onClick={()=>{handleShowOption(index)}} className='stemtd'>{stem.length<60 ? (stem):(stem.slice(0,60)+"...")}</td>
+                 <td onClick={()=>{handleShowOption(index)}}>{CategoryName}</td>
+                 <td onClick={()=>{handleShowOption(index)}}>{question_weight}</td>
+                 <td onClick={()=>{handleShowOption(index)}}>{optionArray.length}</td> 
+                 <td><button className='delete-action-button' onClick={()=>{handleActionbutton(question.id)}}>Delete</button></td>
               </tr>
             
             {/* <th className='optionhead'></th>

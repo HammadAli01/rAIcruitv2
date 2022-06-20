@@ -13,19 +13,20 @@
   height: 100%;
   text-align: center;
   width: 100%;
-  background-image: linear-gradient(rgb(130, 171, 233), rgb(144, 138, 204));
+  background-color: #a6b7c3ed;
   overflow-y: scroll;
   overflow-x: hidden;
+  
   position: absolute;
 }
 .dividerline{
-border-top: 1.5px solid #0124ec !important;
+border-top: 1.5px solid #000000 !important;
 opacity: 0.4;
 margin-left: 15px;
 margin-right: 15px;
 }
 .banktitle{
-font-size: 2.1rem;
+
 position: relative;
 padding-left: 9%;
 padding-right: 7%;
@@ -53,13 +54,13 @@ overflow-y: scroll;
  
 /* Handle */
 .addquestionDiv::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgb(24, 106, 230), rgb(83, 72, 204)); 
+  background: linear-gradient(rgb(118, 128, 143), rgb(107, 104, 104)); 
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .addquestionDiv::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(rgb(6, 95, 228), rgb(130, 124, 204));  
+  background: linear-gradient(rgb(48, 82, 133), rgb(0, 0, 0));  
 }
 /*styling category tag*/
 .accordion-button {
@@ -101,6 +102,7 @@ border: none;
 background-color: transparent;
 }
 .buttonHover{
+  font-size: 16px !important;
   background: transparent; 
   border: none;
   display: inline-block;
@@ -126,9 +128,9 @@ background-color: transparent;
 /*input field hover*/
 .searchfield{
 height: 60%;
-width: 80%;
+width: 95%;
 padding: 10px;
-background-color: rgb(240, 232, 232);;
+background-color: #fff;
 
 outline: none;
 text-indent: 33px;
@@ -158,7 +160,7 @@ width: 100%;
 margin-bottom: 15px;
 text-align: center;
 position:relative;
-left:15px;
+left:7px;
 }
 /*Add button hover effect*/
 .addbutton{
@@ -197,8 +199,8 @@ font-size: 18px;
 .questionstyle{
 text-align: left;
 
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 10px;
@@ -206,7 +208,7 @@ text-align: left;
   padding-right: 10%;
   border-bottom: 1px solid rgb(59, 54, 54);
   font-weight: 300;
-  font-size: 16px;
+  font-size: 12px;
   display: -webkit-box;
 -webkit-line-clamp: 2;
 line-height: 30px;
@@ -214,6 +216,7 @@ text-overflow: -o-ellipsis-lastline;
 -webkit-box-orient: vertical;
 overflow: hidden;
 color: aliceblue;
+
 /* border: none;
 outline: none;
 color: aliceblue;
@@ -232,7 +235,7 @@ transition:all 0.1s;
 }
 /*question boundary hover effect*/
 .questionstyle:hover {
-  background-image: linear-gradient(rgb(130, 171, 233), rgb(144, 138, 204));
+  background-image: linear-gradient(#7daac9ed, #999999ed);
   border-bottom: 1.5px solid #000000;
 }
 .customNodeStyle{

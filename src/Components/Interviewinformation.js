@@ -1,10 +1,12 @@
 import React,{useState,useRef,useEffect,useCallback} from 'react'
 import "./Interviewinformation.css"
+import axios from 'axios';
 import { DatePickerComponent, Inject, MaskedDateTime } from "@syncfusion/ej2-react-calendars";
 import { Dropdown,DropdownButton } from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 export default function Interviewinformation(props) {
   const logged_user=window.localStorage.getItem('user_Id');
+  const logged_user_email=window.localStorage.getItem('user_email');
   const navigation = useNavigate();
   const handlePageSubmit = useCallback(() => navigation('/designinterview', {replace: true}), [navigation]);
   const handlePageSubmittemplate = useCallback(() => navigation('/sendemail', {replace: true}), [navigation]);
@@ -74,7 +76,9 @@ const change=()=>{
   updateinterview();
   },[tempdetails]);
   const updateinterview=()=>{
+    tempdetails.duration="";
     setInterviewDetail(tempdetails);
+    
     console.log("temp details in useeffect are",tempdetails);
     console.log("interviewdetails in useeffect are",InterviewDetail);
    }
@@ -142,7 +146,10 @@ const change=()=>{
           return false;
       }
   }
-    const submitForm=(e)=>{
+    const submitForm=async(e)=>{
+
+
+
       const is_Template=window.localStorage.getItem("Is_Template");
       InterviewDetail.type=positionType;
       InterviewDetail.startDate=startDate.getFullYear()+"-" +(startDate.getMonth()+1)+"-" + startDate.getDate();
@@ -158,100 +165,143 @@ const change=()=>{
         console.log("Interview details are errored: ",InterviewDetail);
       }
       else{
-        console.log("is template after submit is",is_Template);
-        const initial_Duration=""+InterviewDetail.duration;
-        if(initial_Duration.length==5){
-          if(initial_Duration.includes(":"))
-        {
-        const convert_Milliseconds=InterviewDetail.duration.split(":");
-        console.log("ALL MILLISECONDS:",convert_Milliseconds);
-        const convert_Milliseconds_Hours=parseInt(convert_Milliseconds.splice(0,1))*3600000;
-        const convert_Milliseconds_Minutes=parseInt(convert_Milliseconds)*60000;
-        InterviewDetail.duration=convert_Milliseconds_Hours+convert_Milliseconds_Minutes;
-        console.log("Duration inmilliseconds is:",InterviewDetail.duration/60000,"Hours are:",convert_Milliseconds_Hours,"minutes are:",convert_Milliseconds_Minutes);
-        if( InterviewDetail.duration/60000<5){
-          error={
-            jobTitleError:"",
-            positionTitleError:"",
-            positionTypeError:"",
-            durationError:"Duration cannot be less than 5 minutes",
-            jobDescriptionError:"",
-            sameDateError:""
-        };
-        setUserErrors(error);
+//api for checking title if response body false then continure else show error of interviews with same title are not allowed
+const response =await axios.post(`${process.env.REACT_APP_API_KEY}/Interview/check/title?title=${InterviewDetail.title}`).catch((err) => 
+{
+  //incase of server down
+  alert("There was an error while checking interivew title .Kindly try again");
+});
+if(response){
+  console.log("got response by checking interview title",response);
+if(response.data==false){
+  console.log("is template after submit is",is_Template);
+  const initial_Duration=""+InterviewDetail.duration;
+  if(initial_Duration.length==5){
+    if(initial_Duration.includes(":"))
+  {
+  const convert_Milliseconds=InterviewDetail.duration.split(":");
+  console.log("ALL MILLISECONDS:",convert_Milliseconds);
+  const convert_Milliseconds_Hours=parseInt(convert_Milliseconds.splice(0,1))*3600000;
+  const convert_Milliseconds_Minutes=parseInt(convert_Milliseconds)*60000;
+  InterviewDetail.duration=convert_Milliseconds_Hours+convert_Milliseconds_Minutes;
+  console.log("Duration inmilliseconds is:",InterviewDetail.duration/60000,"Hours are:",convert_Milliseconds_Hours,"minutes are:",convert_Milliseconds_Minutes);
+  if( InterviewDetail.duration/60000<5){
+    error={
+      jobTitleError:"",
+      positionTitleError:"",
+      positionTypeError:"",
+      durationError:"Duration cannot be less than 5 minutes",
+      jobDescriptionError:"",
+      sameDateError:""
+  };
+  setUserErrors(error);
 }else{  
-  console.log("Duration in fine");
-  if(is_Template==1){
-            console.log("DONE");
-            
-            
-  const templateID=window.localStorage.getItem('current_template_Id');
-  const APIDATA={
-    template_Id:templateID,
-    title: InterviewDetail.title,
-    generationDate: InterviewDetail.generationDate,
-    startDate: InterviewDetail.startDate,
-    endDate: InterviewDetail.endDate,
-    duration:InterviewDetail.duration,
-    type: InterviewDetail.type,
-    position:InterviewDetail.position ,
-    job_description:InterviewDetail.jobDescription ,
-    email: logged_user,
-  }
-  //write api for sending template data here
-  console.log("API TEMPLATE DATA IS",APIDATA);
-  window.localStorage.setItem('current_Interview', APIDATA.title);
-  //window.localStorage.setitem("camefromtemplate",true);
-            handlePageSubmittemplate();
-          }else{
-  console.log("GOING IN ELSE?/");
-          window.localStorage.setItem("interview_data",JSON.stringify(InterviewDetail));
-          handlePageSubmit();}
-   
-          // const response = await axios.post("/interview details", InterviewDetail).catch((err) => 
-        // {
-        //   alert("Error: ", err);
-        // });
+console.log("Duration in fine");
+if(is_Template==1){
+      console.log("DONE");
+      
+      
+const templateRules=JSON.parse(window.localStorage.getItem('current_template_Rules'));
+const APIDATA={
+edge:templateRules,
+title: InterviewDetail.title,
+generationDate: InterviewDetail.generationDate,
+startDate: InterviewDetail.startDate,
+endDate: InterviewDetail.endDate,
+duration:InterviewDetail.duration,
+type: InterviewDetail.type,
+position:InterviewDetail.position ,
+job_description:InterviewDetail.jobDescription ,
+email: logged_user_email,
+}
+//write api for sending template data here
+console.log("API TEMPLATE DATA IS",APIDATA);
+window.localStorage.setItem('current_Interview', APIDATA.title);
+//window.localStorage.setitem("camefromtemplate",true);
+//api for storing template interview
+let er=false;
+const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/interview`, APIDATA).catch((err) => 
+{
+  console.log("Error in stroing template interview: ", err);
   
-        // if (response) {
-           setInterviewDetail({
-            id:1,
-            title:"",
-            generationDate:"",
-            startDate:"",
-            endDate:"",
-            duration:"",
-            type:"",
-            position:"",
-            jobDescription:""
-          });
-        //}
-          
-          
-        
+});
 
-      }
-        }else{
-          error={
-            jobTitleError:"",
-            positionTitleError:"",
-            positionTypeError:"",
-            durationError:"Kindly enter the duration in the specified format",
-            jobDescriptionError:"",
-            sameDateError:""
-        };
-        setUserErrors(error);
-        }}else{
-          error={
-            jobTitleError:"",
-            positionTitleError:"",
-            positionTypeError:"",
-            durationError:"Kindly enter the duration in the specified format",
-            jobDescriptionError:"",
-            sameDateError:""
-        };
-        setUserErrors(error);
-        } }
+if(er==false){
+  if(response.status==200)  {
+  
+  if(response.data.Message=="Successfully stored interview")
+  {
+   
+    handlePageSubmittemplate();
+  }
+  
+  console.log("reponse by post interview templATE is",response);
+ 
+}}
+     
+    }else{
+console.log("GOING IN ELSE?/");
+    window.localStorage.setItem("interview_data",JSON.stringify(InterviewDetail));
+    handlePageSubmit();
+   }
+
+    // const response = await axios.post("/interview details", InterviewDetail).catch((err) => 
+  // {
+  //   alert("Error: ", err);
+  // });
+
+  // if (response) {
+     setInterviewDetail({
+      id:1,
+      title:"",
+      generationDate:"",
+      startDate:"",
+      endDate:"",
+      duration:"",
+      type:"",
+      position:"",
+      jobDescription:""
+    });
+  //}
+    
+    
+  
+
+}
+  }else{
+    error={
+      jobTitleError:"",
+      positionTitleError:"",
+      positionTypeError:"",
+      durationError:"Kindly enter the duration in the specified format",
+      jobDescriptionError:"",
+      sameDateError:""
+  };
+  setUserErrors(error);
+  }}else{
+    error={
+      jobTitleError:"",
+      positionTitleError:"",
+      positionTypeError:"",
+      durationError:"Kindly enter the duration in the specified format",
+      jobDescriptionError:"",
+      sameDateError:""
+  };
+  setUserErrors(error);
+  } 
+}else{
+  error={
+    jobTitleError:"Interview title with the same name exists. Try any other",
+    positionTitleError:"",
+    positionTypeError:"",
+    durationError:"",
+    jobDescriptionError:"",
+    sameDateError:""
+};
+setUserErrors(error);
+}
+}
+}
   }
       const interviewdate=document.getElementById("interviewdate");
       if(interviewdate!==null){

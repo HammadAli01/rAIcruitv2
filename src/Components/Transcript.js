@@ -1,57 +1,83 @@
-import React,{useState,useEffect} from 'react'
+import React,{useRef,useEffect,useState} from 'react'
 import './Transcript.css';
 import botImage from '../Assets/mainmenu/botimage.jpg';
+import axios from 'axios';
 import candidateImage from '../Assets/mainmenu/candidate1.PNG';
-import InfiniteScroll from "react-infinite-scroll-component";
 export default function Transcript() {
-const [candidateData,setCandidateData]=useState({email:"hammadalibu@gmail.com",name:"Hammad Ali",marks:"60%"});
-    const [results,setResults]=useState([{stem:"What is your name",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name2",response:"anser1",response_Time:"2:21"},
-    {stem:"What is your name3",response:"anser3",response_Time:"3:21"},
-    {stem:"What is your name4",response:"answer5",response_Time:"2:21"},
-    {stem:"What is your name5",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name6",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name7",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name8",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name9",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name11",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name12",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name13",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name15",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your name1",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your nameasd",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your nameff",response:"hammad",response_Time:"2:24"},
-    {stem:"What is your namedd",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your namess",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your namess",response:"hammad",response_Time:"2:21"},
-    {stem:"What is your nameaa",response:"hammad hammad hammad hammad hammad hammad hammadhammadhammadhammadhammadhammad hammad hammadhammadhammadhammadhammad hammad hammad hammad hammad hammad hammad hammad v v hammad hammad ",response_Time:"2:23"},
-    {stem:"What is your namezzz",response:"z",response_Time:"2:21"},
-]);
-  return (
+  const candidate_Id=window.localStorage.getItem("checkresultcandidate_id");
+  const candidate_Email=window.localStorage.getItem("checkresultcandidate_email");
+  const candidate_Name=window.localStorage.getItem("checkresultcandidate_name");
+  const candidate_Score=window.localStorage.getItem("checkresultcandidate_score");
+    const results=useRef([]);
+    const [start,setStart]=useState(false);
+
+const getTranscript=async()=>{
+  const response =await axios.post(`${process.env.REACT_APP_API_KEY}/get/transcript/?id=${candidate_Id}`).then(response => {
+    console.log("first response",response.data); 
+  results.current=response.data.ResponseList;
+  let last_time;
+  console.log("results1",results.current);
+  results.current.map((result)=>{
+    console.log("current time",result);
+    last_time=result.response_time;
+  });
+   console.log("last message is",last_time);
+  const bymsg={question_stem:"Thank you for your time. The interview has been finished. It was great to interview you. Goodbye till next time, Olaf",
+  response:"null",response_time:last_time};
+  let tempresult=results.current;
+  console.log("temp result is",tempresult);
+  tempresult.push(bymsg);
+  results.current=tempresult;
+  setStart(true);
+  console.log("useEffect caleed",start);
+})
+.catch(error => {
+    console.error('There was an error!', error);
+});
+};
+    useEffect(() => {
+     getTranscript();
+    //  results.current=[{stem:"What is your name",response:"hammad",response_Time:"2:21"},
+    //   {stem:"What is your name",response:"hammad",response_Time:"2:21"},
+    //   {stem:"What is your name",response:"hammad",response_Time:"2:21"},
+    //   {stem:"What is your name",response:"hammad",response_Time:"2:21"},
+    //   {stem:"What is your name",response:"hammad",response_Time:"2:21"}
+    // ];
+   
+    },[]);
+
+  return ( <>
+    {start &&
+     
     <div className='candidate-transcript'>
-        <h3>Candidate Data</h3>
+        <h3 className='candidate-check'>Candidate Data</h3>
+      
     <div className='transcript-candidateData'>
         
-       <div className='transcript-candidateDatablock'> <h6>Name: </h6> <div>{candidateData.name}</div></div>
-       <div className='transcript-candidateDatablock'><h6>Email: </h6><div>{candidateData.email}</div></div>
-       <div className='transcript-candidateDatablock'> <h6>Marks: </h6><div>{candidateData.marks}</div></div>
+       <div className='transcript-candidateDatablock'> <h6>Name: </h6> <div>{candidate_Name}</div></div>
+       <div className='transcript-candidateDatablock'><h6>Email: </h6><div>{candidate_Email}</div></div>
+       <div className='transcript-candidateDatablock'> <h6>Marks: </h6><div>{candidate_Score+"%"}</div></div>
     </div>
-        <h3>Conversation Transcript</h3>
+        <h3 className='candidate-check'>Chat Transcript</h3>
         <div className='transcript-conversation'>
-        {results.map((result)=>(
+        {results.current.map((result)=>(
             <>
-            <div className='question_Stem'><img className='response-botimg' src={botImage} alt="botimg"/><span>{result.response_Time}</span>
+            <div className='question_Stem'><img className='response-botimg' src={botImage} alt="botimg"/><span>{result.response_time}</span>
+         {result.question_stem!=="Thank you for your time. The interview has been finished. It was great to interview you. Goodbye till next time, Olaf"?(
+ <p>  {result.question_stem}</p> 
+         ):( <p className='trans-bye-chat'>  {result.question_stem}</p> )
          
-          <p>  {result.stem}</p> 
-            </div>
-            <div className='question_Response'>
-                <img className='response-candidatebotimg' src={candidateImage} alt="botimg"/><span>{result.response_Time}</span>
-                <p> {result.response}</p>
-                </div>
+         }   </div>
+
+            {result.question_stem!=="Thank you for your time. The interview has been finished. It was great to interview you. Goodbye till next time, Olaf" && <div className='question_Response'>
+                <img className='response-candidatebotimg' src={candidateImage} alt="botimg"/><span>{result.response_time}</span>
+                <p> {result.question_response}</p>
+                </div>}
             </>
             
         ))}</div>
+       
         <h5>End of conversation</h5>
-    </div>
+    </div>}</> 
   )
 }

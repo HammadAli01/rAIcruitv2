@@ -58,7 +58,11 @@ export default function Adminmain() {
           beginAtZero: true
         }
       }
-    ]
+    ]},elements: {
+      point:{
+          radius: 3,
+          hitRadius: 30
+      }
   }
 };
 const getRecruiterData=async()=>{

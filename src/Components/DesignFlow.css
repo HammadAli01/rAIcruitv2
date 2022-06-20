@@ -7,6 +7,9 @@
     border: 1px solid rgb(212, 212, 212) !important;
 border-right: 1px solid rgb(212, 212, 212) !important;
 }
+.designflows{
+  margin-top: 10px;
+}
 /* .react-flow__node-input{
     display: -webkit-box;
 -webkit-line-clamp: 1;
@@ -273,8 +276,8 @@ z-index: 3;
     position: absolute;
     padding: 0.5rem 0.75rem;
     z-index: 500;
-      margin-top: -60%;
-      margin-left: -40%;
+      margin-top: -51%;
+      margin-left: 30%;
        min-width: 310px;
        height: max-content;
        font-size: .875rem;

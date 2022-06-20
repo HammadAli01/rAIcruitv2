@@ -1,5 +1,6 @@
 import React,{useState,useCallback,useRef,useEffect} from 'react';
 import "./SendEmail.css";
+import loadinggif from '../Assets/mainmenu/sendingemail.gif';
 import DashboardNavbar from '../Components/navbars/DashboardNavbar';
 import * as XLSX from "xlsx";
 import { BsFillPersonFill,BsEnvelopeOpenFill,BsEnvelopeFill,BsMastodon } from "react-icons/bs";
@@ -7,7 +8,9 @@ import { Toast } from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 export default function SendEmail() {
-  const logged_user=window.localStorage.getItem('user_Id');
+  const logged_user=window.localStorage.getItem('user_email');
+  const [shoudlStart,setStart]=useState(false);
+  //const logged_user="hammadalibu@gmail.com";
   const navigation = useNavigate();
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);
@@ -50,22 +53,23 @@ const current_interview_id=useRef(undefined);
 }
 
 useEffect(() => {
-
-  current_interview_id.current=window.localStorage.getItem("current_Interview");
+ // current_interview_id.current="hamzaSenior Software Engineer";
+ current_interview_id.current=window.localStorage.getItem("current_Interview");
   if(current_interview_id.current==undefined || current_interview_id.current==null){
     alert("Kindly design an interview first");
     handlePageInterviewSubmit();
   }else{
   console.log("send email loaded",current_interview_id.current);
-  currentid.current=10;
-  //getInterviewID();
+ // currentid.current=10;
+  getInterviewID();
 }
   //store in localhost user data if response is correct  checkData( params.get('interviewid'),params.get('userid'));
 },[]);
 const getInterviewID=async()=>{
-  const response = await axios.get(`https://raicruittest.herokuapp.com/Interview/get?email=${logged_user}&title=${current_interview_id.current}`).catch((err) => 
+  const response = await axios.get(`${process.env.REACT_APP_API_KEY}/Interview/get?email=${logged_user}&title=${current_interview_id.current}`).catch((err) => 
   {
-    alert("Error: ", err);
+   console.log("error by api finding interivew id",err);
+
   });
   if (response)  {
     console.log("reponse by get interview id is",response);
@@ -76,6 +80,11 @@ const getInterviewID=async()=>{
   }
 
   const sendDataToAPI=async(e,all_candidates,email_msg)=>{
+    all_candidates=all_candidates.filter((candidate)=>{
+      if(candidate!==null){return true};
+  });
+
+console.log("Candidates before api are:",all_candidates);
     emailData.receiverEmails=all_candidates;
     emailData.emailMessage=email_msg;
    // console.log("email data",emailData);
@@ -90,34 +99,41 @@ body:emailData.emailMessage,
   }
   console.log("TO_API: for email",email_data_sent);
   window.localStorage.setItem("Is_Template",0);
-  handlePageSubmit();
+  //handlePageSubmit();
     //call api remove the below reponse cmnt
-    // const response = await axios.post("https://raicruittest.herokuapp.com/add/email", email_data_sent).catch((err) => 
-    //     {
-    //       alert("Error: ", err);
-    //     });
-    //     if (response)  {
-    //       console.log("reponse by send email is",response);
-    //       if(response.data.Message=="successfully sent emails to all applicant"){
-    //         console.log("sab sae");
-    //         //resetting fields and states
-    // invalidEmails.current=0;
-    // duplicateEmails.current=0;
-    // emailData.receiverEmails="";
-    // emailData.senderName="";
-    // emailData.senderEmail="NOT USED";
-    // emailData.emailSubject="";
-    // emailData.emailMessage="";
-    // candidates.current=[];
-    // setSenderEmailError('');
-    // isfileselected=false;
-    // // console.log("invalid emails",invalidEmails.current,"duplicate are",duplicateEmails.current,"email data",emailData,
-    // // "candidates are",candidates.current,"sender error",senderEmailError,"file selected",isfileselected );
-    // e.target.reset();
-    // handlePageSubmit();
-    //       }
+    setStart(true);
+    const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/email`, email_data_sent).catch((err) => 
+        {
          
-    //     }
+          alert("There was an error while sending emails kindly try again");
+         setStart(false);
+        });
+        if (response)  {
+          setStart(false);
+          console.log("reponse by send email is",response);
+          if(response.data.is_sended==true){
+            console.log("sab sae");
+            //resetting fields and states
+    invalidEmails.current=0;
+    duplicateEmails.current=0;
+    emailData.receiverEmails="";
+    emailData.senderName="";
+    emailData.senderEmail="NOT USED";
+    emailData.emailSubject="";
+    emailData.emailMessage="";
+    candidates.current=[];
+    setSenderEmailError('');
+    isfileselected=false;
+    // console.log("invalid emails",invalidEmails.current,"duplicate are",duplicateEmails.current,"email data",emailData,
+    // "candidates are",candidates.current,"sender error",senderEmailError,"file selected",isfileselected );
+    e.target.reset();
+    handlePageSubmit();
+          }
+         else{
+          alert("There was an error while sending emails kindly try again");
+          setStart(false);
+         }
+        }
     
     
   }
@@ -236,12 +252,12 @@ body:emailData.emailMessage,
                           <input className='emailinput' type="text" placeholder="sender Name"  name="senderName" onChange={(e)=>{changeHandler(e)}}/>
                           <i className="inputicon"><BsFillPersonFill/></i>
                       </div>
-                      <div className='fieldgroup'>
+                      {/* <div className='fieldgroup'>
                       
                           <input className='emailinput' type="email"  placeholder="sender Email Address" name="senderEmail" onChange={(e)=>{changeHandler(e)}}/>
                           <i className="inputicon"><BsEnvelopeOpenFill/></i>
                       {senderEmailError && <p className="emailerror">{senderEmailError}</p>}
-                      </div>
+                      </div> */}
                       <div className='fieldgroup'>
                       
                           <input className='emailinput' type="text"  placeholder="Subject" name="emailSubject" onChange={(e)=>{changeHandler(e)}}/>
@@ -275,10 +291,10 @@ body:emailData.emailMessage,
               className="rounded me-2"
               alt="Notification"
             /> */}
-            <strong className="me-auto">Notification</strong>
+            <strong className="me-auto">Message</strong>
             <small>now</small>
           </Toast.Header>
-          <Toast.Body>Duplicate emails found are {duplicateEmails.current}<br/> Duplicate emails are not accepted</Toast.Body>
+          <Toast.Body>Duplicate emails found are {duplicateEmails.current}<br/> Duplicate emails discarded</Toast.Body>
         </Toast>
         <Toast show={showB} onClose={toggleShowB} className='toast1' position='bottom-center' delay={2000} autohide >
           <Toast.Header>
@@ -318,7 +334,8 @@ body:emailData.emailMessage,
         </Toast>
         </div>
       </div>
-      
+      {shoudlStart&&<div className='loadingdiv-sendingemail'><img className='sending-loading-image' src={loadinggif}>
+</img ></div>}
       </> 
       )
 }

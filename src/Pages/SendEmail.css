@@ -22,6 +22,7 @@
 .formheader{
     padding-left: 32%;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 .fieldgroup{
     padding-left: 13%;
@@ -105,7 +106,7 @@ position: absolute;
 .fileinput{
     min-width: 80%;
     line-height: 30px;
-    margin-top: 5px;
+    margin-top:20px;
     margin-bottom: 20px;
     cursor: pointer;
     border:1px solid black;
@@ -144,7 +145,10 @@ position: absolute;
        }
     .fileinput::-webkit-file-upload-button {
          visibility: hidden; 
-        margin-right: 20%;
+        
+         margin-left: 20%;
+         /* padding: 0px 6% 0px;
+         transform: translatex(-6%); */
       }
       .emaildatasubmitbutton{
         
@@ -174,7 +178,8 @@ position: absolute;
         -webkit-user-select: none;
         vertical-align: middle;
         white-space: nowrap;
-        margin-left: 38%;
+        margin-left: 40%;
+        margin-top: 15px;
        }
        
        .emaildatasubmitbutton:after {
@@ -287,4 +292,18 @@ padding: 0.75rem;
       0% {opacity: 1;}
       100% {opacity: 0;}
    }
-   
+   .loadingdiv-sendingemail{
+    width: 100%;
+    position: relative;
+    height: 100vh;
+    padding-left: 15%;
+    opacity: 0.8;
+    background-color: #ffffff;
+   }
+   .sending-loading-image
+   {
+    height: 400px;
+    width: 400px;
+    margin-left: 24%;
+    margin-top: 7.0%;
+   }

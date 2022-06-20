@@ -1,4 +1,5 @@
 import React, { useState, useRef,useEffect,useCallback} from 'react';
+import styles  from './Adminquestionbank.module.css';
 import './Admindesignflow.css'
 import {Form,Button,Modal,InputGroup,FormControl,Dropdown, DropdownButton,Accordion} from 'react-bootstrap';
 import  axios  from 'axios'
@@ -34,25 +35,29 @@ const initialElements = [
     }
   ];
   
-let id = 0;
 
-const getId = () => `dndnode_${id++}`;
 
 export default function DesignFlow() {
+  const id = useRef(0);
+
+const getId = () =>{id.current=id.current+1;
+  console.log("ID OF NEW NODE IS",`dndnode_${id.current}`);
+  return `dndnode_${id.current}`};
   
 //logged user
 //const logged_user=window.localStorage.getItem('user_Id');
 //console.log("user got in flow is",logged_user);
-const logged_user="hammadalibu@gmail.com";
+const tempUrl=useRef();
+const logged_user=window.localStorage.getItem('user_email');;
 const [toast_text,setToastText]=useState();
 const selectedImage = useRef();
 const [templateName,setTemplateName]=useState();
 const navigation = useNavigate();
-const handlePageSubmit = useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
+const handlePageSubmit = useCallback(() => navigation('/Admintemplatemenu', {replace: true}), [navigation]);
 const toggleShowA = () => {
   setShowA(!showA);
   sleep(3000);
-  handlePageSubmit();
+  
 };
   const [showA, setShowA] = useState(false);
   const sleep = (milliseconds) => {
@@ -66,11 +71,15 @@ const toggleShowA = () => {
   const [nodeFound,setnodeFound]=useState({node_id:'',question_id:'',stem:'',optionArray:[{id:'',optionText:'',optionWeightage:''}],CategoryName:'',username:'',question_weight:''});
   const [stem,setStem]=useState();
   const [sourcehandlecount,setsourcehandlecount]=useState({sourcecount:1,sourceid:''});
-    const [optionList,setoptionList]=useState([{id:count,optionText: '',optionWeightage: ''}]);
+  const updateNodeList=useRef([{old_Question_Id:'',new_Question_Id:''}])
+  
+  const [optionList,setoptionList]=useState([{id:count,optionText: '',optionWeightage: ''}]);
     const [question_weight,setQuestionWeightage]=useState();
   edgeData.current=edgeData.current.filter(edge=>(!(edge.edge_id=='')));
   question.current=question.current.filter(node=>(!(node.node_id=='')));
-    const [show, setShow] = useState(false);
+  updateNodeList.current=updateNodeList.current.filter(node=>(!(node.old_Question_Id=='')));
+ 
+  const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const dropDownTitle=useRef("A");
@@ -98,7 +107,7 @@ const toggleShowA = () => {
     {
     count=Math.ceil(Math.random()*99999999);
     //id=count;
-    setoptionList([...optionList, {id:count, optionText: '', optionWeightage: '' }]);
+    setoptionList([...optionList, {id:count, optionText: '', optionWeightage: '25' }]);
     };
   //reactflow states
   const reactFlowWrapper = useRef(null);
@@ -122,10 +131,12 @@ const toggleShowA = () => {
       if(node.node_id===nodeid)
       {
         
-       const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.question_weight}
+        console.log("node to be copied is ",node);
+       const tempnode={node_id:node.node_id,question_id:node.question_id,stem:node.stem,optionArray:node.option,CategoryName:node.category,username:logged_user,question_weight:node.stemweightage}
        setnodeFound(tempnode);
        setQuestionWeightage(nodeFound.question_weight);
-       //console.log("Question node is",node);
+
+       console.log("Weight here is",node.question_weight);
        //console.log("updated node value",nodeFound);
        handleShow();
       }
@@ -153,6 +164,7 @@ const handleCloseUpdateQuestion=()=>{
     console.log("optinlist is",optionList);
       if(nodeFound.optionArray===optionList){
         console.log("option same");
+        
         //setoptionList(nodeFound.optionArray);
         notchanged2=true;
         optionschanged=false;
@@ -161,10 +173,7 @@ const handleCloseUpdateQuestion=()=>{
         notchanged3=true;
         weightagechanged=false;
       }
-      if(stemchanged===false || optionschanged===false || weightagechanged===false){
-        console.log("noneupdated");
-      handleClose();
-    }
+     
       //check weightage here too 
     if(notchanged1==false||notchanged2==false ||notchanged3==false){
       console.log("not change is false something updated optionlist is",optionList);
@@ -178,7 +187,7 @@ const handleCloseUpdateQuestion=()=>{
   console.log("updated nodefound in handlesubmit is",nodeFound);
   const addques={CategoryName: '',
   stem: '',
-  question_weight: '',
+  question_weight: 1,
   optionArray:[
           {
             id: 1,
@@ -186,22 +195,37 @@ const handleCloseUpdateQuestion=()=>{
             optionWeightage: ''
           }
         ],
-  email: ''};
+  user_id: 0};
   addques.stem=nodeFound.stem;
   addques.question_weight=question_weight;
 addques.optionArray=nodeFound.optionArray;
-addques.email=nodeFound.username;
+
 addques.CategoryName=nodeFound.CategoryName;
-//   const response = await axios.post("https://raicruittest.herokuapp.com/add/user/question", addques).catch((err) => 
-//   {
-//     console.log("Error: ", err);
-//   });
-//   if (response)  {
-//     console.log("reponse by post question is",response.data);
-//     nodeFound.question_id=response.data.question_id;
-//   }
-nodeFound.question_id=999;
-  //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
+let isSomethingempty=false;
+if(addques.stem.length==0){
+  isSomethingempty=true;
+}
+addques.optionArray.map((option)=>{
+if(option.optionText.length==0){
+  isSomethingempty=true;
+  alert("Kindly input all options");
+}
+});
+
+if(isSomethingempty==false) {
+  if(stemchanged===false || optionschanged===false || weightagechanged===false){
+    console.log("noneupdated");
+  handleClose();
+}
+  console.log("adding update question");
+  const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/user/question`, addques).catch((err) => 
+{
+  //incase of server down
+  alert("There was an error while updating .Kindly try again");
+});
+if (response)  {
+  console.log("reponse by post question is",response.data);
+  updateNodeList.current.push({old_Question_Id:nodeFound.question_id,new_Question_Id:response.data.question_id});
   console.log("API DONE",nodeFound.question_id);
   //update question in array
   updateQuestion();
@@ -229,8 +253,12 @@ nodeFound.question_id=999;
     console.log("updated question did not had any edges");
     handleClose();
   }
+  // yay nodeFound.question_id=response.data.question_id;
+}
+  //send it to backend ,using temp new id and get updated id and assignit to nodeFound up
+  
     }
-  }
+     } }
   const updateQuestion=()=>
   {
     question.current.map((node)=>
@@ -325,10 +353,34 @@ nodeFound.question_id=999;
   {
 
     question.current.map((currentNode)=>
-    {
+    {let exist_edge=false;
       if(currentNode.node_id===sourceid)
       {
+        console.log("Node selected is",currentNode,"and source id is",sourceid);
+        let tempoptions=[];
+    currentNode.option.map((questionOption)=>{
+      let optionfound=false;
+titleArray.current.map((title)=>{if(title.source_id==sourceid){
+if(questionOption.optionText==title.selectedTitle){
+  optionfound=true;
+}}
+});
+if(optionfound==false){
+  console.log("new option adding",questionOption);
+tempoptions.push(questionOption);
+}else{
+  console.log("option already added",questionOption);
+}
+    });
+    dropdownValues.current=tempoptions;
+    console.log("dp options after loop are",dropdownValues.current);
+if(tempoptions.length==0){
+  exist_edge=false;
+}else{ }
+if(exist_edge==true){
+  
         dropdownValues.current=currentNode.option;
+}
 
        
       }
@@ -402,8 +454,39 @@ nodeFound.question_id=999;
  //react flow functions
   const onConnect = (params) => {
     console.log("params are",params);
+    let isopenended=false,ismade=false;
     if(params.source!=="0"){
-    setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+      const edgeArray = [];
+      const nodeArray = [];
+      elements.map((els) => 
+      {
+        if (isEdge(els)) 
+        {
+          return edgeArray.push(els);
+        }
+        else 
+        {
+          return nodeArray.push(els);
+        }
+      });
+      edgeArray.map((edge)=>{
+        if(edge.source==params.source){
+
+question.current.map((currentQuestion)=>{
+  if(currentQuestion.node_id==params.source){
+    if(currentQuestion.option.length==0){
+      isopenended=true;
+      ismade=true;
+      alert("Open ended question can have only one outgoing edge");
+    }
+  }
+        });
+        if(isopenended==false){
+          ismade=true;
+      setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+
+      }});if(ismade==false){ setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els))}
+     }
   else{
     if(sourcehandlecount.sourcecount==1) { setElements((els) => addEdge({ ...params,arrowHeadType:"arrow", type: 'customedge' }, els));
     //const temp={};
@@ -423,6 +506,27 @@ alert("There can only be one starting question");}
           sourcehandlecount.sourceid='';
         }
       }
+      elementsToRemove.map((currentelement)=>{
+      
+        if(currentelement.type=="customedge"){
+         
+          titleArray.current.map((title)=>{
+           
+        if(title.source_id==currentelement.source){
+         
+          if(title.target_id==currentelement.target){
+            
+            titleArray.current=titleArray.current.filter((ctitle)=>{
+              if(ctitle!==title){return true};
+          }
+           );
+          console.log("titlearra after filter are",titleArray.current);
+          }
+        }
+          });
+          console.log("after element removal title are",titleArray.current);
+        }
+            });
     console.log("element remove called",elementsToRemove);
     //first checking if source edge is deleted then restoring the source edge state
     
@@ -570,6 +674,15 @@ const convertEdgesId=()=>{
       }
     });
   });
+  edgeData.current.map((edge)=>{
+    updateNodeList.current.map((update_Node)=>{
+    if(edge.source==update_Node.old_Question_Id){
+      edge.source=update_Node.new_Question_Id;
+    }else if(edge.target==update_Node.old_Question_Id){
+      edge.target=update_Node.new_Question_Id;
+    }
+    });
+      });
 }
 useEffect(()=>{
   console.log("toast text is",toast_text);
@@ -581,27 +694,29 @@ const sendFlow=async()=>{
  const data_to_send={
   template_Name:templateName,
   template_Image:selectedImage.current,
-  template_Flow: JSON.stringify(elements),
-  template_Rules:edgeData.current
+  
+  template_Rules:edgeData.current,
+  template_Flow: elements,
  }
   console.log("data sended to api is",data_to_send);
-  setToastText("Successfully stored");
-//   const response = await axios.post("https://raicruittest.herokuapp.com/add/interview", data_to_send).catch((err) => 
-//       {
-//         console.log("Error: ", err);
-//       });
-//       if (response.status==200)  {
+  //setToastText("Successfully stored");
+  const response = await axios.post(`${process.env.REACT_APP_API_KEY}/add/template`, data_to_send).catch((err) => 
+      {
+        console.log("Error: ", err);
+      });
+      if (response.status==200)  {
         
-//         if(response.data.Message=="Successfully stored interview")
-//         {
-//           setToastText(response.data.Message);
-//         console.log("reponse is all good received");
-//         
-//         }
+        if(response.data.Message=="Successfully stored Templates")
+        {
+          setToastText("Template has been stored successfully");
+
+        console.log("reponse is all good received");
         
-//         console.log("reponse by post question is",response);
+        }
+        
+        console.log("reponse by post question is",response);
        
-//       }
+      }
 }
   
   const onLoad = (_reactFlowInstance) =>
@@ -740,13 +855,13 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
         <foreignObject
          id={`${id}.foreignObject`}
          visibility= "hidden"
-          width={foreignObjectSize+150}
-          height={foreignObjectSize+200}
+          width={foreignObjectSize+450}
+          height={foreignObjectSize+400}
           x={edgeCenterX - foreignObjectSize / 4}
           y={edgeCenterY - foreignObjectSize / 4}
           className="edgebutton-foreignobject"
           requiredExtensions="http://www.w3.org/1999/xhtml"
-          style={{color: "red",zIndex:"50px"}}
+          
         >
           <body className="pathdropdown">
    
@@ -823,6 +938,7 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
       newNode.data = { ...newNode.data, id: `${newNode.id}` };
       setElements((es) => es.concat(newNode));
       list['node_id']=newNode.id;
+      
       question.current.push(list);   
       console.log("question is after current",question.current);
   
@@ -837,16 +953,26 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
     const handleClick = (e) => {
       hiddenFileInput.current.click();
     };
-
+    
   const handleChange = (event) => {
-     
+    tempUrl.current='none';
     var selectedFile = event.target.files[0];
-    selectedImage.current=URL.createObjectURL(selectedFile);
-  console.log(selectedFile.name.slice(0,20)+"...","URL MADE IS:",selectedImage.current);
-  document.getElementById('templateimage').innerText=selectedFile.name.slice(0,15)+"...";
-  
-  }
-  
+    const reader=new FileReader();
+    reader.addEventListener("load",()=>{
+      tempUrl.current=reader.result;
+      selectedImage.current=selectedFile;
+      console.log(selectedFile.name.slice(0,20)+"...","URL MADE IS:",selectedImage.current);
+      document.getElementById('templateimage').innerText=selectedFile.name.slice(0,15)+"...";
+      selectedImage.current=tempUrl.current;
+      console.log("updated url is",selectedImage.current);
+   
+    });
+    reader.readAsDataURL(selectedFile);
+     
+   
+   // selectedImage.current=URL.createObjectURL(selectedFile);
+   
+   }
   const graphStyles = { width: "100%", height: "515px" };
   return (
     <div className='admin-designflows'><div className='template-infomration'>
@@ -910,13 +1036,9 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
       </ReactFlowProvider>
      
     </div>
-    <Toast show={showA} onClose={toggleShowA} className='toast1' position='bottom-center'  delay={2000} autohide>
+    <Toast show={showA} onClose={handlePageSubmit} className='toast1' position='bottom-center'  delay={2000} autohide>
           <Toast.Header>
-            {/* <img 
-              src=""  
-              className="rounded me-2" 
-              alt="Notification"
-            /> */}
+            {console.log("toast is shown somewhwere,",toast_text)}
             <strong className="me-auto">Message</strong>
             <small>now</small>
           </Toast.Header>
@@ -935,41 +1057,46 @@ const myfo = document.getElementById(`${pathId}.foreignObject`).style.visibility
         </Modal.Header>
           <Form>
             <Modal.Body >      
+            <h6 className='myclasscateogry'>Category Name: </h6><label> {nodeFound.CategoryName}</label>    
+            
                 <InputGroup>
                     <InputGroup.Text>Question</InputGroup.Text>
                     <FormControl as="textarea" name="stem"  
                     onChange={handleStemChange} value={stem} >{nodeFound.stem}</FormControl>
                 </InputGroup>
+                <div className='admin-weight-dp'><label className="weightagelabelss">Weightage: </label>
+                
                 <DropdownButton id="dropdown-basic-button" title={question_weight}  name="question_weight"
-                value={question_weight}  onSelect={e => setQuestionWeightage(e)} required className="newquestiondeightage">
+                value={question_weight}  onSelect={e => setQuestionWeightage(e)} required className="updatequestiondeightage">
                           <Dropdown.Item eventKey="25">25</Dropdown.Item>
                           <Dropdown.Item eventKey="50">50</Dropdown.Item>
                           <Dropdown.Item eventKey="75">75</Dropdown.Item>
                           <Dropdown.Item eventKey="100">100</Dropdown.Item>
                           
-                      </DropdownButton>
-                <label>Category Name: {nodeFound.CategoryName}</label><br/>
-                <label>Options</label><br/>
+                      </DropdownButton></div>
+                      
+                      <label style={{fontWeight:"500",display: "flex",marginLeft: "5px"}}>Options</label>
                 
                 {optionList.map((T_option,i)=>(
-                    <div key={T_option.id}>
+                    <div key={T_option.id} style={{marginTop:"10px"}}>
                       
                       <Form.Control  type="text" name="optionText" value={T_option.optionText} 
-                      onChange={e=> handleOptionChange(e.target.name,e.target.value,i)} ></Form.Control><br/>    
+                      onChange={e=> handleOptionChange(e.target.name,e.target.value,i)} className='admindesignflowoption'></Form.Control>  
+                       <h6 style={{marginRight:"3%",display:"inline-flex"}}>weightage</h6> 
                       <DropdownButton id="dropdown-basic-button" title={T_option.optionWeightage}  name="optionWeightage"
-                value={T_option.optionWeightage}  onSelect={e => handleOptionChange("optionWeightage",e, i)} >
+                value={T_option.optionWeightage}  onSelect={e => handleOptionChange("optionWeightage",e, i)} style={{display:"contents",marginRight:"20px"}}>
                           <Dropdown.Item eventKey="25">25</Dropdown.Item>
                           <Dropdown.Item eventKey="50">50</Dropdown.Item>
                           <Dropdown.Item eventKey="75">75</Dropdown.Item>
                           <Dropdown.Item eventKey="100">100</Dropdown.Item>
                           
                       </DropdownButton>
-                      <div className="btn-box">
-                  {optionList.length !== 1 && <button
+                      <div className="update-add-question-btn-box" style={{marginLeft:"20px"}}>
+                  {optionList.length !== 2 && <button
                   
-                    className="optionremoveButton"
+                    className="update-add-question-optionremoveButton"
                     onClick={() => handleRemoveClick(i)}>-</button>}
-                  {optionList.length - 1 === i && <button className="optionremoveButton"
+                  {optionList.length - 1 === i && <button className="update-add-question-optionaddbutton"
                   onClick={()=>handleAddClick(i)}>+</button>}
                 </div>
                       </div>

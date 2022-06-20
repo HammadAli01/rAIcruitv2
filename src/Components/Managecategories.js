@@ -1,25 +1,30 @@
 import React,{useState,useEffect,useCallback} from 'react'
 import './Managecategories.css'
 import {useNavigate} from 'react-router-dom';
+import  axios  from 'axios'
 export default function Managecategories() {
     const navigation = useNavigate();
     const handlePageSubmit = useCallback(() => navigation('/categoryView', {replace: true}), [navigation]);
 const [category,setCategory]=useState("");
 //when admin logged in get categories and store in localstorage and get them here window.localStorage.getItem("admincategories");
+const getAllCategories=async()=>{
+    console.log("get categories called"); 
+    const response = await axios.post(`${process.env.REACT_APP_API_KEY}/Category/get/all`).catch((err) => 
+    { alert("Server down kindly try again") });
+     if (response) { 
+       console.log("cateogires got are",response.data); 
+       setCategories(response.data); 
+     }
+};
 useEffect(()=>{
-    // const response = await axios.get("https://raicruittest.herokuapp.com/get/all/question").catch((err) => {
-//   console.log("Error:", err);
-// });
-// if (response ) {
-//     setCategories(response.data.Questions);
-// }
-setCategories([{id:1,name:"Experience"},
-{id:2,name:"Icebreaker"},
-{id:3,name:"Goals"},
-{id:4,name:"Organization"},
-{id:5,name:"Personal"},
-{id:6,name:"Work environment"},
-{id:7,name:"Education"}]);
+   getAllCategories();
+// setCategories([{id:1,name:"Experience"},
+// {id:2,name:"Icebreaker"},
+// {id:3,name:"Goals"},
+// {id:4,name:"Organization"},
+// {id:5,name:"Personal"},
+// {id:6,name:"Work environment"},
+// {id:7,name:"Education"}]);
 },[]);
 const [categories,setCategories]=useState([]);
 
@@ -49,9 +54,22 @@ else{
             setCategoryError("");
         setCategories([...categories,{id:(categories.length+1),name:category}]);
         //add cateogry api call with name category_Name:""
+        postCategory(category);
+        
         setCategory("");
   }
     }
+}
+const postCategory=async(categoryName)=>{
+    const name={name:categoryName};
+//add api call category
+console.log("Add category called"); 
+const response = await axios.post(`${process.env.REACT_APP_API_KEY}/Category`,name).catch((err) => 
+{ console.log("Error:", err); });
+ if (response) { 
+   console.log("category added is",response.data); 
+ getAllCategories();
+ }
 }
 const handleCategorySelected=(category)=>{
     window.localStorage.setItem('SelectedCategory',JSON.stringify(category));
@@ -67,14 +85,15 @@ const handleCategorySelected=(category)=>{
         </div>
         <div className='categories-container' >
             <h3>Categories</h3>
-            {categories.map((acategory,index)=>{
+            {categories.length!==0?(
+            categories.map((acategory,index)=>{
             return(
                 <div className='ancategory' onClick={()=>handleCategorySelected(acategory)}>
                     <h5>{index+1}</h5>
                     <h6>{acategory.name}</h6>
                     </div>
             )
-        })
+        })):(<div className='empty-questions'>No categories exist</div>)
 }</div>
     </div>
   )

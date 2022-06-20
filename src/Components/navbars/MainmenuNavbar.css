@@ -26,8 +26,8 @@
 }
 .mainnavbar .navbar-nav{
     position: absolute;
-    margin-left: 58%;
-    
+    /* margin-left: 58%; */
+    margin-left: 75%;
    
 }
 .mainnavbar  .nav-link{
@@ -42,10 +42,27 @@
 }
 .mainnavbar  .sitelogo{
     background-color: transparent;
-    width: 10%;
-    height: 5%;
+    width: 9%;
+    height: 13%;
     margin-left: 5%;
+    margin-top: -28px;
     position: fixed;
+}
+.cruittext{
+    margin-top: 3px;
+    margin-left: 12.5%;
+    position: fixed;
+    background-color: transparent;
+}
+.mainnavbar .navbar-brand h5{
+    display: contents;
+color: black;
+font-size: 20px !important;
+text-transform: uppercase;
+}
+.mainnavbar .navbar-brand h6{
+    color:blue;
+    font-size: 20px !important;
 }
 .mainnavbar  .nav-colored{
     background-color: white ;

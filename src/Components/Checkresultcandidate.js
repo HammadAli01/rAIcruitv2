@@ -1,19 +1,33 @@
 import React,{useState,useEffect,useRef,useCallback} from 'react'
 import './Checkresultcandidate.css'
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Dropdown,DropdownButton,Button } from 'react-bootstrap';
 
 export default function Checkresultinterviews() {
     const [sortTitle,setSorttitle]=useState("Select sort");
     const navigation = useNavigate();
+    const current_interview_id= window.localStorage.getItem("checkresultinterview");
     const handlePageSubmit = useCallback(() => navigation('/Interviewcandidateresultview', {replace: true}), [navigation]);
     const currentCandidatesLength=useRef(10);
 const [AllCandidates,setAllCandidates]=useState([]);
 
     const [current_candidates,setCandidates]=useState([]);
+    const getAllCandidates=async()=>{
+      const response =await axios.get(`${process.env.REACT_APP_API_KEY}/check/interview/result?interview_id=${current_interview_id}`).then(response => {
+        console.log("first response",response.data); 
+        setAllCandidates(response.data);
+  
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+    };
 useEffect(()=>{
-setAllCandidates([]);
+  getAllCandidates();
+//setAllCandidates([{id:1,email:"hammadalibu@gmail.com",interview_scor:"30.123123"},{id:1,email:"hammadalibu@gmail.com",interview_scor:"80.9087"},{id:1,email:"hammadalibu@gmail.com",interview_scor:"80.11"}]);
+
 },[]);
 useEffect(()=>{
   setCandidates(AllCandidates.slice(0,9));
@@ -33,18 +47,18 @@ useEffect(()=>{
             if(sortTitle=="Lowest")
             {
                 tempcandidates=tempcandidates.sort((a, b) => {
-              if (parseInt(a.marks) < parseInt(b.marks))
+              if (parseInt(a.interview_scor) < parseInt(b.interview_scor))
                   return -1;
-              if (parseInt(a.marks) > parseInt(b.marks))
+              if (parseInt(a.interview_scor) > parseInt(b.interview_scor))
                   return 1;
               return 0;
           });
         }
         else if(sortTitle=="Highest"){
             tempcandidates=tempcandidates.sort((a, b) => {
-              if (parseInt(a.marks) > parseInt(b.marks))
+              if (parseInt(a.interview_scor) > parseInt(b.interview_scor))
                   return -1;
-              if (parseInt(a.marks) < parseInt(b.marks))
+              if (parseInt(a.interview_scor) < parseInt(b.interview_scor))
                   return 1;
               return 0;
           });
@@ -60,27 +74,34 @@ useEffect(()=>{
             if(sortTitle=="Lowest")
             {
                 tempAllCandidates=tempAllCandidates.sort((a, b) => {
-              if (parseInt(a.marks) < parseInt(b.marks))
+              if (parseInt(a.interview_scor) < parseInt(b.interview_scor))
                   return -1;
-              if (parseInt(a.marks) > parseInt(b.marks))
+              if (parseInt(a.interview_scor) > parseInt(b.interview_scor))
                   return 1;
               return 0;
           });
         }
         else if(sortTitle=="Highest"){
             tempAllCandidates=tempAllCandidates.sort((a, b) => {
-              if (parseInt(a.marks) > parseInt(b.marks))
+              if (parseInt(a.interview_scor) > parseInt(b.interview_scor))
                   return -1;
-              if (parseInt(a.marks) < parseInt(b.marks))
+              if (parseInt(a.interview_scor) < parseInt(b.interview_scor))
                   return 1;
               return 0;
           });
         }}
         setAllCandidates(tempAllCandidates);
       }
+      const handleviewActionButton=(id,email,name,score)=>{
+        window.localStorage.setItem("checkresultcandidate_id",id);
+        window.localStorage.setItem("checkresultcandidate_email",email);
+        window.localStorage.setItem("checkresultcandidate_name",name);
+        window.localStorage.setItem("checkresultcandidate_score",score.toFixed(2));
+handlePageSubmit();
+      };
   return (
     <div><div className='candidate-check-tablecontainer'>
-        <h3>Sort Candidates</h3>
+        <h3 className='candidate-check'>Sort Candidates</h3>
         <div className='candidate-check-sortContainer'>
         <div className='candidate-Asorter'>
         
@@ -91,7 +112,7 @@ useEffect(()=>{
         </div> 
         <button onClick={()=>handleSortButton()}>sort</button>
         </div>
-<h3 className='candidate-check-tabletitle'>Interview Candidates</h3>
+<h3 className='candidate-check-tabletitle candidate-check'>Interview Candidates</h3>
 {AllCandidates.length!==0?(
          <div className='candidate-check-table'>
          <InfiniteScroll
@@ -119,11 +140,11 @@ useEffect(()=>{
         //    count.current=count.current+1;
         //    console.log("ct",count.current);
            return (
-              <tr key={index+1}>
+              <tr key={index+1} className='checkres-row'>
                 <td>{index+1}</td>
                  <td>{candidate.email}</td>
-                 <td>{candidate.marks}</td>
-                 <td><button className='candidate-result-action-button' onClick={()=>{handlePageSubmit()}}>View</button></td>
+                 <td>{(candidate.interview_scor.toFixed(2))+"%"}</td>
+                 <td><button className='candidate-result-action-button' onClick={()=>{handleviewActionButton(candidate.id,candidate.email,candidate.applicant_name,candidate.interview_scor)}}>View</button></td>
                  
               </tr>
            )

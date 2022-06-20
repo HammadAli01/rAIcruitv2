@@ -156,7 +156,7 @@ form {
 }
 .field-error{
     color: red;
-    font-size: 11px;
+    font-size: 10px;
     padding-left: 10px;
     float: left;
    position: absolute;
@@ -290,4 +290,86 @@ p {
     background-color: #10d0a2 !important;
     border: 0px;
     
+}
+.signup-toast{
+    position: relative;
+    background-color: transparent;
+    display: block;
+}
+.signup-toast{
+    position: fixed;
+ margin-top: -16% !important;
+ margin-left:-2% !important;
+ 
+}
+    .signup-toast .toast{
+     padding: 0.5rem 0.75rem;
+       
+        min-width: 380px;
+        height: max-content;
+        font-size: .875rem;
+ pointer-events: auto;
+ background-color:hsl(0deg 0% 80%);
+ /* background-color: hsla(0, 0%, 100%, 0.85); */
+ background-clip: padding-box;
+ border: 1px solid rgba(0,0,0,.1);
+ box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+ border-radius: 7px;
+ animation: toastFadeIn 1s toastFadeOut 1s;
+-webkit-animation: toastFadeIn 1s toastFadeOut 1s;
+-moz-animation: toastFadeIn 1s toastFadeOut 1s;
+-o-animation: toastFadeIn 1s toastFadeOut 1s;
+-ms-animation: toastFadeIn 1s toastFadeOut 1s;
+    }
+
+    .signup-toast .btn-close{
+display: none;
+ } 
+ .signup-toast small{
+float: right;
+     font-size: .875em;
+ }
+ .signup-toast  .toast-header{
+     
+ padding: 0.5rem 0.75rem;
+ color: #6c757d;
+ background-color: hsla(0,0%,100%,.85);
+ background-clip: padding-box;
+ border-bottom: 1px solid rgba(0,0,0,.05);
+ border-top-left-radius: calc(0.25rem - 1px);
+ border-top-right-radius: calc(0.25rem - 1px);
+}
+.signup-toast  .toast-body{
+ text-align: center;
+padding: 0.75rem;
+ word-wrap: break-word;}
+
+ @keyframes toastFadeIn {
+     0% {opacity:0;}
+     100% {opacity:1;}
+   }
+   
+   @-moz-keyframes toastFadeIn {
+     0% {opacity:0;}
+     100% {opacity:1;}
+   }
+   
+   @-webkit-keyframes toastFadeIn {
+     0% {opacity:0;}
+     100% {opacity:1;}
+   }
+   
+   @-o-keyframes toastFadeIn {
+     0% {opacity:0;}
+     100% {opacity:1;}
+   }
+   
+@-webkit-keyframes toastFadeOut {
+   0% {opacity: 1;}
+   100% {opacity: 0;}
+}
+
+@keyframes toastFadeOut {
+   0% {opacity: 1;}
+   100% {opacity: 0;}
 }

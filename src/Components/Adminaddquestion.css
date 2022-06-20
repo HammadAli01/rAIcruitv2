@@ -212,7 +212,7 @@ margin-bottom: 50%;
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0px;
+  top: 23px;
   left: 0;
   right: 0;
   bottom: 15px;
@@ -249,6 +249,7 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
+
   border-radius: 34px;
 }
 
@@ -375,7 +376,7 @@ outline: none;
   .addquestion-form .toast{
    padding: 0.5rem 0.75rem;
    position: fixed;
-   margin-top: -5% !important;
+   margin-top: -20% !important;
    margin-left: 15% !important;
  z-index: 10;
  width: 400px;
@@ -453,4 +454,33 @@ word-wrap: break-word;}
     color: rgb(114, 109, 109);
     font-size: large;
     font-weight: bold;
+}
+.delete-action-button{
+  cursor: pointer;
+  display:inline-block;
+    
+  font:normal normal 300 1.3em 'Open Sans';
+  text-decoration:none; 
+  
+  color:#6c7ae0;
+  background-color:transparent;
+  border:1px solid #6c7ae0;
+  border-radius:5px;
+  
+  padding: .1em 1.0em;
+      margin-left: 7%;
+  background-size: 200% 200%; 
+  background-image: linear-gradient(to right, transparent 50%, blue 50%);
+     
+}
+ 
+  
+  .delete-action-button:hover{
+    color:rgba(255, 255, 255, 1);
+    background-color:#6c7ae0;
+    
+  }
+  .delete-action-button:active,.delete-action-button:focus{
+outline: none;
+transform: translateX(0px) translateY(-1px);
 }

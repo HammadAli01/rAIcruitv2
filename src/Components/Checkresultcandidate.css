@@ -12,7 +12,7 @@
     }
     .candidate-check-tabletitle{
       margin-top: 3%;
-        color:black;
+      
 
     }
 .candidate-check-table{
@@ -62,7 +62,7 @@
     */
     
    overflow: scroll;
-   height:350px;
+   /* height:350px; */
 
   }
   .candidate-check-interviews tr:nth-child(even){background-color: #f8f6ff;}
@@ -220,4 +220,11 @@ transform: translateX(0px) translateY(-1px);
     margin-top: 1%;
     margin-bottom: 1%;
     font-weight: bold;
+  }
+  .checkres-row{
+    height: 60px !important;
+  }
+  .candidate-check{
+    color: rgb(32, 32, 32);
+    font-size: 1.35rem !important;
   }

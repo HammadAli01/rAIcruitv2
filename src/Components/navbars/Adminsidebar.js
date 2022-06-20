@@ -25,20 +25,21 @@ export default function Adminsidebar(props) {
       <span>Home</span>
     </li></Link>
     
-    <Link to="/Allcategories">
+    <Link to="/Admintemplatemenu">
     <li class="admin-sidebar-item">
-    <BsFillGridFill className="admin-page-icon"></BsFillGridFill>
-    <span>Categories</span> 
+    <BsFillFileEarmarkFontFill className="admin-page-icon"></BsFillFileEarmarkFontFill>
+    <span>Templates</span> 
     </li></Link>
     <Link to="/Allinterviews">
     <li class="admin-sidebar-item">
     <BsFillMenuButtonWideFill className="admin-page-icon"></BsFillMenuButtonWideFill>
      <span>Interviews</span>
     </li></Link> 
-    <Link to="/Admintemplatemenu">
+   
+    <Link to="/Allcategories">
     <li class="admin-sidebar-item">
-    <BsFillFileEarmarkFontFill className="admin-page-icon"></BsFillFileEarmarkFontFill>
-    <span>Templates</span> 
+    <BsFillGridFill className="admin-page-icon"></BsFillGridFill>
+    <span>Categories</span> 
     </li></Link>
     <Link to="/Adminmanagebank">
     <li class="admin-sidebar-item">

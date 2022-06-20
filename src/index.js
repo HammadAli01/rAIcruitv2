@@ -23,16 +23,19 @@ import Admintemplatemenu from './Pages/Admintemplatemenu';
 import Designtemplate from './Pages/Designtemplate';
 import Admintemplateview from './Pages/Admintemplateview';
 import Adminmanageusers from './Pages/Adminmanageusers';
+import Adminmanageinterviews from './Pages/Adminmanageinterviews';
 import AdminManageprofile from './Pages/AdminManageprofile';
 import Checkcandidate from './Pages/Checkcandidate';
 import Checkresults from './Pages/Checkresults';
 import Checktranscript from './Pages/Checktranscript';
+// import ConductInterview from './Pages/conducting-interview/Interviewconducting';
 ReactDOM.render(
   <React.StrictMode>
    
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<Signin/>}/>
+    <Route path="/" element={<Signup/>}/>
+    <Route path="/home" element={<Mainmenu/>}/>
     <Route path="/signup"  element={<Signup/>}/>
         <Route path='/signin' element={<Signin/>} />
         <Route path='/dashboard' element={<RecruiterDashboard/>} />
@@ -54,10 +57,13 @@ ReactDOM.render(
          <Route path='/Admintemplatemenu' element={<Admintemplatemenu/>} />
          <Route path='/Adminmanageusers' element={<Adminmanageusers/>} />
          <Route path='/Adminmanageprofile' element={<AdminManageprofile/>} />
-         
+         <Route path='/Allinterviews' element={<Adminmanageinterviews/>} />
          <Route path='/Admintemplateview' element={<Admintemplateview/>} />
 {/*include upper route in admin sidebar */}         
         <Route path='/userprofile' element={<Userprofile/>} />   
+
+        {/* <Route path='/interview' element={<ConductInterview/>} />   */}
+        
              
         </Routes>
     </BrowserRouter>

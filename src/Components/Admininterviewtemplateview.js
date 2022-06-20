@@ -22,18 +22,22 @@ export default function Admininterviewtemplateview() {
 const handlePageSubmit = useCallback(() => navigation('/interviewdetails', {replace: true}), [navigation]);
 const reactFlowWrapper = useRef(null);
 const [reactFlowInstance, setReactFlowInstance] = useState(null);
-const [elements, setElements] = useState();
+const [elements, setElements] = useState([]);
 useEffect(()=>{
   const template= JSON.parse(window.localStorage.getItem('current_Selected_Template'))
  setElements(template.template_Flow);
+ console.log("Elements got are",template.template_Flow);
  },[]);
+ useEffect(()=>{
+console.log("Element after updation are",elements);
+ },[elements]);
 const onElementsRemove = (elementsToRemove) =>
 {
 alert("No updation is allowed");    
 }
 const onLoad = (_reactFlowInstance) =>
 setReactFlowInstance(_reactFlowInstance);
-const [interview,setInterview]=useState(JSON.parse(window.localStorage.getItem('current_Selected_Template')));
+const [interview,setInterview]=useState((window.localStorage.getItem('current_Selected_Template')));
 // useEffect(()=>{
 //     setInterview(JSON.parse(window.localStorage.getItem('current_Selected_Template')));
 //     console.log(JSON.parse(window.localStorage.getItem('current_Selected_Template')));

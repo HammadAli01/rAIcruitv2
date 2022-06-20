@@ -2,12 +2,11 @@ import React,{useEffect,useState} from 'react'
 import './Recruitermain.css'
 import { Dropdown,DropdownButton,Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import  axios  from 'axios'
 import { Line } from "react-chartjs-2";
-import Axios from 'axios';
-import { getRectOfNodes } from 'react-flow-renderer';
 export default function Recruitermain() {
     window.localStorage.setItem("Is_Template",0);
-    const logged_user=window.localStorage.getItem('user_Id');
+    const logged_user=window.localStorage.getItem('user_email');
   
 //const logged_user="hammadalibu@gmail.com";
     const [jobTitle,setJobtitle]=useState("Interview Order");
@@ -30,8 +29,8 @@ export default function Recruitermain() {
       };
       useEffect(()=>{
        //calling api remove below comment
-        // getInterviewData();
-        setInterviews([{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"}]);
+       getAllInterviews();
+        //setInterviews([{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"},{title:"aa", generationDate:"2/4/2021", startDate:"3/4/2021", endDate:"4/4/2021",type:"Full Time"}]);
       },[]);
        useEffect(()=>{
        getRecruiterData();
@@ -55,19 +54,17 @@ export default function Recruitermain() {
             ]
           });
           console.log("current data is",data);}
-        },[recruiterData])
-    const getInterviewData=async()=>{
-       
-        const response = await Axios.get(`https://raicruittest.herokuapp.com/Interview/get/all?email=${logged_user}`).then(response => {
-            console.log("Dashboard data response",response.data); 
-            
-            setInterviews(response.data);
-       
-       })
-        .catch(error => {
-            console.error('There was an error!', error);
-        });
-      }
+        },[recruiterData]);
+        const getAllInterviews=async()=>{
+          console.log("Calling API for interview",logged_user);
+          const response =await axios.get(`${process.env.REACT_APP_API_KEY}/Interview/get/all?email=${logged_user}`).then(response => {
+              console.log("first response by get all intervies of user",response.data); 
+              setInterviews(response.data);
+          })
+          .catch(error => {
+              console.error('There was an errorin get all users!', error);
+          });
+         };
     
 //     window.addEventListener('load', (event) =>{
 // getInterviewData();
