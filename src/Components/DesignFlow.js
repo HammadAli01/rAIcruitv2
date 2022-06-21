@@ -268,6 +268,7 @@ if (response)  {
   else
   {
     console.log("updated question did not had any edges");
+    updateEdge();
     handleClose();
   }
   // yay nodeFound.question_id=response.data.question_id;
@@ -291,7 +292,22 @@ if (response)  {
     console.log("edges before updation are",edgeData.current);
     edgeData.current=edgeData.current.filter(edge=>((nodeFound.node_id===edge.source)));
     edgeData.current=edgeData.current.filter(edge=>((nodeFound.node_id===edge.target)));
-    console.log(" My updated edges are",edgeData.current);
+    console.log(" updating titleArray",titleArray.current);
+    titleArray.current=titleArray.current.filter(title=>((nodeFound.node_id!==title.source_id)));
+    titleArray.current=titleArray.current.filter(title=>((nodeFound.node_id!==title.target_id)));
+    console.log(" After  titleArray",titleArray.current);
+    // titleArray.current=titleArray.current.filter((atitle)=>{
+    //   console.log("nodefound id is",nodeFound.node_id==atitle.source_id);
+    //   if(atitle.source_id!==nodeFound.node_id){
+    //     console.log("not same");
+    //     return true;
+    //   }
+    //   else if(atitle.target_id!==nodeFound.node_id){
+    //     console.log("not same2");
+    //     return true;
+    //   }
+    // });
+    console.log("title array after updation are",titleArray.current);
     
   }
   const updateNode=()=>{
@@ -639,6 +655,7 @@ console.log("error is ",error);
     console.log("node array lentgh",nodeArray.length,"Edges array lentgh:",edgeArray.length);
    let res=nodeArray.every((node)=>
    {
+
     let hasSource=false,hasTarget=false;
     edgeArray.map((edge)=>
     {
@@ -692,6 +709,26 @@ console.log("error is ",error);
     console.log("edge array: ",edgeArray,"edgedataarray:",edgeData.current);
     if((edgeArray.length)==edgeData.current.length)
     {
+console.log("Node Array is",nodeArray);
+let duplicatefound=false;
+for (let elem1 of nodeArray) {
+  let onepassed=0;
+  for (let elem2 of nodeArray) {
+  if(elem1.data.label==elem2.data.label){
+    onepassed=onepassed+1;
+    if(onepassed>1){
+      duplicatefound=true;
+      console.log("duplicate changed",duplicatefound);
+      break;
+    }
+  }
+console.log("duplicate found is,",duplicatefound);
+if(duplicatefound==true){
+  alert("Questions with duplicate stem are not allowed")
+  break;
+}
+}
+  }
       console.log("All eddges have options selected");
       convertEdgesId();
       console.log("All correct call api Edges",JSON.stringify(edgeData.current));

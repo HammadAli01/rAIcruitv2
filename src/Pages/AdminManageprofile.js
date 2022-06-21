@@ -1,11 +1,18 @@
 import React,{useRef,useState,useEffect,useCallback} from 'react'
 import Admindashboardnavbar from '../Components/navbars/Admindashboardnavbar';
 import './AdminManageprofile.css';
+import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-// import tempprofile from '../Assets/mainmenu/DSC.png';
-import tempprofile from '../Assets/mainmenu/loginsideimg.png';
+ import tempprofile from '../Assets/mainmenu/adminavatar.png';
 export default function AdminManageprofile() {
-  const userdetails={userName:"Hammad Ali",email:"hammadalibu@gmail.com",password:"andrea",companyName:"magich,isb",gender:"Male",user_Image:"blob:http://localhost:3000/7edcd3ee-aa3d-402a-9eb0-dddc625baab9"}
+  const userdetails={
+    first_name:window.localStorage.getItem('user_first_name'),
+    last_name:window.localStorage.getItem('user_last_name'),
+    email:window.localStorage.getItem('user_email'),
+    password:window.localStorage.getItem('user_password'),
+    companyName:window.localStorage.getItem('user_company'),
+    gender:window.localStorage.getItem('user_gender'),
+    user_Image:tempprofile}
   const navigation = useNavigate();
     const handlePageSubmit = useCallback(() => navigation('/Admindashboard', {replace: true}), [navigation]);
   const [userData,setUserData]=useState(userdetails);
@@ -53,9 +60,24 @@ export default function AdminManageprofile() {
     const errors=checkErrors();
     if(errors==true)
     {   setUserErrors(error);
-        console.log("call the api");
+       
         userData.gender=userGender;
+        console.log("call the api");
         console.log("current userData is::",userData);
+      //   const response =await axios.get(`${process.env.REACT_APP_API_KEY}/Interview/get/all?email=${logged_user}`).then(response => {
+      //     console.log("first response by get all intervies of user",response.data); 
+      //     setDescription(response.data);
+      // })
+      // .catch(error => {
+      //     alert('Server Networ error try again!', error);
+      // }); write below inside response
+      window.localStorage.setItem('user_first_name', userData.first_name);
+      window.localStorage.setItem('user_last_name', userData.last_name);
+      window.localStorage.setItem('user_gender', userData.gender);
+      window.localStorage.setItem('user_email', userData.email);
+      window.localStorage.setItem('user_company', userData.companyName);
+      window.localStorage.setItem('user_image', "blob is nothing");
+      window.localStorage.setItem('user_password', userData.password);
         handlePageSubmit();
     }
     else{
@@ -72,8 +94,8 @@ export default function AdminManageprofile() {
         companyNameError:""
     };
     let count=0;
-    console.log("userdata is",userData.userName.length);
-    if(userData.userName.length==0){
+    console.log("userdata is",userData.first_name.length);
+    if(userData.first_name.length==0){
         error.userNameError="Required";
         count=count+1;
     }
@@ -118,7 +140,7 @@ export default function AdminManageprofile() {
     <div >
        <Admindashboardnavbar  side={true}/>
        <div className='userprofileparent'>
-    <div className='userprofilefirstchild'><img id="imageid" className='userProfile' src={userdetails.user_Image} alt="userimg"  onClick={handleClick}></img>
+    <div className='userprofilefirstchild'><img  id="imageid" className='userProfile' src={userdetails.user_Image} alt="userimg"  ></img>
     <input type="file"
              ref={hiddenFileInput}
              onChange={(e)=>{handleChange(e)}}
@@ -130,8 +152,8 @@ export default function AdminManageprofile() {
     <div className='userprofilesecondchild'>
       <form>
       <div className="form-Group">
-        <input type="text" className="form-Input" id="name-input" value={userData.userName}
-        placeholder=" "  name="userName" required onChange={(e)=>{changeHandler(e)}}/>
+        <input type="text" className="form-Input" id="name-input" value={userData.first_name}
+        placeholder=" "  name="first_name" required onChange={(e)=>{changeHandler(e)}}/>
         <label className="form-Label" onClick={e=>{labelclicked("name-input")}}>Name</label>
         {userErrors.userNameError && <p className="field-Error">{userErrors.userNameError}</p>}
       </div>

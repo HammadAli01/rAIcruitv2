@@ -54,7 +54,7 @@ else if(interview_status==true){
     <><Admindashboardnavbar side={true}/>
     <div className='adminmanageusers'><section>
   
-    <h1>interviews</h1>
+    <h1>Interviews</h1>
     <div class="tbl-header">
       <table cellpadding="0" cellspacing="0" border="0">
         <thead>

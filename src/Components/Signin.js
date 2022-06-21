@@ -88,10 +88,10 @@ const formSubmitHandler=async(e)=>{
             handlePageSubmit();
           }
          }
-        }
+        } 
         })
          .catch(error => {
-             console.error('There was an error!', error);
+            alert("Server network error Kindly try again");
          });
         
         // //handlePageSubmit();

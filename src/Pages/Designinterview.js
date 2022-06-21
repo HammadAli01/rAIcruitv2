@@ -7,6 +7,7 @@ export default function Designinterview() {
  // alert("Open project-initial-3 for this module testing");
     return (
     <div className="design-wrapper">
+      
     <DashboardNavbar side={false}/>
     
         <div className="question">

@@ -3,7 +3,7 @@ import './DashboardNavbar.css'
 import { Navbar,Nav,Container } from 'react-bootstrap';
 import { BsList,BsCaretDownFill } from "react-icons/bs";
 import Sidebar from './Sidebar';
-import userImg from '../../Assets/mainmenu/profile.jpg';
+import userImg from '../../Assets/mainmenu/useravatar3.png';
 import {useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 export default function DashboardNavbar(props) {
@@ -37,7 +37,7 @@ const navigation = useNavigate();
     {showsignout==true ?<div className='signoutdiv'>
         <img src={userImg} className='userImgindiv'></img>
         <p>hammadalibu@gmail.com</p>
-<h6>Hammad Ali</h6>
+        <h6>{window.localStorage.getItem('user_first_name')} {window.localStorage.getItem('user_last_name')}</h6>
         <hr className='spearation-line'></hr>
         <Link to="/home"><button className='signout-button' onClick={()=>{signOut()}}>Sign Out</button></Link></div>:(console.log("logout idv hided"))}
     

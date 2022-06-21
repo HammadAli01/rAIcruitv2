@@ -14,7 +14,14 @@ export default function Category() {
 });
 if (response ) {
   console.log(response.data);
-    setQuestions(response.data.Questions);
+  let tempques=[];tempques=response.data.Questions;
+  tempques.map((ques)=>{
+    if(ques.optionArray.length==1){
+      ques.optionArray=[];
+    }
+  });
+  console.log("temp ques are,",tempques);
+    setQuestions(tempques);
 }
     };
   useEffect(()=>{
